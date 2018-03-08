@@ -1,0 +1,20 @@
+platform  :ios,'8.0'
+inhibit_all_warnings!
+target 'XiaoWeiGo' do
+
+pod 'Masonry'
+pod 'MBProgressHUD'
+pod 'AFNetworking', '~> 3.1.0'
+pod 'Reachability'
+pod 'MJExtension', '~> 3.0.13'
+pod 'MJRefresh'
+pod 'IQKeyboardManager'
+pod 'SDWebImage', '~> 3.8.1'
+pod 'GTMBase64'
+pod 'FMDB'
+pod 'ZBarSDK'
+pod 'MLeaksFinder'
+pod 'HyphenateLite'
+#pod 'EaseUI', :git => 'https://github.com/easemob/easeui-ios-hyphenate-cocoapods.git'
+#pod 'BaiduMapKit' #百度地图SDK
+end

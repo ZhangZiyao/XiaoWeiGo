@@ -1,0 +1,52 @@
+//
+//  xw_PrefixHeader.pch
+//  XiaoWeiGo
+//
+//  Created by dingxin on 2018/2/3.
+//  Copyright © 2018年 xwjy. All rights reserved.
+//
+
+#ifndef xw_PrefixHeader_pch
+#define xw_PrefixHeader_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#import "RWNavigationController.h"
+#import "UIImage+RWImage.h"
+#import "UIColor+Extension.h"
+#import "UIColor+OCRColor.h"
+#import "UIFont+RWFont.h"
+#import "MBProgressHUD+InfoShow.h"
+#import "NSString+AttributedString.h"
+#import "NSString+Verify.h"
+#import "NSString+Date.h"
+#import "NSString+KeyToValue.h"
+
+#import "Define.h"
+#import "URLDefine.h"
+#import "CommonConfig.h"
+
+#import "RWTextField.h"
+#import "RWFactionUI.h"
+#import "RequestManager.h"
+#import "NoMoreDataView.h"
+
+#pragma mark - CocoaPods 第三方类库
+#import <HyphenateLite/HyphenateLite.h>
+#import <HyphenateLite/IEMChatManager.h>
+#import <HyphenateLite/EMError.h>
+#import "Masonry.h"
+#import "MBProgressHUD.h"
+#import "AFNetworking.h"
+#import "MJRefresh.h"
+#import "MJExtension.h"
+#import "UIImageView+WebCache.h"
+#import "Reachability.h"
+#import "XWDefine.h"
+#import "UserModel.h"
+
+
+#import "AppDelegate.h"
+
+#endif /* xw_PrefixHeader_pch */
