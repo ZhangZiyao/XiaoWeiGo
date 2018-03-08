@@ -220,6 +220,9 @@
 		1752677920440052006BB0D9 /* icon_direction.png in Resources */ = {isa = PBXBuildFile; fileRef = 1752677120440052006BB0D9 /* icon_direction.png */; };
 		1752677A20440052006BB0D9 /* icon_rail.png in Resources */ = {isa = PBXBuildFile; fileRef = 1752677220440052006BB0D9 /* icon_rail.png */; };
 		1752677B20440052006BB0D9 /* icon_bus.png in Resources */ = {isa = PBXBuildFile; fileRef = 1752677320440052006BB0D9 /* icon_bus.png */; };
+		177F183E2051762C00D252EC /* XWRegisterFirStepController.m in Sources */ = {isa = PBXBuildFile; fileRef = 177F183D2051762C00D252EC /* XWRegisterFirStepController.m */; };
+		177F18412051763C00D252EC /* XWRegisterSecStepController.m in Sources */ = {isa = PBXBuildFile; fileRef = 177F18402051763C00D252EC /* XWRegisterSecStepController.m */; };
+		177F18442051766600D252EC /* XWScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 177F18432051766600D252EC /* XWScanViewController.m */; };
 		1782DFF4203D5B4C0058F008 /* XWAnswerViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1782DFF3203D5B4C0058F008 /* XWAnswerViewCell.m */; };
 		1782DFF8203D87D20058F008 /* XWCommentHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1782DFF7203D87D20058F008 /* XWCommentHeaderView.m */; };
 		1782DFFB203D87DE0058F008 /* XWCommentFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1782DFFA203D87DE0058F008 /* XWCommentFooterView.m */; };
@@ -740,6 +743,12 @@
 		1752677120440052006BB0D9 /* icon_direction.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_direction.png; sourceTree = "<group>"; };
 		1752677220440052006BB0D9 /* icon_rail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_rail.png; sourceTree = "<group>"; };
 		1752677320440052006BB0D9 /* icon_bus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_bus.png; sourceTree = "<group>"; };
+		177F183C2051762C00D252EC /* XWRegisterFirStepController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XWRegisterFirStepController.h; sourceTree = "<group>"; };
+		177F183D2051762C00D252EC /* XWRegisterFirStepController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XWRegisterFirStepController.m; sourceTree = "<group>"; };
+		177F183F2051763C00D252EC /* XWRegisterSecStepController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XWRegisterSecStepController.h; sourceTree = "<group>"; };
+		177F18402051763C00D252EC /* XWRegisterSecStepController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XWRegisterSecStepController.m; sourceTree = "<group>"; };
+		177F18422051766600D252EC /* XWScanViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XWScanViewController.h; sourceTree = "<group>"; };
+		177F18432051766600D252EC /* XWScanViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XWScanViewController.m; sourceTree = "<group>"; };
 		1782DFF2203D5B4C0058F008 /* XWAnswerViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XWAnswerViewCell.h; sourceTree = "<group>"; };
 		1782DFF3203D5B4C0058F008 /* XWAnswerViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XWAnswerViewCell.m; sourceTree = "<group>"; };
 		1782DFF6203D87D20058F008 /* XWCommentHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XWCommentHeaderView.h; sourceTree = "<group>"; };
@@ -1825,6 +1834,12 @@
 				17D70AA92025394D00122A11 /* XWRegisterViewController.m */,
 				17D70AEF20270D4800122A11 /* RegisterInfoViewController.h */,
 				17D70AF020270D4800122A11 /* RegisterInfoViewController.m */,
+				177F183C2051762C00D252EC /* XWRegisterFirStepController.h */,
+				177F183D2051762C00D252EC /* XWRegisterFirStepController.m */,
+				177F183F2051763C00D252EC /* XWRegisterSecStepController.h */,
+				177F18402051763C00D252EC /* XWRegisterSecStepController.m */,
+				177F18422051766600D252EC /* XWScanViewController.h */,
+				177F18432051766600D252EC /* XWScanViewController.m */,
 			);
 			path = Register;
 			sourceTree = "<group>";
@@ -2678,6 +2693,7 @@
 				174B78DF202C703E002FDB23 /* XWTextViewCell.m in Sources */,
 				17386C6F20465629005B3271 /* LLConversationModelManager.m in Sources */,
 				171F7E05202EA234006A42FC /* XWCompanyViewCell.m in Sources */,
+				177F183E2051762C00D252EC /* XWRegisterFirStepController.m in Sources */,
 				171F7E34202F355D006A42FC /* XWDisDetailViewController.m in Sources */,
 				173C4E3520306F4700FE5DDB /* SGQRCodeGenerateManager.m in Sources */,
 				17386C2D20464C4B005B3271 /* LLTableViewCell.m in Sources */,
@@ -2732,6 +2748,7 @@
 				17D70BA4202731B800122A11 /* XWCreditViewController.m in Sources */,
 				17D70BAD202731D800122A11 /* XWBookViewController.m in Sources */,
 				174B78D8202C6491002FDB23 /* UIColor+OCRColor.m in Sources */,
+				177F18442051766600D252EC /* XWScanViewController.m in Sources */,
 				17386BFC20464B5F005B3271 /* UIScrollView+LLExt.m in Sources */,
 				17386BF920464B5F005B3271 /* UIImage+EMGIF.m in Sources */,
 				174B7923202CBDDC002FDB23 /* YUSegmentedControl.m in Sources */,
@@ -2814,6 +2831,7 @@
 				17386C9C20465F0A005B3271 /* LLChatTextView.m in Sources */,
 				171F7E02202EA021006A42FC /* XWCompanyDetailViewController.m in Sources */,
 				173C4E1F20300D6A00FE5DDB /* XWHotDemandViewController.m in Sources */,
+				177F18412051763C00D252EC /* XWRegisterSecStepController.m in Sources */,
 				17386C0220464B5F005B3271 /* LLUtils+Audio.m in Sources */,
 				1782DFF4203D5B4C0058F008 /* XWAnswerViewCell.m in Sources */,
 				17D70BA1202731AB00122A11 /* XWLoanViewController.m in Sources */,

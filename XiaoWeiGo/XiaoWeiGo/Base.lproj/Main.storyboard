@@ -25,6 +25,144 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="-854" y="112"/>
+        </scene>
+        <!--Contact View Controller-->
+        <scene sceneID="mdq-cb-H22">
+            <objects>
+                <viewController storyboardIdentifier="ChatViewController" id="vd4-5s-rnO" customClass="XWContactViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="1yR-f3-ua3"/>
+                        <viewControllerLayoutGuide type="bottom" id="sEF-z3-lDi"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="pc1-Ud-Jjz">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="pYo-cC-1Qz">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="617"/>
+                                <color key="backgroundColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.90588235289999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="617" id="qLq-FD-LKp"/>
+                                </constraints>
+                            </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xlD-Ez-qL9" customClass="LLChatInputView">
+                                <rect key="frame" x="0.0" y="617" width="375" height="50"/>
+                                <subviews>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lij-Ed-fYA" customClass="LLChatTextView">
+                                        <rect key="frame" x="44" y="7" width="251" height="36"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="36" id="rfO-C9-2NI"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="send" enablesReturnKeyAutomatically="YES"/>
+                                        <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES"/>
+                                    </textView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bP9-4Q-Gdi">
+                                        <rect key="frame" x="300" y="8" width="35" height="35"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="35" id="9EO-4I-GfA"/>
+                                            <constraint firstAttribute="width" constant="35" id="rne-Jh-7co"/>
+                                        </constraints>
+                                        <state key="normal" title="Button" image="tool_emotion_1"/>
+                                        <state key="highlighted" image="tool_emotion_2"/>
+                                        <connections>
+                                            <action selector="emotionButtonPressed:" destination="xlD-Ez-qL9" eventType="touchUpInside" id="iRw-mE-b00"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XoA-so-exA">
+                                        <rect key="frame" x="337" y="8" width="35" height="35"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="35" id="Pcs-4j-Dei"/>
+                                            <constraint firstAttribute="width" constant="35" id="WA9-JQ-YtF"/>
+                                        </constraints>
+                                        <state key="normal" title="Button" image="tool_share_1"/>
+                                        <state key="highlighted" image="tool_share_2"/>
+                                        <connections>
+                                            <action selector="shareButtonPressed:" destination="xlD-Ez-qL9" eventType="touchUpInside" id="kF9-KE-E6l"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RJz-G1-apf">
+                                        <rect key="frame" x="4" y="8" width="35" height="35"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="35" id="ekf-yd-b2b"/>
+                                            <constraint firstAttribute="width" constant="35" id="uO9-fx-eXr"/>
+                                        </constraints>
+                                        <state key="normal" image="tool_voice_1"/>
+                                        <state key="highlighted" image="tool_voice_2"/>
+                                        <connections>
+                                            <action selector="voiceButtonPressed:" destination="xlD-Ez-qL9" eventType="touchUpInside" id="MmL-tD-jeI"/>
+                                        </connections>
+                                    </button>
+                                    <button clipsSubviews="YES" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8An-Km-xTP">
+                                        <rect key="frame" x="44" y="7" width="251" height="36"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="36" id="NL4-Eh-JF3"/>
+                                        </constraints>
+                                        <state key="normal" title="按住 说话">
+                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="recordButtonDragEnter:" destination="xlD-Ez-qL9" eventType="touchDragEnter" id="v9Y-zb-M9G"/>
+                                            <action selector="recordButtonDragExit:" destination="xlD-Ez-qL9" eventType="touchDragExit" id="m4x-qQ-bQc"/>
+                                            <action selector="recordButtonTouchCancelled:" destination="xlD-Ez-qL9" eventType="touchCancel" id="y8r-Zm-kGa"/>
+                                            <action selector="recordButtonTouchDown:" destination="xlD-Ez-qL9" eventType="touchDown" id="0gh-6Y-iaf"/>
+                                            <action selector="recordButtonTouchUpinside:" destination="xlD-Ez-qL9" eventType="touchUpInside" id="IrN-oR-GKE"/>
+                                            <action selector="recordButtonTouchUpoutside:" destination="xlD-Ez-qL9" eventType="touchUpOutside" id="aI7-go-ZAs"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.94117647059999998" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="lij-Ed-fYA" firstAttribute="top" secondItem="xlD-Ez-qL9" secondAttribute="top" constant="7" id="1YU-ZE-SwW"/>
+                                    <constraint firstAttribute="bottom" secondItem="bP9-4Q-Gdi" secondAttribute="bottom" constant="7" id="6pQ-Zo-DaD"/>
+                                    <constraint firstItem="bP9-4Q-Gdi" firstAttribute="leading" secondItem="lij-Ed-fYA" secondAttribute="trailing" constant="5" id="77E-uD-PQe"/>
+                                    <constraint firstAttribute="bottom" secondItem="lij-Ed-fYA" secondAttribute="bottom" constant="7" id="9te-1D-ZKq"/>
+                                    <constraint firstAttribute="trailing" secondItem="XoA-so-exA" secondAttribute="trailing" constant="3" id="Azv-E9-BDj"/>
+                                    <constraint firstItem="XoA-so-exA" firstAttribute="leading" secondItem="bP9-4Q-Gdi" secondAttribute="trailing" constant="2" id="DIB-9J-Eau"/>
+                                    <constraint firstItem="8An-Km-xTP" firstAttribute="leading" secondItem="RJz-G1-apf" secondAttribute="trailing" constant="5" id="Eme-er-8Z0"/>
+                                    <constraint firstAttribute="height" constant="50" id="HGk-aP-Qlr"/>
+                                    <constraint firstAttribute="bottom" secondItem="RJz-G1-apf" secondAttribute="bottom" constant="7" id="Hzl-qg-5Se"/>
+                                    <constraint firstItem="8An-Km-xTP" firstAttribute="top" secondItem="xlD-Ez-qL9" secondAttribute="top" constant="7" id="alt-Co-ra7"/>
+                                    <constraint firstItem="RJz-G1-apf" firstAttribute="leading" secondItem="xlD-Ez-qL9" secondAttribute="leading" constant="4" id="e1i-gu-66t"/>
+                                    <constraint firstAttribute="bottom" secondItem="XoA-so-exA" secondAttribute="bottom" constant="7" id="wpV-mZ-LUT"/>
+                                    <constraint firstItem="lij-Ed-fYA" firstAttribute="leading" secondItem="RJz-G1-apf" secondAttribute="trailing" constant="5" id="x4z-1K-Iey"/>
+                                    <constraint firstItem="bP9-4Q-Gdi" firstAttribute="leading" secondItem="8An-Km-xTP" secondAttribute="trailing" constant="5" id="xyt-Ns-m0G"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="chatEmotionBtn" destination="bP9-4Q-Gdi" id="LoE-HU-5ol"/>
+                                    <outlet property="chatInputTextView" destination="lij-Ed-fYA" id="uzK-Ab-1KG"/>
+                                    <outlet property="chatRecordBtn" destination="8An-Km-xTP" id="oLM-J4-jfg"/>
+                                    <outlet property="chatShareBtn" destination="XoA-so-exA" id="RqH-E4-fnL"/>
+                                    <outlet property="chatTextViewHeightConstraint" destination="rfO-C9-2NI" id="t68-Hm-wSc"/>
+                                    <outlet property="chatVoiceBtn" destination="RJz-G1-apf" id="aVB-Lo-s9F"/>
+                                </connections>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="xlD-Ez-qL9" firstAttribute="top" secondItem="pYo-cC-1Qz" secondAttribute="bottom" id="2iD-GJ-Whi"/>
+                            <constraint firstItem="sEF-z3-lDi" firstAttribute="top" secondItem="xlD-Ez-qL9" secondAttribute="bottom" id="Acb-dW-Vwb"/>
+                            <constraint firstItem="xlD-Ez-qL9" firstAttribute="leading" secondItem="pc1-Ud-Jjz" secondAttribute="leading" id="PNu-eT-7wq"/>
+                            <constraint firstItem="pYo-cC-1Qz" firstAttribute="leading" secondItem="pc1-Ud-Jjz" secondAttribute="leading" id="bSk-fb-kEu"/>
+                            <constraint firstAttribute="trailing" secondItem="pYo-cC-1Qz" secondAttribute="trailing" id="cHw-XC-YNb"/>
+                            <constraint firstAttribute="trailing" secondItem="xlD-Ez-qL9" secondAttribute="trailing" id="wCB-6t-bmf"/>
+                            <constraint firstItem="pYo-cC-1Qz" firstAttribute="top" secondItem="pc1-Ud-Jjz" secondAttribute="top" id="yoo-3y-pQs"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NWs-RC-gAv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="177" y="112"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="tool_emotion_1" width="35" height="35"/>
+        <image name="tool_emotion_2" width="35" height="35"/>
+        <image name="tool_share_1" width="35" height="35"/>
+        <image name="tool_share_2" width="35" height="35"/>
+        <image name="tool_voice_1" width="35" height="35"/>
+        <image name="tool_voice_2" width="35" height="35"/>
+    </resources>
 </document>
