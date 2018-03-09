@@ -1,0 +1,14 @@
+SetServiceLink 修改过
+GetOrgService 修改过
+RegisterUser 修改过
+RegisterComUser 新增
+RegisterGeneralUser 修改过
+GetDmdList 修改过
+GetCompanyType 新增
+ForgotPwd  新增
+CheckCompnay 新增
+
+
+http://47.96.188.205:70/api/HTWebInterface.asmx
+
+CheckCompnay这个接口主要用于注册的时候是否审核通过
