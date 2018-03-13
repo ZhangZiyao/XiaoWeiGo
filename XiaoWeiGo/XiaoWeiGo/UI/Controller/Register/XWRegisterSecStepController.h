@@ -6,8 +6,12 @@
 //  Copyright © 2018年 xwjy. All rights reserved.
 //
 
-#import "XWBaseViewController.h"
+#import "XLForm.h"
 
-@interface XWRegisterSecStepController : XWBaseViewController
+@interface XWRegisterSecStepController : XLFormViewController
+
+@property (nonatomic, assign) int type;
+
+@property (nonatomic, strong) NSDictionary *dict;
 
 @end

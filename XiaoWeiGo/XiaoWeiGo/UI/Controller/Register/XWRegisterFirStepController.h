@@ -10,4 +10,6 @@
 
 @interface XWRegisterFirStepController : XWBaseViewController
 
+@property (nonatomic, assign) int type;
+
 @end

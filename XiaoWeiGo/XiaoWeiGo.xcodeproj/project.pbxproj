@@ -220,6 +220,11 @@
 		1752677920440052006BB0D9 /* icon_direction.png in Resources */ = {isa = PBXBuildFile; fileRef = 1752677120440052006BB0D9 /* icon_direction.png */; };
 		1752677A20440052006BB0D9 /* icon_rail.png in Resources */ = {isa = PBXBuildFile; fileRef = 1752677220440052006BB0D9 /* icon_rail.png */; };
 		1752677B20440052006BB0D9 /* icon_bus.png in Resources */ = {isa = PBXBuildFile; fileRef = 1752677320440052006BB0D9 /* icon_bus.png */; };
+		177111642057E73800198860 /* PrivateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 177111632057E73800198860 /* PrivateManager.m */; };
+		177111672057E74600198860 /* RWSoundManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 177111652057E74600198860 /* RWSoundManager.m */; };
+		177111692057E7EE00198860 /* saomiao.wav in Resources */ = {isa = PBXBuildFile; fileRef = 177111682057E7EE00198860 /* saomiao.wav */; };
+		1771116C2057F98800198860 /* XWLabelViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1771116B2057F98800198860 /* XWLabelViewCell.m */; };
+		1771116F205803D400198860 /* XWTextFieldViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1771116E205803D400198860 /* XWTextFieldViewCell.m */; };
 		177F183E2051762C00D252EC /* XWRegisterFirStepController.m in Sources */ = {isa = PBXBuildFile; fileRef = 177F183D2051762C00D252EC /* XWRegisterFirStepController.m */; };
 		177F18412051763C00D252EC /* XWRegisterSecStepController.m in Sources */ = {isa = PBXBuildFile; fileRef = 177F18402051763C00D252EC /* XWRegisterSecStepController.m */; };
 		177F18442051766600D252EC /* XWScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 177F18432051766600D252EC /* XWScanViewController.m */; };
@@ -743,6 +748,15 @@
 		1752677120440052006BB0D9 /* icon_direction.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_direction.png; sourceTree = "<group>"; };
 		1752677220440052006BB0D9 /* icon_rail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_rail.png; sourceTree = "<group>"; };
 		1752677320440052006BB0D9 /* icon_bus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_bus.png; sourceTree = "<group>"; };
+		177111622057E73700198860 /* PrivateManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrivateManager.h; sourceTree = "<group>"; };
+		177111632057E73800198860 /* PrivateManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrivateManager.m; sourceTree = "<group>"; };
+		177111652057E74600198860 /* RWSoundManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RWSoundManager.m; sourceTree = "<group>"; };
+		177111662057E74600198860 /* RWSoundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RWSoundManager.h; sourceTree = "<group>"; };
+		177111682057E7EE00198860 /* saomiao.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = saomiao.wav; sourceTree = "<group>"; };
+		1771116A2057F98800198860 /* XWLabelViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XWLabelViewCell.h; sourceTree = "<group>"; };
+		1771116B2057F98800198860 /* XWLabelViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XWLabelViewCell.m; sourceTree = "<group>"; };
+		1771116D205803D400198860 /* XWTextFieldViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XWTextFieldViewCell.h; sourceTree = "<group>"; };
+		1771116E205803D400198860 /* XWTextFieldViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XWTextFieldViewCell.m; sourceTree = "<group>"; };
 		177F183C2051762C00D252EC /* XWRegisterFirStepController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XWRegisterFirStepController.h; sourceTree = "<group>"; };
 		177F183D2051762C00D252EC /* XWRegisterFirStepController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XWRegisterFirStepController.m; sourceTree = "<group>"; };
 		177F183F2051763C00D252EC /* XWRegisterSecStepController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XWRegisterSecStepController.h; sourceTree = "<group>"; };
@@ -1847,6 +1861,10 @@
 		17D70A97202538ED00122A11 /* Tool */ = {
 			isa = PBXGroup;
 			children = (
+				177111662057E74600198860 /* RWSoundManager.h */,
+				177111652057E74600198860 /* RWSoundManager.m */,
+				177111622057E73700198860 /* PrivateManager.h */,
+				177111632057E73800198860 /* PrivateManager.m */,
 				17D70AC520253D9200122A11 /* AppStoreInfoModel.h */,
 				17D70AC720253D9200122A11 /* AppStoreInfoModel.m */,
 				17D70AC920253D9200122A11 /* CheckVersion.h */,
@@ -1906,6 +1924,7 @@
 		17D70A9A202538ED00122A11 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				177111682057E7EE00198860 /* saomiao.wav */,
 				17386CD12046EB2A005B3271 /* 小微加油.doc */,
 				17386CC3204660FC005B3271 /* imageDownloadFail@2x.png */,
 				17386CC1204660F3005B3271 /* Emotions.plist */,
@@ -2176,6 +2195,10 @@
 				174B78F9202C9246002FDB23 /* XWButtonViewCell.m */,
 				174B78FB202C94FB002FDB23 /* RegisterTagCell.h */,
 				174B78FC202C94FB002FDB23 /* RegisterTagCell.m */,
+				1771116A2057F98800198860 /* XWLabelViewCell.h */,
+				1771116B2057F98800198860 /* XWLabelViewCell.m */,
+				1771116D205803D400198860 /* XWTextFieldViewCell.h */,
+				1771116E205803D400198860 /* XWTextFieldViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2511,6 +2534,7 @@
 				17386BA620464AF5005B3271 /* FriendsSendsPicturesNumberIcon@2x.png in Resources */,
 				1752677720440052006BB0D9 /* arrowTexture.png in Resources */,
 				17386BB420464AF5005B3271 /* MMVideoPreviewPlayHL@3x.png in Resources */,
+				177111692057E7EE00198860 /* saomiao.wav in Resources */,
 				17D70A692025368C00122A11 /* LaunchScreen.storyboard in Resources */,
 				17386BA220464AF5005B3271 /* CellBlueSelected@2x.png in Resources */,
 				1752677920440052006BB0D9 /* icon_direction.png in Resources */,
@@ -2755,6 +2779,7 @@
 				174B78F1202C8E6E002FDB23 /* XWChuangxinViewController.m in Sources */,
 				17386BF820464B5F005B3271 /* UIColor+LLExt.m in Sources */,
 				1782DFFE203D8FD30058F008 /* XWCommentCell.m in Sources */,
+				1771116F205803D400198860 /* XWTextFieldViewCell.m in Sources */,
 				17386BBB20464AF5005B3271 /* LLPhotoToolbar.m in Sources */,
 				171F7E08202EC814006A42FC /* XWNewsDetailViewController.m in Sources */,
 				172CD7F1202DD12A003A804B /* CommandModel.m in Sources */,
@@ -2816,11 +2841,13 @@
 				17D70B4B202710EA00122A11 /* XLFormDateCell.m in Sources */,
 				17D70B7F20272B7800122A11 /* RequestManager.m in Sources */,
 				171F7E15202EF2DB006A42FC /* XWDownFileViewController.m in Sources */,
+				177111672057E74600198860 /* RWSoundManager.m in Sources */,
 				173C4E19202FF48D00FE5DDB /* XWOrgModel.m in Sources */,
 				17386C5A204651F3005B3271 /* LLMessageAttachmentDownloader.m in Sources */,
 				17D70AA12025392B00122A11 /* RWNavigationController.m in Sources */,
 				17D70B5D202710EA00122A11 /* XLFormSectionDescriptor.m in Sources */,
 				172D01DC20312466003AB402 /* NoMoreDataView.m in Sources */,
+				177111642057E73800198860 /* PrivateManager.m in Sources */,
 				17D70B6B202710EA00122A11 /* XLForm.m in Sources */,
 				17386BBD20464AF5005B3271 /* LLAssetListController.m in Sources */,
 				174B792D202CD0D7002FDB23 /* ServiceDetailViewController.m in Sources */,
@@ -2889,6 +2916,7 @@
 				17386C0520464B5F005B3271 /* LLUtils+IPhone.m in Sources */,
 				17386C2C20464C4B005B3271 /* LLSimpleTextLabel.m in Sources */,
 				174B7916202CBC2F002FDB23 /* MySettingsViewController.m in Sources */,
+				1771116C2057F98800198860 /* XWLabelViewCell.m in Sources */,
 				983272E2203414650027AA20 /* XWCommentModel.m in Sources */,
 				171F7E2E202F28F4006A42FC /* XWServiceDetailSecViewController.m in Sources */,
 				1782E109203D92630058F008 /* XWCommentInfoModel.m in Sources */,

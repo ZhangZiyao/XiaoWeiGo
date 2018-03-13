@@ -9,6 +9,7 @@
 #import "XWRegisterViewController.h"
 #import "RWFactionUI.h"
 #import "RegisterInfoViewController.h"
+#import "XWRegisterFirStepController.h"
 
 @interface XWRegisterViewController ()
 
@@ -62,10 +63,15 @@
     }
 }
 - (void)clickBtnAction:(UIButton *)sender{
-    RegisterInfoViewController *registerVc = [[RegisterInfoViewController alloc] init];
-    registerVc.type = (int)sender.tag;
-    [self.navigationController pushViewController:registerVc animated:YES];
-    
+    if (sender.tag-4 == 2) {
+        RegisterInfoViewController *registerVc = [[RegisterInfoViewController alloc] init];
+        registerVc.type = (int)sender.tag;
+        [self.navigationController pushViewController:registerVc animated:YES];
+    }else{
+        XWRegisterFirStepController *registerVc = [[XWRegisterFirStepController alloc] init];
+        registerVc.type = (int)sender.tag;
+        [self.navigationController pushViewController:registerVc animated:YES];
+    }
 }
 - (void)navLeftItemClick{
     [self.navigationController popViewControllerAnimated:YES];
