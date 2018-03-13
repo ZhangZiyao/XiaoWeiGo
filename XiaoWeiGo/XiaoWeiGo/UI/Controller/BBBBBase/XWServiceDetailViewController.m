@@ -201,6 +201,9 @@
             cell = [[XWServiceViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"sssqsCell"];
         }
         cell.cmodel = self.model;
+        cell.heightBlock = ^{
+//            [self.tableView reloadData];
+        };
         //    [cell resetCellWithData:@"" andType:index];
         return cell;
     }else{
@@ -309,12 +312,20 @@
     return 1;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
     if (indexPath.section == 0) {
-        if (self.model.category == 1) {
-            return 520*kScaleH;
+        if (tableView != nil) {
+//            XWServiceViewCell *cell = (XWServiceViewCell *)[self tableView:tableView cellForRowAtIndexPath:indexPath];
+//            return cell.cellheight;
+            return 440*kScaleH;
         }else{
             return 440*kScaleH;
         }
+//        if (self.model.category == 1) {
+//            return 520;
+//        }else{
+//            return 440*kScaleH;
+//        }
     }else{
         return 100*kScaleH;
     }

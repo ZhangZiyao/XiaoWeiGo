@@ -25,4 +25,6 @@
 #pragma mark - 百度地图SDK配置
 #define BAIDU_MAP_APP_KEY @"gYsCHbZhdnNxkuYBeztSWClkfCYcd9om"
 
+#define STOREAPPID @"1355434831"
+
 #endif /* XWDefine_h */

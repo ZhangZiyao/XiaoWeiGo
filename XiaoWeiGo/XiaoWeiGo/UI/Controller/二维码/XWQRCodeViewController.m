@@ -114,9 +114,7 @@
 //        activityVC.excludedActivityTypes = @[UIActivityTypeMessage,UIActivityTypeAirDrop,UIActivityTypeAssignToContact,UIActivityTypeMail];
         UIActivityViewControllerCompletionWithItemsHandler myBlock = ^(UIActivityType __nullable activityType, BOOL completed, NSArray * __nullable returnedItems, NSError * __nullable activityError) {
             if (completed){
-                [MBProgressHUD alertInfo:@"操作成功"];
-            }else{
-                [MBProgressHUD alertInfo:@"操作失败"];
+                [MBProgressHUD alertInfo:@"成功"];
             }
         };
         activityVC.completionWithItemsHandler = myBlock;

@@ -10,7 +10,7 @@
 #import "XWServiceModel.h"
 #import "CommandModel.h"
 
-@interface XWServiceViewCell ()
+@interface XWServiceViewCell ()<UIWebViewDelegate>
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UILabel *detail0Label;
 @property (nonatomic, strong) UILabel *detail1Label;
@@ -18,6 +18,7 @@
 @property (nonatomic, strong) UILabel *detail3Label;
 @property (nonatomic, strong) UILabel *detail4Label;
 @property (nonatomic, strong) UILabel *detail5Label;
+@property (nonatomic, strong) UIWebView *webView;
 @end
 
 @implementation XWServiceViewCell
@@ -25,6 +26,7 @@
     if (self=[super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         self.contentView.backgroundColor = [UIColor whiteColor];
         self.selectionStyle = UITableViewCellSelectionStyleNone;
+        self.cellheight = 440*kScaleH;
         [self createCell];
     }
     return self;
@@ -44,32 +46,38 @@
     if (cmodel == nil) {
         return;
     }
-    if (cmodel.category == 1) {
-        self.detail5Label.hidden = NO;
-        self.detail0Label.text = [NSString stringWithFormat:@"适用对象：%@",@"进入工业园区的初创期中小企业"];
-        self.detail1Label.text = [NSString stringWithFormat:@"产品介绍：%@",@"抵押贷款"];
-        self.detail2Label.text = [NSString stringWithFormat:@"产品功能：%@",[NSString ifNull:cmodel.serviceName]];
-        self.detail3Label.text = [NSString stringWithFormat:@"产品特点：%@",[NSString ifNull:cmodel.serviceName]];
-        self.detail4Label.text = [NSString stringWithFormat:@"办贷流程：%@",[NSString ifNull:cmodel.serviceName]];
-        self.detail5Label.text = [NSString stringWithFormat:@"申请介绍：点击下面的“我要申请”按钮，服务机构收到后1-3个工作日会电话联系，通过后，再由申请人携带相关资料（原材料或复印件已在材料清单中注明）到窗口办理正式审批手续。"];
-    }else{
-        self.detail5Label.hidden = YES;
-        self.detail0Label.text = [NSString stringWithFormat:@"服务主要内容：%@",[NSString ifNull:cmodel.serviceName]];
-        self.detail1Label.text = [NSString stringWithFormat:@"服务方式：%@",[NSString ifNull:cmodel.serviceName]];
-        self.detail2Label.text = [NSString stringWithFormat:@"服务对象：%@",[NSString ifNull:cmodel.contacts]];
-        self.detail3Label.text = [NSString stringWithFormat:@"服务模式：%@",[NSString ifNull:cmodel.serviceName]];
-        self.detail4Label.text = [NSString stringWithFormat:@"服务流程说明：%@",[NSString ifNull:cmodel.sketch]];
-    }
+//    if (cmodel.category == 1) {
+//        NSAttributedString * attrStr = [[NSAttributedString alloc] initWithData:[cmodel.details dataUsingEncoding:NSUnicodeStringEncoding] options:@{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType} documentAttributes:nil error:nil];
+//        self.detail0Label.attributedText = attrStr;
+        
+        [_webView loadHTMLString:cmodel.details baseURL:nil];
+        
+//        self.detail5Label.hidden = NO;
+//        self.detail0Label.text = [NSString stringWithFormat:@"适用对象：%@",@"进入工业园区的初创期中小企业"];
+//        self.detail1Label.text = [NSString stringWithFormat:@"产品介绍：%@",@"抵押贷款"];
+//        self.detail2Label.text = [NSString stringWithFormat:@"产品功能：%@",[NSString ifNull:cmodel.details]];
+//        self.detail3Label.text = [NSString stringWithFormat:@"产品特点：%@",[NSString ifNull:cmodel.serviceName]];
+//        self.detail4Label.text = [NSString stringWithFormat:@"办贷流程：%@",[NSString ifNull:cmodel.serviceName]];
+//        self.detail5Label.text = [NSString stringWithFormat:@"申请介绍：点击下面的“我要申请”按钮，服务机构收到后1-3个工作日会电话联系，通过后，再由申请人携带相关资料（原材料或复印件已在材料清单中注明）到窗口办理正式审批手续。"];
+//    }else{
+//        self.detail5Label.hidden = YES;
+//        self.detail0Label.text = [NSString stringWithFormat:@"服务主要内容：%@",[NSString ifNull:cmodel.serviceName]];
+//        self.detail1Label.text = [NSString stringWithFormat:@"服务方式：%@",[NSString ifNull:cmodel.serviceName]];
+//        self.detail2Label.text = [NSString stringWithFormat:@"服务对象：%@",[NSString ifNull:cmodel.contacts]];
+//        self.detail3Label.text = [NSString stringWithFormat:@"服务模式：%@",[NSString ifNull:cmodel.serviceName]];
+//        self.detail4Label.text = [NSString stringWithFormat:@"服务流程说明：%@",[NSString ifNull:cmodel.sketch]];
+//    }
 }
 
 - (void)createCell{
     [self.contentView addSubview:self.titleLabel];
-    [self.contentView addSubview:self.detail0Label];
-    [self.contentView addSubview:self.detail1Label];
-    [self.contentView addSubview:self.detail2Label];
-    [self.contentView addSubview:self.detail3Label];
-    [self.contentView addSubview:self.detail4Label];
-    [self.contentView addSubview:self.detail5Label];
+//    [self.contentView addSubview:self.detail0Label];
+    [self.contentView addSubview:self.webView];
+//    [self.contentView addSubview:self.detail1Label];
+//    [self.contentView addSubview:self.detail2Label];
+//    [self.contentView addSubview:self.detail3Label];
+//    [self.contentView addSubview:self.detail4Label];
+//    [self.contentView addSubview:self.detail5Label];
     
     [self addFrame];
 }
@@ -81,37 +89,68 @@
 //        make.centerX.equalTo(self.contentView);
 //    }];
     
-    [self.detail0Label mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.contentView).offset(40*kScaleW);
-        make.right.equalTo(self.contentView).offset(-40*kScaleW);
-        make.top.equalTo(self.contentView).offset(30*kScaleW);
+//    [self.detail0Label mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(self.contentView).offset(40*kScaleW);
+//        make.right.equalTo(self.contentView).offset(-40*kScaleW);
+//        make.top.equalTo(self.contentView).offset(30*kScaleW);
+//        make.bottom.equalTo(self.contentView).offset(30*kScaleW);
+//        //        make.width.mas_equalTo(150*kScaleW);
+//    }];
+    [self.webView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.contentView).offset(20*kScaleW);
+        make.right.equalTo(self.contentView).offset(-20*kScaleW);
+        make.top.equalTo(self.contentView).offset(20*kScaleW);
+        make.bottom.equalTo(self.contentView).offset(-20*kScaleW);
         //        make.width.mas_equalTo(150*kScaleW);
     }];
-    [self.detail1Label mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.detail0Label);
-        make.top.equalTo(self.detail0Label.mas_bottom).offset(20*kScaleW);
-        make.right.equalTo(self.contentView).offset(-40*kScaleW);
-    }];
-    [self.detail2Label mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.detail0Label);
-        make.top.equalTo(self.detail1Label.mas_bottom).offset(20*kScaleW);
-        make.right.equalTo(self.contentView).offset(-40*kScaleW);
-    }];
-    [self.detail3Label mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.detail0Label);
-        make.top.equalTo(self.detail2Label.mas_bottom).offset(20*kScaleW);
-        make.right.equalTo(self.contentView).offset(-40*kScaleW);
-    }];
-    [self.detail4Label mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.detail0Label);
-        make.top.equalTo(self.detail3Label.mas_bottom).offset(20*kScaleW);
-        make.right.equalTo(self.contentView).offset(-40*kScaleW);
-    }];
-    [self.detail5Label mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.detail0Label);
-        make.top.equalTo(self.detail4Label.mas_bottom).offset(20*kScaleW);
-        make.right.equalTo(self.contentView).offset(-40*kScaleW);
-    }];
+//    [self.detail1Label mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(self.detail0Label);
+//        make.top.equalTo(self.detail0Label.mas_bottom).offset(20*kScaleW);
+//        make.right.equalTo(self.contentView).offset(-40*kScaleW);
+//    }];
+//    [self.detail2Label mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(self.detail0Label);
+//        make.top.equalTo(self.detail1Label.mas_bottom).offset(20*kScaleW);
+//        make.right.equalTo(self.contentView).offset(-40*kScaleW);
+//    }];
+//    [self.detail3Label mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(self.detail0Label);
+//        make.top.equalTo(self.detail2Label.mas_bottom).offset(20*kScaleW);
+//        make.right.equalTo(self.contentView).offset(-40*kScaleW);
+//    }];
+//    [self.detail4Label mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(self.detail0Label);
+//        make.top.equalTo(self.detail3Label.mas_bottom).offset(20*kScaleW);
+//        make.right.equalTo(self.contentView).offset(-40*kScaleW);
+//    }];
+//    [self.detail5Label mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(self.detail0Label);
+//        make.top.equalTo(self.detail4Label.mas_bottom).offset(20*kScaleW);
+//        make.right.equalTo(self.contentView).offset(-40*kScaleW);
+//    }];
+}
+- (void)webViewDidFinishLoad:(UIWebView *)webView{
+    
+//    CGSize actualSize = [webView sizeThatFits:CGSizeZero];
+//
+//    CGRect newFrame = webView.frame;
+//
+//    newFrame.size.height = actualSize.height;
+//
+//    webView.frame = newFrame;
+//
+//    self.cellheight = webView.frame.size.height+20;
+//
+//    self.heightBlock();
+
+}
+- (UIWebView *)webView{
+    if (!_webView) {
+        _webView = [[UIWebView alloc] init];
+//        _webView.scrollView.scrollEnabled = NO;
+        _webView.delegate = self;
+    }
+    return _webView;
 }
 - (UILabel *)titleLabel{
     if (!_titleLabel) {
@@ -123,6 +162,7 @@
     }
     return _titleLabel;
 }
+
 - (UILabel *)detail0Label{
     if (!_detail0Label) {
         _detail0Label = [[UILabel alloc] init];

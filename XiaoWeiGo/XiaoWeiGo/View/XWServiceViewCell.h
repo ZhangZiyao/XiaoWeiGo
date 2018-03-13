@@ -10,10 +10,15 @@
 @class XWServiceModel;
 @class CommandModel;
 
+typedef void(^heightBlock)();
 @interface XWServiceViewCell : XWBaseCell
 
 @property (nonatomic, strong) XWServiceModel *cmodel;
 
 @property (nonatomic, strong) CommandModel *dmodel;
+
+@property (nonatomic, assign) CGFloat cellheight;
+
+@property (nonatomic, copy) heightBlock heightBlock;
 
 @end
