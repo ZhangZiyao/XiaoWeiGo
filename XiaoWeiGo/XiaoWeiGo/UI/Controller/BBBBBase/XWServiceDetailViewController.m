@@ -150,12 +150,12 @@
         }
         CALayer *topLayer = [CALayer layer];
         topLayer.backgroundColor = [UIColor colorWithHex:@"e2e2e2"].CGColor;
-        topLayer.frame = CGRectMake(0, 0, ScreenWidth/2, 0.5);
+        topLayer.frame = CGRectMake(0, 0, ScreenWidth/array.count, 0.5);
         [saveBtn.layer addSublayer:topLayer];
         if (i == 0) {
             CALayer *rightLayer = [CALayer layer];
             rightLayer.backgroundColor = [UIColor colorWithHex:@"e2e2e2"].CGColor;
-            rightLayer.frame = CGRectMake(ScreenWidth/2, 0, 0.5, 90*kScaleH);
+            rightLayer.frame = CGRectMake(ScreenWidth/array.count, 0, 0.5, 90*kScaleH);
             [saveBtn.layer addSublayer:rightLayer];
         }
         saveBtn.layer.masksToBounds = YES;
@@ -188,8 +188,9 @@
         if (APPDELEGATE.user.loginType == 3) {
             [MBProgressHUD alertInfo:@"您没有此权限哦～"];
         }else{
-            XWContactViewController *contactVc = [[XWContactViewController alloc] init];
-            [self.navigationController pushViewController:contactVc animated:YES];
+            [MBProgressHUD alertInfo:@"功能正在开发，敬请期待～"];
+//            XWContactViewController *contactVc = [[XWContactViewController alloc] init];
+//            [self.navigationController pushViewController:contactVc animated:YES];
         }
     }
 }

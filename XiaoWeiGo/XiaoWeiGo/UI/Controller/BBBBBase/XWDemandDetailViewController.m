@@ -122,8 +122,9 @@
         if (APPDELEGATE.user.loginType == 3 ) {
             [MBProgressHUD alertInfo:@"您没有此权限哦～"];
         }else{
-            XWContactViewController *contactVc = [[XWContactViewController alloc] init];
-            [self.navigationController pushViewController:contactVc animated:YES];
+            [MBProgressHUD alertInfo:@"功能正在开发，敬请期待～"];
+//            XWContactViewController *contactVc = [[XWContactViewController alloc] init];
+//            [self.navigationController pushViewController:contactVc animated:YES];
         }
     }
 }

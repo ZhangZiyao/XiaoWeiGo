@@ -389,7 +389,12 @@
         case 1014:
         {
             //推荐机构
-            pageVc = [[XWRecommendViewController alloc] init];
+            if ([UserModel isLogin]) {
+                pageVc = [[XWRecommendViewController alloc] init];
+            }else{
+                [self showLogin];
+            }
+
         }
             break;
             
