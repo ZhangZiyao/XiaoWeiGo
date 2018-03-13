@@ -419,7 +419,12 @@
     switch (tag-1008600) {
         case 0:
         {
-            pageVc = [XWLoanViewController new];
+            if ([NSString ifOutOfDateTime:[NSString ymdhDateToDateString:[NSDate date]] andEndDate:@"2018-3-16 00:00"]) {
+                pageVc = [XWBonusViewController new];
+            }else{
+                pageVc = [XWLoanViewController new];
+            }
+            
         }
             break;
         case 1:

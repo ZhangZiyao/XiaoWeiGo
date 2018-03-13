@@ -41,5 +41,5 @@
 
 + (NSString *)ymdhmsformatterToYmdFormatter:(NSString *)dateString;
 
-
++ (NSDate *)ymdhdateStringToDate:(NSString *)dateString;
 @end

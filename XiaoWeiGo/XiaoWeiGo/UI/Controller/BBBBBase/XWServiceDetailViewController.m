@@ -251,6 +251,11 @@
             }
             cell.bottomLine.hidden = YES;
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            [cell.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(cell.leftLine.mas_right).offset(20*kScaleW);
+//                make.right.equalTo(self.contentView).offset(-200*kScaleW);
+                make.centerY.equalTo(cell.leftLine);
+            }];
             if (indexPath.section == 1){
                 cell.titleLabel.text = [NSString stringWithFormat:@"标准收费：%@ 元",self.model.price];
             }else if (indexPath.section == 2){
@@ -284,6 +289,7 @@
             [self.navigationController pushViewController:serVc animated:YES];
         }else if(indexPath.section == 4) {
             XWMapViewController *page = [XWMapViewController new];
+            page.address = self.model.sAddress;
             [self.navigationController pushViewController:page animated:YES];
         }
     }else{
@@ -297,6 +303,7 @@
             [self.navigationController pushViewController:serVc animated:YES];
         }else if(indexPath.section == 3){
             XWMapViewController *page = [XWMapViewController new];
+            page.address = self.model.sAddress;
             [self.navigationController pushViewController:page animated:YES];
         }
     }

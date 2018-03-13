@@ -10,7 +10,7 @@
 #import "NewsModel.h"
 
 @interface XWTextViewCell ()
-@property (nonatomic, strong) UIImageView *leftLine;
+
 
 
 @end
@@ -63,7 +63,7 @@
     }];
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
        make.left.equalTo(self.leftLine.mas_right).offset(20*kScaleW);
-//        make.right.equalTo(self.contentView).offset(-200*kScaleW);
+        make.right.equalTo(self.contentView).offset(-200*kScaleW);
         make.centerY.equalTo(self.leftLine);
     }];
     [self.detailLabel mas_makeConstraints:^(MASConstraintMaker *make) {

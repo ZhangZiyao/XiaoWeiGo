@@ -10,4 +10,6 @@
 
 @interface XWMapViewController : XWBaseViewController
 
+@property (nonatomic, copy) NSString *address;
+
 @end

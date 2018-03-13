@@ -15,11 +15,12 @@
 #import <BaiduMapAPI_Search/BMKSearchComponent.h>
 #import "RouteAnnotation.h"
 
-@interface XWMapViewController ()<BMKMapViewDelegate,BMKLocationServiceDelegate,BMKRouteSearchDelegate>
+@interface XWMapViewController ()<BMKMapViewDelegate,BMKLocationServiceDelegate,BMKRouteSearchDelegate,BMKGeoCodeSearchDelegate>
 {
     BMKLocationService *_locService;
     BMKRouteSearch *_routeSearch;
     BMKMapView *_mapView;
+    BMKGeoCodeSearch* _geocodesearch;
 }
 @property (nonatomic, strong) YUSegmentedControl *segmentedControl;
 //@property (nonatomic, strong) BMKMapView *mapView;
@@ -34,8 +35,44 @@
     [self showBackItem];
     
 }
+- (void)bottomView{
+    UIView *bottomView = [[UIView alloc] init];
+    bottomView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:bottomView];
+    
+    UILabel *durationLabel = [[UILabel alloc] init];
+    durationLabel.textColor = [UIColor textBlackColor];
+    durationLabel.font = [UIFont rw_regularFontSize:15.0];
+    [bottomView addSubview:durationLabel];
+    
+    UILabel *label = [[UILabel alloc] init];
+    label.text = @"最快";
+    [bottomView addSubview:label];
+    UIButton *button = [[UIButton alloc] init];
+    [button setTitle:@"导航" forState:UIControlStateNormal];
+    button.layer.cornerRadius = 5.0;
+    button.layer.masksToBounds = YES;
+    [bottomView addSubview:button];
+}
+- (void)geoSearch{
+    BMKGeoCodeSearchOption *geocodeSearchOption = [[BMKGeoCodeSearchOption alloc]init];
+//    geocodeSearchOption.city= _cityText.text;
+    geocodeSearchOption.address = self.address;
+    BOOL flag = [_geocodesearch geoCode:geocodeSearchOption];
+    if(flag)
+    {
+        NSLog(@"geo检索发送成功");
+    }
+    else
+    {
+        NSLog(@"geo检索发送失败");
+    }
+}
 - (void)segmentedControlTapped:(YUSegmentedControl *)sender {
     NSLog(@"切换路线 %ld",sender.selectedSegmentIndex);
+    if (IsStrEmpty(self.address)) {
+        return;
+    }
     switch (sender.selectedSegmentIndex) {
         case 0:
         {
@@ -58,7 +95,6 @@
         }
             break;
             
-            
         default:
             break;
     }
@@ -72,6 +108,11 @@
 //    }];
     _routeSearch = [[BMKRouteSearch alloc]init];
     _routeSearch.delegate = self;
+    
+    _geocodesearch = [[BMKGeoCodeSearch alloc]init];
+    if (!IsStrEmpty(self.address)) {
+        [self geoSearch];
+    }
     
     NSArray *array = @[@"公交",@"驾车",@"步行",@"骑行"];
     _segmentedControl = [[YUSegmentedControl alloc] initWithTitles:array];
@@ -108,6 +149,29 @@
     
     [self onClickNewBusSearch];
 }
+- (void)onGetGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKGeoCodeResult *)result errorCode:(BMKSearchErrorCode)error
+{
+    NSArray* array = [NSArray arrayWithArray:_mapView.annotations];
+    [_mapView removeAnnotations:array];
+    array = [NSArray arrayWithArray:_mapView.overlays];
+    [_mapView removeOverlays:array];
+    if (error == 0) {
+        BMKPointAnnotation* item = [[BMKPointAnnotation alloc]init];
+        item.coordinate = result.location;
+        item.title = result.address;
+        [_mapView addAnnotation:item];
+        _mapView.centerCoordinate = result.location;
+        NSString* titleStr;
+        NSString* showmeg;
+        
+        titleStr = @"正向地理编码";
+        showmeg = [NSString stringWithFormat:@"纬度:%f,经度:%f",item.coordinate.latitude,item.coordinate.longitude];
+        
+        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:titleStr message:showmeg delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定",nil];
+        [myAlertView show];
+    }
+}
+
 //实现相关delegate 处理位置信息更新
 //处理方向变更信息
 - (void)didUpdateUserHeading:(BMKUserLocation *)userLocation
@@ -559,6 +623,7 @@
     _mapView.delegate = self; // 此处记得不用的时候需要置nil，否则影响内存的释放
     _locService.delegate = self;
     _routeSearch.delegate = self;
+    _geocodesearch.delegate = self; // 此处记得不用的时候需要置nil，否则影响内存的释放
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
@@ -566,6 +631,7 @@
     _mapView.delegate = nil; // 不用时，置nil
     _locService.delegate = nil;
     _routeSearch.delegate = nil;
+    _geocodesearch.delegate = nil; // 不用时，置nil
 }
 - (void)dealloc{
     if (_routeSearch != nil) {
@@ -576,6 +642,9 @@
     }
     if (_mapView != nil) {
         _mapView = nil;
+    }
+    if (_geocodesearch != nil) {
+        _geocodesearch = nil;
     }
 }
 @end

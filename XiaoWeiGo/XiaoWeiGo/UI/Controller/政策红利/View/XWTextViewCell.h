@@ -15,7 +15,7 @@ typedef NS_ENUM(NSInteger,HHShowNewsTableCellType) {
     HHShowOtherCellType = 2 //其他
 };
 @interface XWTextViewCell : UITableViewCell
-
+@property (nonatomic, strong) UIImageView *leftLine;
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UILabel *detailLabel;
 @property (nonatomic, strong) UIImageView *bottomLine;

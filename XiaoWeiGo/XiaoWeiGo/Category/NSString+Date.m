@@ -236,5 +236,12 @@
     }
     return NO;
 }
-
++ (NSDate *)ymdhdateStringToDate:(NSString *)dateString{
+    NSDateFormatter * formatter = [[NSDateFormatter alloc ] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    NSDate *date =  [formatter dateFromString:dateString];
+    //    NSString *timeLocal = [[NSString alloc] initWithFormat:@"%@", date];
+    //    NSLog(@"%@", timeLocal);
+    return date;
+}
 @end

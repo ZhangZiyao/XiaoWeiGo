@@ -141,7 +141,11 @@
             page = [XWQRCodeViewController new];
             break;
         case 1:
-            page = [XWMapViewController new];
+        {
+            XWMapViewController *mapVc = [XWMapViewController new];
+            mapVc.address = self.model.sAddress;
+            page = mapVc;
+        }
             break;
         case 2:
             page = [XWQQViewController new];

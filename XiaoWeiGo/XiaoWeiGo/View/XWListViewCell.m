@@ -10,6 +10,7 @@
 #import "XWCommonModel.h"
 #import "CommandModel.h"
 #import "XWServiceModel.h"
+#import "NSString+Date.h"
 
 @interface XWListViewCell ()
 
@@ -57,9 +58,16 @@
     self.detailLabel0.text = [NSString stringWithFormat:@"%@:%@",self.categoryName[category-1],dmodel.serviceName];
     self.detailLabel1.text = StringPush(@"截止时间:", dmodel.endTime, @"");
 }
+
 - (NSArray *)categoryName{
-    NSArray *array = @[@"我要贷款",@"创业创新",@"知识产权",@"共享会计",@"法律服务",@"优惠政策",@"ISO认证",@"展会服务",@"工商注册",@"其他服务"];
-    return array;
+    if ([NSString ifOutOfDateTime:[NSString ymdhDateToDateString:[NSDate date]] andEndDate:@"2018-3-16 00:00"]) {
+        
+        NSArray *array = @[@"我有需求",@"创业创新",@"知识产权",@"共享会计",@"法律服务",@"优惠政策",@"ISO认证",@"展会服务",@"工商注册",@"其他服务"];
+        return array;
+    }else{
+        NSArray *array = @[@"我要贷款",@"创业创新",@"知识产权",@"共享会计",@"法律服务",@"优惠政策",@"ISO认证",@"展会服务",@"工商注册",@"其他服务"];
+        return array;
+    }
 }
 - (void)setType:(HHShowTableCellType)type{
     _type = type;
