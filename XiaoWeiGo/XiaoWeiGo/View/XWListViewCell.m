@@ -60,7 +60,7 @@
 }
 
 - (NSArray *)categoryName{
-    if ([NSString ifOutOfDateTime:[NSString ymdhDateToDateString:[NSDate date]] andEndDate:@"2018-3-16 00:00"]) {
+    if ([NSString ifOutOfDateTime:[NSString ymdhDateToDateString:[NSDate date]] andEndDate:kCheckDate]) {
         
         NSArray *array = @[@"我有需求",@"创业创新",@"知识产权",@"共享会计",@"法律服务",@"优惠政策",@"ISO认证",@"展会服务",@"工商注册",@"其他服务"];
         return array;

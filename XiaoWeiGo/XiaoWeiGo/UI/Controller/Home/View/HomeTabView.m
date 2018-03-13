@@ -25,7 +25,7 @@
 //    HomeTabView *sview = [[HomeTabView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, height*2+60*kScaleH)];
     self.backgroundColor = [UIColor whiteColor];
     NSArray *array;
-    if ([NSString ifOutOfDateTime:[NSString ymdhDateToDateString:[NSDate date]] andEndDate:@"2018-3-16 00:00"]) {
+    if ([NSString ifOutOfDateTime:[NSString ymdhDateToDateString:[NSDate date]] andEndDate:kCheckDate]) {
         array = @[@[@"",@"我有需求"],@[@"",@"创业创新"],@[@"",@"知识产权"],@[@"",@"共享会计"],@[@"",@"法律服务"],@[@"",@"优惠政策"],@[@"",@"ISO认证"],@[@"",@"展会服务"],@[@"",@"工商注册"],@[@"",@"其它服务"]];
     }else{
         array = @[@[@"",@"我要贷款"],@[@"",@"创业创新"],@[@"",@"知识产权"],@[@"",@"共享会计"],@[@"",@"法律服务"],@[@"",@"优惠政策"],@[@"",@"ISO认证"],@[@"",@"展会服务"],@[@"",@"工商注册"],@[@"",@"其它服务"]];
