@@ -11,6 +11,7 @@
 #import "RWEnvironmentManager.h"
 #import "XWLoginViewController.h"
 #import <BaiduMapAPI_Map/BMKMapComponent.h>
+#import "CheckVersion.h"
 
 @interface AppDelegate ()
 {
@@ -70,9 +71,15 @@
         NSLog(@"manager start failed!");
     }
     
+    [self shareAppVersionAlert];
+    
     return YES;
 }
-
+#pragma mark - 检查版本
+//判断是否需要提示更新App
+- (void)shareAppVersionAlert {
+    [CheckVersion checkNewEditionWithAppID:STOREAPPID ctrl:self.window.rootViewController];
+}
 -(void)reachabilityChanged:(NSNotification *)note
 {
     Reachability *currReach = [note object];

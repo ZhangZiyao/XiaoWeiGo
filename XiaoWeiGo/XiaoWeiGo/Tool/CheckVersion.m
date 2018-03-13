@@ -47,13 +47,13 @@
         UIAlertAction *updateAction = [UIAlertAction actionWithTitle:@"立即升级" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             [self updateRightNow:model];
         }];
-//        UIAlertAction *delayAction = [UIAlertAction actionWithTitle:@"稍后再说" style:UIAlertActionStyleDefault handler:nil];
+        UIAlertAction *delayAction = [UIAlertAction actionWithTitle:@"稍后再说" style:UIAlertActionStyleDefault handler:nil];
         //        UIAlertAction *ignoreAction = [UIAlertAction actionWithTitle:@"忽略" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         //            [self ignoreNewVersion:model.version];
         //        }];
         
         [alertController addAction:updateAction];
-//        [alertController addAction:delayAction];
+        [alertController addAction:delayAction];
         //        [alertController addAction:ignoreAction];
         [containCtrl presentViewController:alertController animated:YES completion:nil];
     }];
