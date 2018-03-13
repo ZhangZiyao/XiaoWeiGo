@@ -13,7 +13,7 @@ pod 'SDWebImage', '~> 3.8.1'
 pod 'GTMBase64'
 pod 'FMDB'
 pod 'ZBarSDK'
-pod 'MLeaksFinder'
+#pod 'MLeaksFinder'
 pod 'HyphenateLite'
 #pod 'EaseUI', :git => 'https://github.com/easemob/easeui-ios-hyphenate-cocoapods.git'
 #pod 'BaiduMapKit' #百度地图SDK
