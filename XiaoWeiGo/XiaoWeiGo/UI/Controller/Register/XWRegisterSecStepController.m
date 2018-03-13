@@ -14,6 +14,9 @@
 #import "XWTextFieldViewCell.h"
 
 @interface XWRegisterSecStepController ()
+{
+    BOOL auditing;
+}
 @property (nonatomic, strong) NSMutableArray *typeArray;
 @property (nonatomic, strong) RegisterModel *registerModel;
 @property (nonatomic, strong) UIView *footerView;
@@ -37,96 +40,33 @@
     self.title = @"注册";
     [self showBackItem];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    _registerModel.orgCode = [self.dict objectForKey:@"code"];
+    _registerModel.orgType = [self.dict objectForKey:@"有限责任公司"];
+    _registerModel.regOrg = [self.dict objectForKey:@"rcode"];
+    _registerModel.orgName = [self.dict objectForKey:@"name"];
+    _registerModel.operation = [self.dict objectForKey:@"fanwei"];
 }
-//- (void)addSection2{
-//    XLFormDescriptor * formDescriptor = [XLFormDescriptor formDescriptor];
-//    self.form = formDescriptor;
-//    XLFormSectionDescriptor * section;
-//    XLFormRowDescriptor * row;
-//
-//    WS(weakSelf);
-//    // 基本信息 Section
-//    section = [XLFormSectionDescriptor formSection];
-//    // 账号 1-50
-//    row = [XLFormRowDescriptor formRowDescriptorWithTag:XWRegisterAccountTF rowType:XLFormRowDescriptorTypeAccount title:@"＊"];
-//    row.cellClass = [XWTextFieldCell class];
-//    row.textFieldMaxNumberOfCharacters = @20;
-//    [row.cellConfigAtConfigure setObject:@"请输入账号" forKey:@"textField.placeholder"];
-//    row.onChangeBlock = ^(id  _Nullable oldValue, id  _Nullable newValue, XLFormRowDescriptor * _Nonnull rowDescriptor) {
-//        if (newValue) {
-//            weakSelf.registerModel.name = [NSString stringWithFormat:@"%@",newValue];
-//        }else{
-//            weakSelf.registerModel.name = nil;
-//        }
-//    };
-//    row.required = YES;
-//    [section addFormRow:row];
-//
-//    // 密码 2-50
-//    row = [XLFormRowDescriptor formRowDescriptorWithTag:XWRegisterPasswordTF rowType:XLFormRowDescriptorTypePassword title:@"＊"];
-//    row.cellClass = [XWTextFieldCell class];
-//    row.textFieldMaxNumberOfCharacters = @20;
-//    [row.cellConfigAtConfigure setObject:@"请输入密码" forKey:@"textField.placeholder"];
-//    row.required = YES;
-//    row.onChangeBlock = ^(id  _Nullable oldValue, id  _Nullable newValue, XLFormRowDescriptor * _Nonnull rowDescriptor) {
-//        if (newValue) {
-//            weakSelf.registerModel.pwd = [NSString stringWithFormat:@"%@",newValue];
-//        }else{
-//            weakSelf.registerModel.pwd = nil;
-//        }
-//    };
-//    [section addFormRow:row];
-//    // 密码 2-10
-//    row = [XLFormRowDescriptor formRowDescriptorWithTag:XWRegisterRePasswordTF rowType:XLFormRowDescriptorTypePassword title:@"＊"];
-//    row.cellClass = [XWTextFieldCell class];
-//    row.textFieldMaxNumberOfCharacters = @20;
-//    [row.cellConfigAtConfigure setObject:@"请再次输入密码" forKey:@"textField.placeholder"];
-//    row.required = YES;
-//    row.onChangeBlock = ^(id  _Nullable oldValue, id  _Nullable newValue, XLFormRowDescriptor * _Nonnull rowDescriptor) {
-//        if (newValue) {
-//            weakSelf.registerModel.confirmPwd = [NSString stringWithFormat:@"%@",newValue];
-//        }else{
-//            weakSelf.registerModel.confirmPwd = nil;
-//        }
-//    };
-//    [section addFormRow:row];
-//
-//    // 联系人 5-50
-//    row = [XLFormRowDescriptor formRowDescriptorWithTag:XWRegisterLinkManTF rowType:XLFormRowDescriptorTypeText title:@"＊"];
-//    row.cellClass = [XWTextFieldCell class];
-//    row.textFieldMaxNumberOfCharacters = @20;
-//    [row.cellConfigAtConfigure setObject:@"请输入联系人" forKey:@"textField.placeholder"];
-//    [row.cellConfigAtConfigure setObject:@(NSTextAlignmentRight) forKey:@"textField.textAlignment"];
-//    row.required = YES;
-//    [row addValidator:[XLFormValidator emailValidator]];
-//    row.onChangeBlock = ^(id  _Nullable oldValue, id  _Nullable newValue, XLFormRowDescriptor * _Nonnull rowDescriptor) {
-//        if (newValue) {
-//            weakSelf.registerModel.contact = [NSString stringWithFormat:@"%@",newValue];
-//        }else{
-//            weakSelf.registerModel.contact = nil;
-//        }
-//    };
-//    [section addFormRow:row];
-//
-//    // 手机 2-100
-//    row = [XLFormRowDescriptor formRowDescriptorWithTag:XWRegisterMobileTF rowType:XLFormRowDescriptorTypePhone title:@"＊"];
-//    row.cellClass = [XWTextFieldCell class];
-//    row.textFieldMaxNumberOfCharacters = @13;
-//    [row.cellConfigAtConfigure setObject:@"请输入手机" forKey:@"textField.placeholder"];
-//    [row.cellConfigAtConfigure setObject:@(NSTextAlignmentRight) forKey:@"textField.textAlignment"];
-//    row.required = YES;
-//    row.onChangeBlock = ^(id  _Nullable oldValue, id  _Nullable newValue, XLFormRowDescriptor * _Nonnull rowDescriptor) {
-//        if (newValue) {
-//            weakSelf.registerModel.mobile = [NSString stringWithFormat:@"%@",newValue];
-//        }else{
-//            weakSelf.registerModel.mobile = nil;
-//        }
-//    };
-//    [section addFormRow:row];
-//
-//    [self.form addFormSection:section];
-//    NSLog(@"%@",self.form.formSections);
-//}
+- (void)checkCompany{
+    RequestManager *manager = [[RequestManager alloc] init];
+    manager.isShowLoading = NO;
+    [manager POSTRequestUrlStr:kCheckCompnay parms:@{@"orgCode":_registerModel.orgCode,@"reservedtelephone":_registerModel.reservedtelephone} success:^(id responseData) {
+        
+        NSString *message = responseData[0];
+        if ([message containsString:@"success"]) {
+            //成功
+            auditing = YES;
+//            [MBProgressHUD alertInfo:@"注册成功"];
+        }else{
+            //用户名不存在
+            auditing = NO;
+            [MBProgressHUD alertInfo:@"用户名不存在"];
+        }
+        
+    } fail:^(NSError *error) {
+        
+    }];
+}
 - (void)addSection0{
     XLFormDescriptor * formDescriptor = [XLFormDescriptor formDescriptor];
     self.form = formDescriptor;
@@ -171,15 +111,15 @@
     // 基本信息 Section
     section = [XLFormSectionDescriptor formSection];
     // 账号 1-50
-    row = [XLFormRowDescriptor formRowDescriptorWithTag:XWRegisterAccountTF rowType:XLFormRowDescriptorTypeAccount title:@"工商登记预留电话"];
+    row = [XLFormRowDescriptor formRowDescriptorWithTag:@"DIANHUA" rowType:XLFormRowDescriptorTypeAccount title:@"工商登记预留电话"];
     row.cellClass = [XWTextFieldViewCell class];
     row.textFieldMaxNumberOfCharacters = @11;
     [row.cellConfigAtConfigure setObject:@"请输入电话" forKey:@"textField.placeholder"];
     row.onChangeBlock = ^(id  _Nullable oldValue, id  _Nullable newValue, XLFormRowDescriptor * _Nonnull rowDescriptor) {
         if (newValue) {
-            weakSelf.registerModel.name = [NSString stringWithFormat:@"%@",newValue];
+            weakSelf.registerModel.reservedtelephone = [NSString stringWithFormat:@"%@",newValue];
         }else{
-            weakSelf.registerModel.name = nil;
+            weakSelf.registerModel.reservedtelephone = nil;
         }
     };
     row.required = YES;
@@ -402,17 +342,24 @@
                                                      @"mobile":_registerModel.mobile
                                                      }];
         }else{
-            url = kRegisterUser;
+            url = kRegisterComUser;
             [params setValuesForKeysWithDictionary:@{@"name":_registerModel.name,
                                                      @"pwd":_registerModel.pwd,
                                                      @"confirmPwd":_registerModel.confirmPwd,
-                                                     @"contact":_registerModel.contact,
-                                                     @"mobile":_registerModel.mobile,
                                                      @"orgName":_registerModel.orgName,
                                                      @"orgType":_registerModel.orgType,
                                                      @"orgCode":_registerModel.orgCode,
-                                                     @"email":_registerModel.email,
-                                                     @"telephone":_registerModel.telephone,
+                                                     @"contact":_registerModel.contact,
+                                                     @"mobile":_registerModel.mobile,
+                                                     @"email":IsStrEmpty(_registerModel.email)?@"":_registerModel.email,
+                                                     @"telephone":IsStrEmpty(_registerModel.telephone)?@"":_registerModel.telephone,
+                                                     @"sType":@"1",
+                                                     @"comCode":_registerModel.regOrg,//企业注册号
+                                                     @"operation":_registerModel.operation,//经营范围
+                                                     @"reservedtelephone":_registerModel.reservedtelephone,//预留电话
+                                                     @"question":@"",//密保提问
+                                                     @"answer":@"",//密保回答
+                                                     @"auditing":@"",//是否审核通过(yes为审核通过,这个值 的获取需要以调用CheckCompany接口的返回情况而定)
                                                      @"uType":self.type==4?@(2):@(1)//用户类型(1:企业服务商,2:小薇企业)
                                                      }];
             if (_typeArray.count > 0) {
@@ -477,18 +424,21 @@
             [MBProgressHUD alertInfo:@"请输入组织机构代码证号"];
             return NO;
         }
+        if (IsStrEmpty(_registerModel.reservedtelephone)) {
+            [MBProgressHUD alertInfo:@"请输入预留电话"];
+            return NO;
+        }
         if (IsStrEmpty(_registerModel.contact)) {
             [MBProgressHUD alertInfo:@"请输入联系人"];
             return NO;
         }
-        if (IsStrEmpty(_registerModel.email)) {
-            [MBProgressHUD alertInfo:@"请输入邮箱"];
-            return NO;
+        if (!IsStrEmpty(_registerModel.email)) {
+            if (![_registerModel.email isEmailAddress]) {
+                [MBProgressHUD alertInfo:@"邮箱格式不正确"];
+                return NO;
+            }
         }
-        if (![_registerModel.email isEmailAddress]) {
-            [MBProgressHUD alertInfo:@"邮箱格式不正确"];
-            return NO;
-        }
+        
         if (IsStrEmpty(_registerModel.mobile)) {
             [MBProgressHUD alertInfo:@"请输入手机号"];
             return NO;
@@ -497,13 +447,11 @@
             [MBProgressHUD alertInfo:@"手机号格式不正确"];
             return NO;
         }
-        if (IsStrEmpty(_registerModel.telephone)) {
-            [MBProgressHUD alertInfo:@"请输入固定电话"];
-            return NO;
-        }
-        if (![NSString valiServiceMobileNum:_registerModel.telephone]) {
-            [MBProgressHUD alertInfo:@"固定电话格式不正确"];
-            return NO;
+        if (!IsStrEmpty(_registerModel.telephone)) {
+            if (![NSString valiServiceMobileNum:_registerModel.telephone]) {
+                [MBProgressHUD alertInfo:@"固定电话格式不正确"];
+                return NO;
+            }
         }
         
         NSMutableArray *arrayP = [NSMutableArray array];

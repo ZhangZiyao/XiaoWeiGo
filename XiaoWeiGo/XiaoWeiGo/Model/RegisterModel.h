@@ -23,4 +23,13 @@
 @property (nonatomic, copy) NSString *sTypeArr;//服务类别
 @property (nonatomic, assign) int uType;//用户类型(1:企业服务商,2:小薇企业)
 
+@property (nonatomic, copy) NSString *sType;//行业类别ID
+@property (nonatomic, copy) NSString *comCode;//企业注册号
+@property (nonatomic, copy) NSString *operation;//经营范围
+@property (nonatomic, copy) NSString *reservedtelephone;//预留电话
+@property (nonatomic, copy) NSString *question;//密保提问
+@property (nonatomic, copy) NSString *answer;//密保回答
+@property (nonatomic, copy) NSString *auditing;//是否审核通过(yes为审核通过,这个值 的获取需要以调用CheckCompany接口的返回情况而定)
+
+
 @end

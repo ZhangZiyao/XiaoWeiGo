@@ -62,8 +62,8 @@
         iconImage.image = [UIImage imageNamed:@"mine_icon_avatar"];
         [_headerView addSubview:iconImage];
         iconImage.userInteractionEnabled = YES;
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushToMineInfovc)];
-        [iconImage addGestureRecognizer:tap];
+//        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushToMineInfovc)];
+//        [iconImage addGestureRecognizer:tap];
         [iconImage mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(_headerView).offset(60*kScaleW);
             make.top.equalTo(_headerView).offset(100*kScaleW);

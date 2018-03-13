@@ -55,10 +55,14 @@
 #define kSetServiceLink @"/SetServiceLink"
 //GetDmdInfo(获取需求信息)
 #define kGetDmdInfo @"/GetDmdInfo"
-//注册用户
+//注册企业服务商
 #define kRegisterUser @"/RegisterUser"
+//注册小微企业
+#define kRegisterComUser @"/RegisterComUser"
 //注册一般用户
 #define kRegisterGeneralUser @"/RegisterGeneralUser"
+//检查用户是否在企业数据表里
+#define kCheckCompnay @"/CheckCompnay"
 //获取用户信息
 #define kGetUserInfo @"/GetUserInfo"
 //修改用户信息
