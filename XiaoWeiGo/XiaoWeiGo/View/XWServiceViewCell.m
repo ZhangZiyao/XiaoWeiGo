@@ -33,6 +33,13 @@
 }
 - (void)setDmodel:(CommandModel *)dmodel{
     _dmodel = dmodel;
+    self.webView.hidden = YES;
+    self.titleLabel.hidden = YES;
+    self.detail0Label.hidden = NO;
+    self.detail2Label.hidden = NO;
+    self.detail3Label.hidden = NO;
+    self.detail4Label.hidden = NO;
+    self.detail5Label.hidden = NO;
     self.detail0Label.text = [NSString stringWithFormat:@"需求方：%@",dmodel.serviceName];
     self.detail1Label.text = [NSString stringWithFormat:@"简要标题：%@",dmodel.dTitle];
     self.detail2Label.text = [NSString stringWithFormat:@"简要描述：%@",dmodel.serviceName];
@@ -49,8 +56,15 @@
 //    if (cmodel.category == 1) {
 //        NSAttributedString * attrStr = [[NSAttributedString alloc] initWithData:[cmodel.details dataUsingEncoding:NSUnicodeStringEncoding] options:@{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType} documentAttributes:nil error:nil];
 //        self.detail0Label.attributedText = attrStr;
-        
-        [_webView loadHTMLString:cmodel.details baseURL:nil];
+    self.webView.hidden = NO;
+    self.titleLabel.hidden = YES;
+    self.detail0Label.hidden = YES;
+    self.detail2Label.hidden = YES;
+    self.detail3Label.hidden = YES;
+    self.detail4Label.hidden = YES;
+    self.detail5Label.hidden = YES;
+    
+    [self.webView loadHTMLString:cmodel.details baseURL:nil];
         
 //        self.detail5Label.hidden = NO;
 //        self.detail0Label.text = [NSString stringWithFormat:@"适用对象：%@",@"进入工业园区的初创期中小企业"];
@@ -70,18 +84,19 @@
 }
 
 - (void)createCell{
-    [self.contentView addSubview:self.titleLabel];
-//    [self.contentView addSubview:self.detail0Label];
+//    [self.contentView addSubview:self.titleLabel];
+    [self.contentView addSubview:self.detail0Label];
+    [self.contentView addSubview:self.detail1Label];
+    [self.contentView addSubview:self.detail2Label];
+    [self.contentView addSubview:self.detail3Label];
+    [self.contentView addSubview:self.detail4Label];
+    [self.contentView addSubview:self.detail5Label];
     [self.contentView addSubview:self.webView];
-//    [self.contentView addSubview:self.detail1Label];
-//    [self.contentView addSubview:self.detail2Label];
-//    [self.contentView addSubview:self.detail3Label];
-//    [self.contentView addSubview:self.detail4Label];
-//    [self.contentView addSubview:self.detail5Label];
     
     [self addFrame];
 }
 - (void)addFrame{
+    
 //    [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
 //        make.top.equalTo(self.contentView).offset(40*kScaleW);
 //        make.left.equalTo(self.contentView).offset(40*kScaleW);
@@ -89,13 +104,39 @@
 //        make.centerX.equalTo(self.contentView);
 //    }];
     
-//    [self.detail0Label mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.left.equalTo(self.contentView).offset(40*kScaleW);
-//        make.right.equalTo(self.contentView).offset(-40*kScaleW);
-//        make.top.equalTo(self.contentView).offset(30*kScaleW);
+    [self.detail0Label mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.contentView).offset(40*kScaleW);
+        make.right.equalTo(self.contentView).offset(-40*kScaleW);
+        make.top.equalTo(self.contentView).offset(30*kScaleW);
 //        make.bottom.equalTo(self.contentView).offset(30*kScaleW);
-//        //        make.width.mas_equalTo(150*kScaleW);
-//    }];
+        //        make.width.mas_equalTo(150*kScaleW);
+    }];
+    
+    [self.detail1Label mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.detail0Label);
+        make.top.equalTo(self.detail0Label.mas_bottom).offset(20*kScaleW);
+        make.right.equalTo(self.contentView).offset(-40*kScaleW);
+    }];
+    [self.detail2Label mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.detail0Label);
+        make.top.equalTo(self.detail1Label.mas_bottom).offset(20*kScaleW);
+        make.right.equalTo(self.contentView).offset(-40*kScaleW);
+    }];
+    [self.detail3Label mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.detail0Label);
+        make.top.equalTo(self.detail2Label.mas_bottom).offset(20*kScaleW);
+        make.right.equalTo(self.contentView).offset(-40*kScaleW);
+    }];
+    [self.detail4Label mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.detail0Label);
+        make.top.equalTo(self.detail3Label.mas_bottom).offset(20*kScaleW);
+        make.right.equalTo(self.contentView).offset(-40*kScaleW);
+    }];
+    [self.detail5Label mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.detail0Label);
+        make.top.equalTo(self.detail4Label.mas_bottom).offset(20*kScaleW);
+        make.right.equalTo(self.contentView).offset(-40*kScaleW);
+    }];
     [self.webView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.contentView).offset(20*kScaleW);
         make.right.equalTo(self.contentView).offset(-20*kScaleW);
@@ -103,31 +144,6 @@
         make.bottom.equalTo(self.contentView).offset(-20*kScaleW);
         //        make.width.mas_equalTo(150*kScaleW);
     }];
-//    [self.detail1Label mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.left.equalTo(self.detail0Label);
-//        make.top.equalTo(self.detail0Label.mas_bottom).offset(20*kScaleW);
-//        make.right.equalTo(self.contentView).offset(-40*kScaleW);
-//    }];
-//    [self.detail2Label mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.left.equalTo(self.detail0Label);
-//        make.top.equalTo(self.detail1Label.mas_bottom).offset(20*kScaleW);
-//        make.right.equalTo(self.contentView).offset(-40*kScaleW);
-//    }];
-//    [self.detail3Label mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.left.equalTo(self.detail0Label);
-//        make.top.equalTo(self.detail2Label.mas_bottom).offset(20*kScaleW);
-//        make.right.equalTo(self.contentView).offset(-40*kScaleW);
-//    }];
-//    [self.detail4Label mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.left.equalTo(self.detail0Label);
-//        make.top.equalTo(self.detail3Label.mas_bottom).offset(20*kScaleW);
-//        make.right.equalTo(self.contentView).offset(-40*kScaleW);
-//    }];
-//    [self.detail5Label mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.left.equalTo(self.detail0Label);
-//        make.top.equalTo(self.detail4Label.mas_bottom).offset(20*kScaleW);
-//        make.right.equalTo(self.contentView).offset(-40*kScaleW);
-//    }];
 }
 - (void)webViewDidFinishLoad:(UIWebView *)webView{
     
