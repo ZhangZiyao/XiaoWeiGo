@@ -38,7 +38,7 @@
 }
 - (void)refreshUserInfo{
     [UserModel getUserData];
-    self.nickNameLabel.text = [NSString stringWithFormat:@"昵称：%@",APPDELEGATE.user.loginType==3?@"一般用户":(APPDELEGATE.user.loginType==2?@"小微企业":@"企业服务商")];
+    self.nickNameLabel.text = [NSString stringWithFormat:@"昵称：%@",APPDELEGATE.user.loginType==1?@"企业服务商":(APPDELEGATE.user.loginType==2?@"企业服务商":@"一般用户")];
     self.orgNameLabel.text = [NSString stringWithFormat:@"实名：%@",[NSString ifNull:user.name]];
     [self.tableView reloadData];
 }
