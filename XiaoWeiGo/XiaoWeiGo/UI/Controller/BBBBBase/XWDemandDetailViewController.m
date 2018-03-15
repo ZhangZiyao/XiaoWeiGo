@@ -43,10 +43,11 @@
 - (void)addBottomView{
     NSArray *array ;
     //    CGFloat width;
-    if (APPDELEGATE.user.loginType == 3) {
-        array = @[@[@"收藏",@"def_icon_collection"]];
-    }else{
+    if (APPDELEGATE.user.loginType == 1 || APPDELEGATE.user.loginType == 2) {
+        
         array = @[@[@"收藏",@"def_icon_collection"],@[@"联系",@"loan_icon_contact"]];
+    }else{
+        array = @[@[@"收藏",@"def_icon_collection"]];
     }
     for (int i = 0; i < array.count; i++) {
         UIButton *saveBtn = [[UIButton alloc] init];
@@ -119,12 +120,13 @@
         }];
     }else{
         //联系
-        if (APPDELEGATE.user.loginType == 3 ) {
-            [MBProgressHUD alertInfo:@"您没有此权限哦～"];
-        }else{
+        if (APPDELEGATE.user.loginType == 1 || APPDELEGATE.user.loginType == 2) {
             [MBProgressHUD alertInfo:@"功能正在开发，敬请期待～"];
-//            XWContactViewController *contactVc = [[XWContactViewController alloc] init];
-//            [self.navigationController pushViewController:contactVc animated:YES];
+            //            XWContactViewController *contactVc = [[XWContactViewController alloc] init];
+            //            [self.navigationController pushViewController:contactVc animated:YES];
+            
+        }else{
+            [MBProgressHUD alertInfo:@"您没有此权限哦～"];
         }
     }
 }

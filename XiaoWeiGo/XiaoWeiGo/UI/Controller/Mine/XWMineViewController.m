@@ -184,11 +184,11 @@
     
     if (!_dataSource) {
         UserModel *user = APPDELEGATE.user;
-        if (user.loginType == 3) {
-            _dataSource = [NSMutableArray arrayWithArray:@[@[@"我的收藏",@""],@[@"我的设置",@""]]];
-           
-        }else{
+        if (APPDELEGATE.user.loginType == 1 || APPDELEGATE.user.loginType == 2) {
             _dataSource = [NSMutableArray arrayWithArray:@[@[@"我发布的需求",@""],@[@"我的收藏",@""],@[@"我的设置",@""]]];
+            
+        }else{
+            _dataSource = [NSMutableArray arrayWithArray:@[@[@"我的收藏",@""],@[@"我的设置",@""]]];
         }
     }
     return _dataSource;

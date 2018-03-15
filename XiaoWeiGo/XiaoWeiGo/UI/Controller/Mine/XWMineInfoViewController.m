@@ -107,10 +107,10 @@
     return [self.dataSource[section] count];
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    if (APPDELEGATE.user.loginType == 3) {
-        return 2;
-    }else{
+    if (APPDELEGATE.user.loginType == 3 || APPDELEGATE.user.loginType == 1) {
         return 3;
+    }else{
+        return 2;
     }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
