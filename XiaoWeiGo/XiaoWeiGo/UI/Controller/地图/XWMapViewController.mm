@@ -21,6 +21,12 @@
     BMKRouteSearch *_routeSearch;
     BMKMapView *_mapView;
     BMKGeoCodeSearch* _geocodesearch;
+    
+    BMKPlanNode *startNode;
+    BMKPlanNode *endNode;
+    
+    BOOL hasRoute;
+    NSInteger selectedIndex;
 }
 @property (nonatomic, strong) YUSegmentedControl *segmentedControl;
 //@property (nonatomic, strong) BMKMapView *mapView;
@@ -33,7 +39,10 @@
     [super viewDidLoad];
     self.title = @"到达目的地";
     [self showBackItem];
+    selectedIndex = 0;
     
+    startNode = [[BMKPlanNode alloc] init];
+    endNode = [[BMKPlanNode alloc] init];
 }
 - (void)bottomView{
     UIView *bottomView = [[UIView alloc] init];
@@ -70,10 +79,14 @@
 }
 - (void)segmentedControlTapped:(YUSegmentedControl *)sender {
     NSLog(@"切换路线 %ld",sender.selectedSegmentIndex);
+    selectedIndex = sender.selectedSegmentIndex;
     if (IsStrEmpty(self.address)) {
         return;
     }
-    switch (sender.selectedSegmentIndex) {
+    [self getRouteLine:sender.selectedSegmentIndex];
+}
+- (void)getRouteLine:(NSInteger)index{
+    switch (index) {
         case 0:
         {
             [self onClickNewBusSearch];
@@ -161,14 +174,21 @@
         item.title = result.address;
         [_mapView addAnnotation:item];
         _mapView.centerCoordinate = result.location;
-        NSString* titleStr;
-        NSString* showmeg;
+//        NSString* titleStr;
+//        NSString* showmeg;
         
-        titleStr = @"正向地理编码";
-        showmeg = [NSString stringWithFormat:@"纬度:%f,经度:%f",item.coordinate.latitude,item.coordinate.longitude];
+//        titleStr = @"正向地理编码";
+//        showmeg = [NSString stringWithFormat:@"纬度:%f,经度:%f",item.coordinate.latitude,item.coordinate.longitude];
+//
+//        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:titleStr message:showmeg delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定",nil];
+//        [myAlertView show];
         
-        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:titleStr message:showmeg delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定",nil];
-        [myAlertView show];
+        endNode.pt = CLLocationCoordinate2DMake(item.coordinate.latitude,item.coordinate.longitude);
+        
+        if (endNode && startNode) {
+            [self getRouteLine:selectedIndex];
+        }
+        
     }
 }
 
@@ -186,6 +206,12 @@
     [_mapView setCenterCoordinate:userLocation.location.coordinate animated:YES];
     [_mapView updateLocationData:userLocation];
     
+//    currentLocation = userLocation.location;
+    startNode.pt = CLLocationCoordinate2DMake(userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude);
+    if (endNode && startNode && !hasRoute) {
+        hasRoute = YES;
+        [self getRouteLine:selectedIndex];
+    }
 }
 #pragma mark - BMKMapViewDelegate
 
@@ -223,14 +249,13 @@
         NSInteger size = [plan.steps count];
         int planPointCounts = 0;
         for (int i = 0; i < size; i++) {
-            BMKTransitStep* transitStep = [plan.steps objectAtIndex:i];
+            BMKTransitStep *transitStep = [plan.steps objectAtIndex:i];
             if(i==0){
                 RouteAnnotation *item = [[RouteAnnotation alloc]init];
                 item.coordinate = plan.starting.location;
                 item.title = @"起点";
                 item.type = 0;
                 [_mapView addAnnotation:item]; // 添加起点标注
-                
             }
             if(i==size-1){
                 RouteAnnotation* item = [[RouteAnnotation alloc]init];
@@ -260,7 +285,6 @@
                 temppoints[i].y = transitStep.points[k].y;
                 i++;
             }
-            
         }
         // 通过points构建BMKPolyline
         BMKPolyline* polyLine = [BMKPolyline polylineWithPoints:temppoints count:planPointCounts];
@@ -475,17 +499,18 @@
 }
 -(void)onClickDriveSearch
 {
-    BMKPlanNode* start = [[BMKPlanNode alloc]init];
-    start.name = @"火车站";
-    start.cityName = @"北京";
-    BMKPlanNode* end = [[BMKPlanNode alloc]init];
-    end.name = @"天安门";
-    end.cityName = @"北京";
+//    BMKPlanNode* start = [[BMKPlanNode alloc]init];
+//    start.name = @"火车站";
+//    start.cityName = @"北京";
+    
+//    BMKPlanNode* end = [[BMKPlanNode alloc]init];
+//    end.name = @"天安门";
+//    end.cityName = @"北京";
     
     BMKDrivingRoutePlanOption *drivingRouteSearchOption = [[BMKDrivingRoutePlanOption alloc]init];
 //    drivingRouteSearchOption.city= @"烟台市";
-    drivingRouteSearchOption.from = start;
-    drivingRouteSearchOption.to = end;
+    drivingRouteSearchOption.from = startNode;
+    drivingRouteSearchOption.to = endNode;
     drivingRouteSearchOption.drivingRequestTrafficType = BMK_DRIVING_REQUEST_TRAFFICE_TYPE_NONE;//不获取路况信息
     BOOL flag = [_routeSearch drivingSearch:drivingRouteSearchOption];
     if(flag)
@@ -501,18 +526,18 @@
 
 -(void)onClickWalkSearch
 {
-    BMKPlanNode* start = [[BMKPlanNode alloc]init];
-    start.name = @"烟台站";
-    start.cityName = @"烟台";
-    BMKPlanNode* end = [[BMKPlanNode alloc]init];
-    end.name = @"烟台大学";
-    end.cityName = @"烟台";
+//    BMKPlanNode* start = [[BMKPlanNode alloc]init];
+//    start.name = @"烟台站";
+//    start.cityName = @"烟台";
+//    BMKPlanNode* end = [[BMKPlanNode alloc]init];
+//    end.name = @"烟台大学";
+//    end.cityName = @"烟台";
     
     
     BMKWalkingRoutePlanOption *walkingRouteSearchOption = [[BMKWalkingRoutePlanOption alloc]init];
 //    walkingRouteSearchOption.city= @"烟台市";
-    walkingRouteSearchOption.from = start;
-    walkingRouteSearchOption.to = end;
+    walkingRouteSearchOption.from = startNode;
+    walkingRouteSearchOption.to = endNode;
     BOOL flag = [_routeSearch walkingSearch:walkingRouteSearchOption];
     if(flag)
     {
@@ -526,17 +551,17 @@
 }
 
 - (void)onClickRidingSearch {
-    BMKPlanNode* start = [[BMKPlanNode alloc]init];
-    start.name = @"烟台站";
-    start.cityName = @"烟台";
-    BMKPlanNode* end = [[BMKPlanNode alloc]init];
-    end.name = @"烟台大学";
-    end.cityName = @"烟台";
+//    BMKPlanNode* start = [[BMKPlanNode alloc]init];
+//    start.name = @"烟台站";
+//    start.cityName = @"烟台";
+//    BMKPlanNode* end = [[BMKPlanNode alloc]init];
+//    end.name = @"烟台大学";
+//    end.cityName = @"烟台";
     
     BMKRidingRoutePlanOption *option = [[BMKRidingRoutePlanOption alloc]init];
 //    option.city= @"烟台市";
-    option.from = start;
-    option.to = end;
+    option.from = startNode;
+    option.to = endNode;
     BOOL flag = [_routeSearch ridingSearch:option];
     if (flag)
     {
@@ -549,17 +574,17 @@
 }
 //新公交路线规划 - 支持跨城公交
 - (void)onClickNewBusSearch{
-    BMKPlanNode* start = [[BMKPlanNode alloc]init];
-    start.name = @"烟台站";
-    start.cityName = @"烟台";
-    BMKPlanNode* end = [[BMKPlanNode alloc]init];
-    end.name = @"烟台大学";
-    end.cityName = @"烟台";
+//    BMKPlanNode* start = [[BMKPlanNode alloc]init];
+//    start.name = @"烟台站";
+//    start.cityName = @"烟台";
+//    BMKPlanNode* end = [[BMKPlanNode alloc]init];
+//    end.name = @"烟台大学";
+//    end.cityName = @"烟台";
     
     BMKMassTransitRoutePlanOption *option = [[BMKMassTransitRoutePlanOption alloc]init];
 //    option.city= @"烟台市";
-    option.from = start;
-    option.to = end;
+    option.from = startNode;
+    option.to = endNode;
     BOOL flag = [_routeSearch massTransitSearch:option];
     
     if(flag) {

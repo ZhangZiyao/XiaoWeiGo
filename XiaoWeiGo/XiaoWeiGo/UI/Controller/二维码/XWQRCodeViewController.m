@@ -42,7 +42,7 @@
         make.height.mas_equalTo(280*kScaleW);
         make.width.mas_equalTo(280*kScaleH);
     }];
-    UIImage *image = [SGQRCodeGenerateManager SG_generateWithDefaultQRCodeData:@"12344" imageViewWidth:qrcodeImage.frame.size.width+20];
+    UIImage *image = [SGQRCodeGenerateManager SG_generateWithDefaultQRCodeData:@"奉化小微加油" imageViewWidth:qrcodeImage.frame.size.width+20];
     qrcodeImage.image = image;
 
     NSArray *array = @[@"保存到相册",@"分享"];

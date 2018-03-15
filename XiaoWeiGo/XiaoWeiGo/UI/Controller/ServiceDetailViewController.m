@@ -147,7 +147,7 @@
         {
             XWMapViewController *mapVc = [XWMapViewController new];
             mapVc.address = self.model.sAddress;
-            page = mapVc;
+            [self.navigationController pushViewController:mapVc animated:YES];
         }
             break;
         case 2:
