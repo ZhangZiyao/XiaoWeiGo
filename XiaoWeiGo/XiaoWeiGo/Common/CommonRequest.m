@@ -64,6 +64,41 @@
         block(NO);
     }];
 }
++ (void)publishEvaluate:(NSString *)string withParams:(NSDictionary *)params block:(void(^)(BOOL success))block{
+    RequestManager *manager = [[RequestManager alloc] init];
+    manager.isShowLoading = NO;
+    [manager POSTRequestUrlStr:kPublishEvaluate parms:params success:^(id responseData) {
+        
+        NSString *message = responseData[0];
+        if ([message containsString:@"success"]) {
+//            [MBProgressHUD alertInfo:@"发布成功"];
+            block(YES);
+        }else{
+//            [MBProgressHUD alertInfo:@"发布失败"];
+            block(NO);
+        }
+    } fail:^(NSError *error) {
+        block(NO);
+    }];
+}
++ (void)publishReply:(NSString *)string withParams:(NSDictionary *)params block:(void(^)(BOOL success))block{
+    RequestManager *manager = [[RequestManager alloc] init];
+    manager.isShowLoading = NO;
+    [manager POSTRequestUrlStr:kPublishReply parms:params success:^(id responseData) {
+        
+        NSString *message = responseData[0];
+        if ([message containsString:@"success"]) {
+            //            [MBProgressHUD alertInfo:@"发布成功"];
+            block(YES);
+        }else{
+            //            [MBProgressHUD alertInfo:@"发布失败"];
+            block(NO);
+        }
+    } fail:^(NSError *error) {
+        block(NO);
+    }];
+}
+
 //- (void)getFileWithParams:(NSDictionary *)params block:(void(^)(BOOL success))block{
 //    RequestManager *request = [[RequestManager alloc] init];
 //    [request POSTRequestUrlStr:kAddServiceCollect parms:params success:^(id responseData) {

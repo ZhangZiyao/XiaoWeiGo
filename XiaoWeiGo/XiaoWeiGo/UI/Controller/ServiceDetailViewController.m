@@ -22,10 +22,13 @@
 #import "XWCommentHeaderView.h"
 #import "XWCommentFooterView.h"
 #import "XWCommentInfoModel.h"
+#import "XHInputView.h"
 
-@interface ServiceDetailViewController ()<UITableViewDataSource, UITableViewDelegate,XWOrgInfoCellDelegate>
+@interface ServiceDetailViewController ()<UITableViewDataSource, UITableViewDelegate,XWOrgInfoCellDelegate,XHInputViewDelagete>
 {
     NSInteger index;
+    BOOL isReply;
+    XWCommentModel *currentModel;
 }
 @property (nonatomic, strong) XWServiceModel *cmodel;
 @property (nonatomic, strong) NSMutableArray *dataSource;
@@ -266,10 +269,14 @@
     if (index == 0) {
         return nil;
     }else{
+        currentModel = self.dataSource[section];
+        WS(weakSelf);
         XWCommentFooterView *footerView = (XWCommentFooterView *)[tableView dequeueReusableHeaderFooterViewWithIdentifier:@"XWCommentFooterView"];
-        //        footerView.model= ;
+        //        footerView.model = ;
         footerView.CommentBtnClickBlock = ^(UIButton *commentBtn, NSInteger footerSection, int modelId) {
             //评论
+            isReply = YES;
+            [weakSelf showXHInputViewWithStyle:InputViewStyleLarge];//显示样式二
             
         };
         footerView.LikeBtnClickBlock = ^(UIButton *likeBtn, NSInteger footerSection, int modelId) {
@@ -324,7 +331,74 @@
 }
 #pragma mark - 发布话题
 - (void)publishAction{
-    [MBProgressHUD alertInfo:@"功能正在开发，敬请期待"];
+//    [MBProgressHUD alertInfo:@"功能正在开发，敬请期待"];
+    isReply = NO;
+    [self showXHInputViewWithStyle:InputViewStyleLarge];//显示样式二
+}
+-(void)showXHInputViewWithStyle:(InputViewStyle)style{
+    
+    [XHInputView showWithStyle:style configurationBlock:^(XHInputView *inputView) {
+        /** 请在此block中设置inputView属性 */
+        
+        /** 代理 */
+        inputView.delegate = self;
+        
+        /** 占位符文字 */
+        inputView.placeholder = @"请输入...";
+        /** 设置最大输入字数 */
+        inputView.maxCount = 100;
+        /** 输入框颜色 */
+        inputView.textViewBackgroundColor = [UIColor groupTableViewBackgroundColor];
+        
+        /** 更多属性设置,详见XHInputView.h文件 */
+        
+    } sendBlock:^BOOL(NSString *text) {
+        if(text.length){
+            NSLog(@"输入的信息为:%@",text);
+            if (isReply) {
+                [CommonRequest publishEvaluate:text withParams:@{@"uId":APPDELEGATE.user.uId,@"sId":@(self.model.ID),@"eContent":text} block:^(BOOL success) {
+                    if (success) {
+                        [MBProgressHUD alertInfo:@"发布成功"];
+                    }else{
+                        [MBProgressHUD alertInfo:@"发布失败"];
+                    }
+                }];
+            }else{
+                [CommonRequest publishReply:text withParams:@{@"uId":APPDELEGATE.user.uId,@"eId":@(currentModel.ID),@"rContent":text} block:^(BOOL success) {
+                    if (success) {
+                        [MBProgressHUD alertInfo:@"发布成功"];
+                    }else{
+                        [MBProgressHUD alertInfo:@"发布失败"];
+                    }
+                }];
+            }
+            
+            return YES;//return YES,收起键盘
+        }else{
+            NSLog(@"显示提示框-请输入要评论的的内容");
+            return NO;//return NO,不收键盘
+        }
+    }];
+}
+
+#pragma mark - XHInputViewDelagete
+/** XHInputView 将要显示 */
+-(void)xhInputViewWillShow:(XHInputView *)inputView{
+    
+    /** 如果你工程中有配置IQKeyboardManager,并对XHInputView造成影响,请在XHInputView将要显示时将其关闭 */
+    
+    //[IQKeyboardManager sharedManager].enableAutoToolbar = NO;
+    //[IQKeyboardManager sharedManager].enable = NO;
+    
+}
+
+/** XHInputView 将要影藏 */
+-(void)xhInputViewWillHide:(XHInputView *)inputView{
+    
+    /** 如果你工程中有配置IQKeyboardManager,并对XHInputView造成影响,请在XHInputView将要影藏时将其打开 */
+    
+    //[IQKeyboardManager sharedManager].enableAutoToolbar = YES;
+    //[IQKeyboardManager sharedManager].enable = YES;
 }
 #pragma mark - 收藏
 - (void)didClickCollectButton{

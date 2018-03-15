@@ -26,4 +26,16 @@
  */
 + (void)setCommentLikeWithParams:(NSDictionary *)params block:(void(^)(BOOL success))block;
 
+/**
+ *
+ *  发布评价接口
+ */
++ (void)publishEvaluate:(NSString *)string withParams:(NSDictionary *)params block:(void(^)(BOOL success))block;
+
+/**
+ *
+ *  发布评论回复接口
+ */
++ (void)publishReply:(NSString *)string withParams:(NSDictionary *)params block:(void(^)(BOOL success))block;
+
 @end

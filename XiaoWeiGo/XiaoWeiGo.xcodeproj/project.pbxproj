@@ -237,6 +237,7 @@
 		1788E0AD203BB88700933CD5 /* XWResetPwdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1788E0AC203BB88700933CD5 /* XWResetPwdViewController.m */; };
 		1788E0B4203C08ED00933CD5 /* DMDropDownMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 1788E0B3203C08ED00933CD5 /* DMDropDownMenu.m */; };
 		1788E0B7203C20EF00933CD5 /* XWSafetyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1788E0B6203C20EF00933CD5 /* XWSafetyViewController.m */; };
+		17915F38205A9829004E40CB /* XHInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 17915F36205A9828004E40CB /* XHInputView.m */; };
 		17D70A5E2025368C00122A11 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 17D70A5D2025368C00122A11 /* AppDelegate.mm */; };
 		17D70A642025368C00122A11 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17D70A622025368C00122A11 /* Main.storyboard */; };
 		17D70A662025368C00122A11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 17D70A652025368C00122A11 /* Assets.xcassets */; };
@@ -781,6 +782,8 @@
 		1788E0B3203C08ED00933CD5 /* DMDropDownMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMDropDownMenu.m; sourceTree = "<group>"; };
 		1788E0B5203C20EF00933CD5 /* XWSafetyViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XWSafetyViewController.h; sourceTree = "<group>"; };
 		1788E0B6203C20EF00933CD5 /* XWSafetyViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XWSafetyViewController.m; sourceTree = "<group>"; };
+		17915F36205A9828004E40CB /* XHInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHInputView.m; sourceTree = "<group>"; };
+		17915F37205A9828004E40CB /* XHInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHInputView.h; sourceTree = "<group>"; };
 		17D70A592025368C00122A11 /* XiaoWeiGo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XiaoWeiGo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		17D70A5C2025368C00122A11 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		17D70A5D2025368C00122A11 /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
@@ -1735,6 +1738,8 @@
 		17D70A90202538EC00122A11 /* Vender */ = {
 			isa = PBXGroup;
 			children = (
+				17915F37205A9828004E40CB /* XHInputView.h */,
+				17915F36205A9828004E40CB /* XHInputView.m */,
 				1782E104203D91C70058F008 /* CopyAbleLabel.h */,
 				1782E105203D91C70058F008 /* CopyAbleLabel.m */,
 				1788E0B1203C08ED00933CD5 /* DMDropDownMenu */,
@@ -2866,6 +2871,7 @@
 				17D70B5E202710EA00122A11 /* NSArray+XLFormAdditions.m in Sources */,
 				174B7913202CBC22002FDB23 /* MyDemandViewController.m in Sources */,
 				17386B9D20464AF5005B3271 /* LLAssetManager.m in Sources */,
+				17915F38205A9829004E40CB /* XHInputView.m in Sources */,
 				17D70B62202710EA00122A11 /* NSString+XLFormAdditions.m in Sources */,
 				173C4E2B2030623500FE5DDB /* XWSecondTabViewController.m in Sources */,
 				17D70B61202710EA00122A11 /* NSPredicate+XLFormAdditions.m in Sources */,

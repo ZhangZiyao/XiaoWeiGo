@@ -53,7 +53,7 @@
 {
     self.navigationItem.leftBarButtonItem = nil;
     UIButton *but = [UIButton buttonWithType:UIButtonTypeCustom];
-    but.frame = CGRectMake(0, 0, 44, 44);
+    but.frame = CGRectMake(0, 0, 65, 44);
     but.imageView.contentMode = UIViewContentModeScaleAspectFit;
     //    [but setBackgroundImage:[UIImage imageNamed:itemImage] forState:UIControlStateNormal];
     [but setImage:[UIImage imageNamed:itemImage] forState:UIControlStateNormal];
