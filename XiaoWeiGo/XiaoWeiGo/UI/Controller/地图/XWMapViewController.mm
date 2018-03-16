@@ -27,10 +27,14 @@
     
     BOOL hasRoute;
     NSInteger selectedIndex;
+    
+    CLLocation *currentLocation;
+    
 }
 @property (nonatomic, strong) YUSegmentedControl *segmentedControl;
 //@property (nonatomic, strong) BMKMapView *mapView;
 //@property (nonatomic, strong) BMKMapView *nowLocation;
+@property (nonatomic, strong) UILabel *durationLabel;
 @end
 
 @implementation XWMapViewController
@@ -52,16 +56,21 @@
     [self.view addSubview:bottomView];
     
     UILabel *durationLabel = [[UILabel alloc] init];
-    durationLabel.textColor = [UIColor textBlackColor];
-    durationLabel.font = [UIFont rw_regularFontSize:15.0];
+    durationLabel.textColor = [UIColor blackColor];
+    durationLabel.font = [UIFont boldSystemFontOfSize:17.0];
     [bottomView addSubview:durationLabel];
+    self.durationLabel = durationLabel;
     
     UILabel *label = [[UILabel alloc] init];
     label.text = @"最快";
+    label.textColor = UIColorFromRGB16(0x666666);
+    label.font = [UIFont rw_regularFontSize:15.0];
     [bottomView addSubview:label];
     
     UIButton *button = [[UIButton alloc] init];
+    [button setImage:[UIImage imageNamed:@"map_arrow"] forState:UIControlStateNormal];
     [button setTitle:@"导航" forState:UIControlStateNormal];
+    [button setBackgroundColor:UIColorFromRGB16(0x3385ff)];
     button.layer.cornerRadius = 5.0;
     button.layer.masksToBounds = YES;
     [bottomView addSubview:button];
@@ -70,11 +79,11 @@
         make.bottom.equalTo(self.view);
         make.left.equalTo(self.view);
         make.right.equalTo(self.view);
-        make.height.mas_equalTo(200);
+        make.height.mas_equalTo(200*kScaleH);
     }];
     [button mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(bottomView).offset(20*kScaleH);
-        make.right.equalTo(bottomView).offset(20*kScaleH);
+        make.right.equalTo(bottomView).offset(-20*kScaleH);
         make.size.mas_equalTo(CGSizeMake(100*kScaleW, 80*kScaleH));
     }];
     [durationLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -101,6 +110,23 @@
     else
     {
         NSLog(@"geo检索发送失败");
+    }
+}
+- (void)reverseGeo{
+    CLLocationCoordinate2D pt = (CLLocationCoordinate2D){0, 0};
+    if (currentLocation != nil) {
+        pt = (CLLocationCoordinate2D){currentLocation.coordinate.latitude, currentLocation.coordinate.longitude};
+    }
+    BMKReverseGeoCodeOption *reverseGeocodeSearchOption = [[BMKReverseGeoCodeOption alloc] init];
+    reverseGeocodeSearchOption.reverseGeoPoint = pt;
+    BOOL flag = [_geocodesearch reverseGeoCode:reverseGeocodeSearchOption];
+    if(flag)
+    {
+        NSLog(@"反geo检索发送成功");
+    }
+    else
+    {
+        NSLog(@"反geo检索发送失败");
     }
 }
 - (void)segmentedControlTapped:(YUSegmentedControl *)sender {
@@ -183,7 +209,7 @@
         make.left.equalTo(self.view);
         make.top.equalTo(self.view).offset(44);
         make.right.equalTo(self.view);
-        make.bottom.equalTo(self.view);
+        make.bottom.equalTo(self.view).offset(200*kScaleH);
     }];
     
     [self onClickNewBusSearch];
@@ -217,7 +243,27 @@
         
     }
 }
-
+- (void) onGetReverseGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKReverseGeoCodeResult *)result errorCode:(BMKSearchErrorCode)error
+{
+    NSArray* array = [NSArray arrayWithArray:_mapView.annotations];
+    [_mapView removeAnnotations:array];
+    array = [NSArray arrayWithArray:_mapView.overlays];
+    [_mapView removeOverlays:array];
+    if (error == 0) {
+        BMKPointAnnotation* item = [[BMKPointAnnotation alloc]init];
+        item.coordinate = result.location;
+        item.title = result.address;
+        [_mapView addAnnotation:item];
+        _mapView.centerCoordinate = result.location;
+//        NSString* titleStr;
+//        NSString* showmeg;
+//        titleStr = @"反向地理编码";
+//        showmeg = [NSString stringWithFormat:@"%@",item.title];
+//
+//        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:titleStr message:showmeg delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定",nil];
+//        [myAlertView show];
+    }
+}
 //实现相关delegate 处理位置信息更新
 //处理方向变更信息
 - (void)didUpdateUserHeading:(BMKUserLocation *)userLocation
@@ -229,11 +275,13 @@
 {
     NSLog(@"didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
 //    _mapView.centerCoordinate = CLLocationCoordinate2DMake(userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude);
-    [_mapView setCenterCoordinate:userLocation.location.coordinate animated:YES];
+//    [_mapView setCenterCoordinate:userLocation.location.coordinate animated:YES];
     [_mapView updateLocationData:userLocation];
     
-//    currentLocation = userLocation.location;
+    currentLocation = userLocation.location;
+    [self reverseGeo];
     startNode.pt = CLLocationCoordinate2DMake(userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude);
+    
     if (endNode && startNode && !hasRoute) {
         hasRoute = YES;
         [self getRouteLine:selectedIndex];
@@ -523,6 +571,99 @@
 //        [self onClickRidingSearch];
     }
 }
+                                       /**
+                                        *返回公共交通路线检索结果（new）
+                                        *@param searcher 搜索对象
+                                        *@param result 搜索结果，类型为BMKMassTransitRouteResult
+                                        *@param error 错误号，@see BMKSearchErrorCode
+                                        */
+                                       - (void)onGetMassTransitRouteResult:(BMKRouteSearch*)searcher result:(BMKMassTransitRouteResult*)result errorCode:(BMKSearchErrorCode)error
+            {
+                NSLog(@"onGetMassTransitRouteResult error:%d", (int)error);
+                NSArray* array = [NSArray arrayWithArray:_mapView.annotations];
+                [_mapView removeAnnotations:array];
+                array = [NSArray arrayWithArray:_mapView.overlays];
+                [_mapView removeOverlays:array];
+                if (error == BMK_SEARCH_NO_ERROR) {
+                    BMKMassTransitRouteLine* routeLine = (BMKMassTransitRouteLine*)[result.routes objectAtIndex:0];
+                    
+                    BOOL startCoorIsNull = YES;
+                    CLLocationCoordinate2D startCoor;//起点经纬度
+                    CLLocationCoordinate2D endCoor;//终点经纬度
+                    
+                    NSInteger size = [routeLine.steps count];
+                    NSInteger planPointCounts = 0;
+                    for (NSInteger i = 0; i < size; i++) {
+                        BMKMassTransitStep* transitStep = [routeLine.steps objectAtIndex:i];
+                        for (BMKMassTransitSubStep *subStep in transitStep.steps) {
+                            //添加annotation节点
+                            RouteAnnotation* item = [[RouteAnnotation alloc]init];
+                            item.coordinate = subStep.entraceCoor;
+                            item.title = subStep.instructions;
+                            item.type = 2;
+                            [_mapView addAnnotation:item];
+                            
+                            if (startCoorIsNull) {
+                                startCoor = subStep.entraceCoor;
+                                startCoorIsNull = NO;
+                            }
+                            endCoor = subStep.exitCoor;
+                            
+                            //轨迹点总数累计
+                            planPointCounts += subStep.pointsCount;
+                            
+                            //steps中是方案还是子路段，YES:steps是BMKMassTransitStep的子路段（A到B需要经过多个steps）;NO:steps是多个方案（A到B有多个方案选择）
+                            if (transitStep.isSubStep == NO) {//是子方案，只取第一条方案
+                                break;
+                            }
+                            else {
+                                //是子路段，需要完整遍历transitStep.steps
+                            }
+                        }
+                    }
+                    
+                    //添加起点标注
+                    RouteAnnotation* startAnnotation = [[RouteAnnotation alloc]init];
+                    startAnnotation.coordinate = startCoor;
+                    startAnnotation.title = @"起点";
+                    startAnnotation.type = 0;
+                    [_mapView addAnnotation:startAnnotation]; // 添加起点标注
+                    //添加终点标注
+                    RouteAnnotation* endAnnotation = [[RouteAnnotation alloc]init];
+                    endAnnotation.coordinate = endCoor;
+                    endAnnotation.title = @"终点";
+                    endAnnotation.type = 1;
+                    [_mapView addAnnotation:endAnnotation]; // 添加终点标注
+                    
+                    //轨迹点
+                    BMKMapPoint * temppoints = new BMKMapPoint[planPointCounts];
+                    NSInteger index = 0;
+                    for (BMKMassTransitStep* transitStep in routeLine.steps) {
+                        for (BMKMassTransitSubStep *subStep in transitStep.steps) {
+                            for (NSInteger i = 0; i < subStep.pointsCount; i++) {
+                                temppoints[index].x = subStep.points[i].x;
+                                temppoints[index].y = subStep.points[i].y;
+                                index++;
+                            }
+                            
+                            //steps中是方案还是子路段，YES:steps是BMKMassTransitStep的子路段（A到B需要经过多个steps）;NO:steps是多个方案（A到B有多个方案选择）
+                            if (transitStep.isSubStep == NO) {//是子方案，只取第一条方案
+                                break;
+                            }
+                            else {
+                                //是子路段，需要完整遍历transitStep.steps
+                            }
+                        }
+                    }
+                    
+                    // 通过points构建BMKPolyline
+                    BMKPolyline* polyLine = [BMKPolyline polylineWithPoints:temppoints count:planPointCounts];
+                    [_mapView addOverlay:polyLine]; // 添加路线overlay
+                    delete []temppoints;
+                    [self mapViewFitPolyLine:polyLine];
+                }
+            }
+
 -(void)onClickDriveSearch
 {
 //    BMKPlanNode* start = [[BMKPlanNode alloc]init];
@@ -612,12 +753,27 @@
     option.from = startNode;
     option.to = endNode;
     BOOL flag = [_routeSearch massTransitSearch:option];
-    
+
     if(flag) {
         NSLog(@"公交交通检索（支持垮城）发送成功");
     } else {
         NSLog(@"公交交通检索（支持垮城）发送失败");
     }
+    
+//    BMKTransitRoutePlanOption *transitRouteSearchOption = [[BMKTransitRoutePlanOption alloc]init];
+//    transitRouteSearchOption.city= @"北京市";
+//    transitRouteSearchOption.from = startNode;
+//    transitRouteSearchOption.to = endNode;
+//    BOOL flag = [_routeSearch transitSearch:transitRouteSearchOption];
+//
+//    if(flag)
+//    {
+//        NSLog(@"bus检索发送成功");
+//    }
+//    else
+//    {
+//        NSLog(@"bus检索发送失败");
+//    }
 }
 #pragma mark - 私有
 

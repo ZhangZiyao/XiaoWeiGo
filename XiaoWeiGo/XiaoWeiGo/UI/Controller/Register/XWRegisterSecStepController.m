@@ -392,7 +392,6 @@
         if ([message containsString:@"success"]) {
             //成功
             _registerModel.auditing = @"yes";
-            //            [MBProgressHUD alertInfo:@"注册成功"];
         }else{
             //用户名不存在
             _registerModel.auditing = @"no";

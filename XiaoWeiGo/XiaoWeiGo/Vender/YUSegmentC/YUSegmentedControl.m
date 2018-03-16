@@ -206,23 +206,25 @@ static const CGFloat        kIndicatorDefaultHeight = 3.0;
     // indicator animate
     CGRect frame = _indicator.frame;
     frame.origin.x = CGRectGetWidth(_indicator.bounds) * toIndex;
-    
+    _indicator.frame = frame;
+    _selectedSegmentIndex = toIndex;
+    [self sendActionsForControlEvents:UIControlEventValueChanged];
 //    NSLog(@"from %ld  to %ld   x = %f",fromIndex,toIndex,frame.origin.x);
     
-    [UIView animateWithDuration:kAnimationDuration
-                          delay:0.0
-         usingSpringWithDamping:0.66
-          initialSpringVelocity:3.0
-                        options:UIViewAnimationOptionCurveLinear
-                     animations:^{
-                         _indicator.frame = frame;
-        
-    } completion:^(BOOL finished) {
-        if (finished) {
-            _selectedSegmentIndex = toIndex;
-            [self sendActionsForControlEvents:UIControlEventValueChanged];
-        }
-    }];
+//    [UIView animateWithDuration:kAnimationDuration
+//                          delay:0.0
+//         usingSpringWithDamping:0.66
+//          initialSpringVelocity:3.0
+//                        options:UIViewAnimationOptionCurveLinear
+//                     animations:^{
+//                         _indicator.frame = frame;
+//
+//    } completion:^(BOOL finished) {
+//        if (finished) {
+//            _selectedSegmentIndex = toIndex;
+//            [self sendActionsForControlEvents:UIControlEventValueChanged];
+//        }
+//    }];
 }
 
 #pragma mark - 
