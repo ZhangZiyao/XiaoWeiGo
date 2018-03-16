@@ -42,6 +42,7 @@
         make.centerY.equalTo(headerImageView);
     }];
     UITextField *_textField = [[UITextField alloc] init];
+    _textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
     _textField.placeholder = @"重设密码";
     _textField.delegate = self;
     _textField.font = [UIFont rw_regularFontSize:15.0];
@@ -50,6 +51,7 @@
     _textField.layer.cornerRadius = 5.0;
     _textField.layer.borderColor = LineColor.CGColor;
     _textField.keyboardType = UIKeyboardTypeAlphabet;
+    _textField.secureTextEntry = YES;
     _textField.layer.borderWidth = 0.5;
     _textField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 10, 0)];
     //设置显示模式为永远显示(默认不显示)
@@ -65,9 +67,11 @@
     
     UITextField *_textField1 = [[UITextField alloc] init];
     _textField1.delegate = self;
+    _textField1.autocapitalizationType = UITextAutocapitalizationTypeNone;
     _textField1.placeholder = @"确认重设密码";
     _textField1.font = [UIFont rw_regularFontSize:15.0];
     _textField1.textColor = [UIColor textBlackColor];
+    _textField1.secureTextEntry = YES;
     _textField1.layer.masksToBounds = YES;
     _textField1.layer.cornerRadius = 5.0;
     _textField1.layer.borderColor = LineColor.CGColor;
@@ -100,10 +104,6 @@
     }];
 }
 - (void)nextStep{
-    if (IsStrEmpty(APPDELEGATE.user.uId)) {
-        [MBProgressHUD alertInfo:@"暂时不可用"];
-        return;
-    }
     if (_pwdTF.text.length == 0) {
         [MBProgressHUD alertInfo:@"请输入新密码"];
         return;
@@ -121,7 +121,7 @@
         return;
     }
     
-    NSDictionary *params = @{@"uId":APPDELEGATE.user.uId,
+    NSDictionary *params = @{@"uId":self.account,
                              @"question":self.question,
                              @"answer":self.answer,
                              @"newPwd":_pwdTF.text

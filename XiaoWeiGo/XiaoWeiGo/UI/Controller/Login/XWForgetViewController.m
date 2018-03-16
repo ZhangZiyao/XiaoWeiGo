@@ -15,6 +15,7 @@
 {
     NSArray *array;
 }
+@property (nonatomic,strong) UITextField *accountTextField;
 @property (nonatomic,strong) UITextField *pwdTextField;
 @property (nonatomic,copy) NSString *question;
 @property (nonatomic,copy) NSString *answer;
@@ -61,7 +62,10 @@
 //    } fail:^(NSError *error) {
 //        NSLog(@"shibai  %@",error);
 //    }];
-    
+    if (self.accountTextField.text.length == 0) {
+        [MBProgressHUD alertInfo:@"请输入账号"];
+        return;
+    }
     if (self.pwdTextField.text.length == 0) {
         [MBProgressHUD alertInfo:@"请填写答案"];
         return;
@@ -71,6 +75,7 @@
         [self.navigationController popToRootViewControllerAnimated:YES];
     }else{
         XWResetPwdViewController *resetPwdvc = [[XWResetPwdViewController alloc] init];
+        resetPwdvc.account = self.accountTextField.text;
         resetPwdvc.question = self.question;
         resetPwdvc.answer = self.answer;
         [self.navigationController pushViewController:resetPwdvc animated:YES];
@@ -79,6 +84,7 @@
 }
 
 - (void)layoutSubviews{
+    
     array = @[@"您最喜欢的颜色是什么？",@"您父亲的姓名是什么？",@"您母亲的姓名是什么？",@"您出生年月是几月几日？"];
     UIImageView *headerImageView = [[UIImageView alloc] init];
     headerImageView.image = [UIImage imageNamed:self.type==1?@"forget_reset1":@"forget_reset2"];
@@ -99,8 +105,30 @@
         make.centerY.equalTo(headerImageView);
     }];
     
+    UITextField *accountTF = [[UITextField alloc] init];
+    accountTF.delegate = self;
+    accountTF.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    accountTF.placeholder = @"请输入账号";
+    accountTF.font = [UIFont rw_regularFontSize:15.0];
+    accountTF.textColor = [UIColor textBlackColor];
+    accountTF.layer.masksToBounds = YES;
+    accountTF.layer.cornerRadius = 5.0;
+    accountTF.layer.borderColor = LineColor.CGColor;
+    accountTF.layer.borderWidth = 0.5;
+    accountTF.leftView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 10, 0)];
+    //设置显示模式为永远显示(默认不显示)
+    accountTF.leftViewMode = UITextFieldViewModeAlways;
+    self.accountTextField = accountTF;
+    [self.view addSubview:accountTF];
     
-    DMDropDownMenu *dropDown = [[DMDropDownMenu alloc] initWithFrame:CGRectMake(35*kScaleW, (184+60)*kScaleH, ScreenWidth-70*kScaleW, 90*kScaleH)];
+    [accountTF mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view).offset(35*kScaleW);
+        make.right.equalTo(self.view).offset(-35*kScaleW);
+        make.top.equalTo(headerImageView.mas_bottom).offset(60*kScaleW);
+        make.height.mas_equalTo(90*kScaleH);
+    }];
+    
+    DMDropDownMenu *dropDown = [[DMDropDownMenu alloc] initWithFrame:CGRectMake(35*kScaleW, (184+60+90+60)*kScaleH, ScreenWidth-70*kScaleW, 90*kScaleH)];
     dropDown.delegate = self;
     [dropDown setListArray:array];
     [self.view addSubview:dropDown];
@@ -111,7 +139,7 @@
     [dropDown mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view).offset(35*kScaleW);
         make.right.equalTo(self.view).offset(-35*kScaleW);
-        make.top.equalTo(headerImageView.mas_bottom).offset(60*kScaleW);
+        make.top.equalTo(accountTF.mas_bottom).offset(60*kScaleW);
         make.height.mas_equalTo(90*kScaleH);
     }];
     self.question = array[0];
@@ -122,6 +150,7 @@
     _textField.font = [UIFont rw_regularFontSize:15.0];
     _textField.textColor = [UIColor textBlackColor];
     _textField.layer.masksToBounds = YES;
+    _textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
     _textField.layer.cornerRadius = 5.0;
     _textField.layer.borderColor = LineColor.CGColor;
     _textField.layer.borderWidth = 0.5;

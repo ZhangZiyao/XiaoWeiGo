@@ -12,10 +12,14 @@
 #import "XWButtonViewCell.h"
 #import "XWLabelViewCell.h"
 #import "XWTextFieldViewCell.h"
+#import "XWQuestionViewCell.h"
+#import "MKActionSheet.h"
 
 @interface XWRegisterSecStepController ()
 {
     BOOL auditing;
+    int companyId;
+    NSString *companyTypeName;
 }
 @property (nonatomic, strong) NSMutableArray *typeArray;
 @property (nonatomic, strong) RegisterModel *registerModel;
@@ -47,26 +51,7 @@
     _registerModel.orgName = [self.dict objectForKey:@"name"];
     _registerModel.operation = [self.dict objectForKey:@"fanwei"];
 }
-- (void)checkCompany{
-    RequestManager *manager = [[RequestManager alloc] init];
-    manager.isShowLoading = NO;
-    [manager POSTRequestUrlStr:kCheckCompnay parms:@{@"orgCode":_registerModel.orgCode,@"reservedtelephone":_registerModel.reservedtelephone} success:^(id responseData) {
-        
-        NSString *message = responseData[0];
-        if ([message containsString:@"success"]) {
-            //成功
-            auditing = YES;
-//            [MBProgressHUD alertInfo:@"注册成功"];
-        }else{
-            //用户名不存在
-            auditing = NO;
-            [MBProgressHUD alertInfo:@"用户名不存在"];
-        }
-        
-    } fail:^(NSError *error) {
-        
-    }];
-}
+
 - (void)addSection0{
     XLFormDescriptor * formDescriptor = [XLFormDescriptor formDescriptor];
     self.form = formDescriptor;
@@ -246,6 +231,34 @@
     [self addSection3];
 }
 - (void)addSection3{
+    WS(weakSelf);
+    XLFormSectionDescriptor *section = [XLFormSectionDescriptor formSection];
+    XLFormRowDescriptor * row;
+    
+    row = [XLFormRowDescriptor formRowDescriptorWithTag:@"QUESTION" rowType:XLFormRowDescriptorTypeSelectorActionSheet title:@"＊"];
+    row.cellClass = [XWQuestionViewCell class];
+    row.action.formSelector = @selector(selectAction:);
+    row.value = IsStrEmpty(self.registerModel.question)?@"请设置密码提示问题":self.registerModel.question;
+    [section addFormRow:row];
+    row = [XLFormRowDescriptor formRowDescriptorWithTag:@"ANSWER" rowType:XLFormRowDescriptorTypePhone title:@"＊"];
+    row.cellClass = [XWTextFieldCell class];
+    row.textFieldMaxNumberOfCharacters = @13;
+    [row.cellConfigAtConfigure setObject:@"请输入密保提示答案" forKey:@"textField.placeholder"];
+    [row.cellConfigAtConfigure setObject:@(NSTextAlignmentRight) forKey:@"textField.textAlignment"];
+    row.required = YES;
+    row.lineHidden = YES;
+    row.onChangeBlock = ^(id  _Nullable oldValue, id  _Nullable newValue, XLFormRowDescriptor * _Nonnull rowDescriptor) {
+        if (newValue) {
+            weakSelf.registerModel.answer = [NSString stringWithFormat:@"%@",newValue];
+        }else{
+            weakSelf.registerModel.answer = nil;
+        }
+    };
+    [section addFormRow:row];
+    [self.form addFormSection:section];
+    [self addSection4];
+}
+- (void)addSection4{
     XLFormSectionDescriptor *section = [XLFormSectionDescriptor formSectionWithTitle:@"服务类别"];
     XLFormRowDescriptor * row;
     
@@ -259,6 +272,27 @@
     
     [self.form addFormSection:section];
 }
+#pragma mark - row点击事件
+- (void)selectAction:(XLFormRowDescriptor *)rowDescriptor{
+    [self.view endEditing:YES];
+    WS(weakSelf);
+    if ([rowDescriptor.tag isEqualToString:@"QUESTION"]){
+        NSArray *array = @[@"您最喜欢的颜色是什么？",@"您父亲的姓名是什么？",@"您母亲的姓名是什么？",@"您出生年月是几月几日？"];
+        MKActionSheet *sheet = [[MKActionSheet alloc] initWithTitle:nil buttonTitleArray:array selectType:MKActionSheetSelectType_selected];
+        
+        NSInteger index = [array indexOfObject:_registerModel.question];
+        sheet.selectedIndex = index;
+        sheet.needCancelButton = NO;
+        sheet.showAccessory = YES;
+        [sheet showWithBlock:^(MKActionSheet *actionSheet, NSInteger buttonIndex) {
+            NSLog(@"button Index : %ld",(long)buttonIndex);
+            weakSelf.registerModel.question = array[buttonIndex];
+            rowDescriptor.value = array[buttonIndex];
+            [weakSelf.tableView reloadData];
+        }];
+    }
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0 && indexPath.row == 4) {
         XLFormRowDescriptor *row = [self.form formRowWithTag:@"FANWEI"];
@@ -268,10 +302,11 @@
     return 100*kScaleH;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    if (section == 0 || section == 1 || section == 2) {
-        return 8.0f;
-    }else{
+    if (section == 4) {
         return 70*kScaleH;
+        
+    }else{
+        return 8.0f;
     }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
@@ -279,7 +314,7 @@
         //一般用户
         return 450*kScaleH;
     }else{
-        if (section==3){
+        if (section==4){
             return 250*kScaleH;
         }else{
             return 0.01f;
@@ -330,51 +365,106 @@
 - (void)commitRegisterRequest{
     if ([self verification] == YES) {
         
-        //    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        NSString *url;
-        NSMutableDictionary *params = [NSMutableDictionary dictionary];
-        if (self.type == 6) {
-            url = kRegisterGeneralUser;
-            [params setValuesForKeysWithDictionary:@{@"name":_registerModel.name,
-                                                     @"pwd":_registerModel.pwd,
-                                                     @"confirmPwd":_registerModel.confirmPwd,
-                                                     @"contact":_registerModel.contact,
-                                                     @"mobile":_registerModel.mobile
-                                                     }];
-        }else{
-            url = kRegisterComUser;
-            [params setValuesForKeysWithDictionary:@{@"name":_registerModel.name,
-                                                     @"pwd":_registerModel.pwd,
-                                                     @"confirmPwd":_registerModel.confirmPwd,
-                                                     @"orgName":_registerModel.orgName,
-                                                     @"orgType":_registerModel.orgType,
-                                                     @"orgCode":_registerModel.orgCode,
-                                                     @"contact":_registerModel.contact,
-                                                     @"mobile":_registerModel.mobile,
-                                                     @"email":IsStrEmpty(_registerModel.email)?@"":_registerModel.email,
-                                                     @"telephone":IsStrEmpty(_registerModel.telephone)?@"":_registerModel.telephone,
-                                                     @"sType":@"1",
-                                                     @"comCode":_registerModel.regOrg,//企业注册号
-                                                     @"operation":_registerModel.operation,//经营范围
-                                                     @"reservedtelephone":_registerModel.reservedtelephone,//预留电话
-                                                     @"question":@"",//密保提问
-                                                     @"answer":@"",//密保回答
-                                                     @"auditing":@"",//是否审核通过(yes为审核通过,这个值 的获取需要以调用CheckCompany接口的返回情况而定)
-                                                     @"uType":self.type==4?@(2):@(1)//用户类型(1:企业服务商,2:小薇企业)
-                                                     }];
-            if (_typeArray.count > 0) {
-                [params setObject:_typeArray forKey:@"sTypeArr"];
-            }
-        }
-        [RegisterModel registWithUrl:url params:params block:^(BOOL success) {
-            if (success) {
-                //                [self.navigationController popToRootViewControllerAnimated:YES];
-//                XWForgetViewController *forgetPwdVc = [[XWForgetViewController alloc] init];
-//                forgetPwdVc.type = 1;
-//                [self.navigationController pushViewController:forgetPwdVc animated:YES];
-            }
-        }];
     }
+}
+#pragma mark -
+- (void)checkCompany{
+    RequestManager *manager = [[RequestManager alloc] init];
+    manager.isShowLoading = NO;
+    [manager POSTRequestUrlStr:kCheckCompnay parms:@{@"orgCode":_registerModel.orgCode,@"reservedtelephone":_registerModel.reservedtelephone} success:^(id responseData) {
+        
+        NSString *message = responseData[0];
+        if ([message containsString:@"success"]) {
+            //成功
+            auditing = YES;
+            //            [MBProgressHUD alertInfo:@"注册成功"];
+        }else{
+            //用户名不存在
+            auditing = NO;
+            [MBProgressHUD alertInfo:@"用户名不存在"];
+        }
+        
+    } fail:^(NSError *error) {
+        
+    }];
+}
+#pragma mark -  获取行业类别
+- (void)getCompanyType{
+    RequestManager *manager = [[RequestManager alloc] init];
+    manager.isShowLoading = NO;
+    [manager POSTRequestUrlStr:kGetCompanyInfo parms:nil success:^(id responseData) {
+        
+//        NSString *message = responseData[0];
+        //        companyId =
+        //        companyTypeName = ;
+//        if (companyId) {
+//            [self commitRegisterInfo];
+//        }
+        
+    } fail:^(NSError *error) {
+        
+    }];
+}
+- (void)commitRegisterInfo{
+    //    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *url;
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    //小微企业
+    if (self.type == 4) {
+        url = kRegisterComUser;
+        [params setValuesForKeysWithDictionary:@{@"name":_registerModel.name,
+                                                 @"pwd":_registerModel.pwd,
+                                                 @"confirmPwd":_registerModel.confirmPwd,
+                                                 @"orgName":_registerModel.orgName,
+                                                 @"orgType":_registerModel.orgType,
+                                                 @"orgCode":_registerModel.orgCode,
+                                                 @"contact":_registerModel.contact,
+                                                 @"mobile":_registerModel.mobile,
+                                                 @"email":IsStrEmpty(_registerModel.email)?@"":_registerModel.email,
+                                                 @"telephone":IsStrEmpty(_registerModel.telephone)?@"":_registerModel.telephone,
+                                                 @"sType":@(companyId),//判断是否为空
+                                                 @"comCode":_registerModel.regOrg,//企业注册号
+                                                 @"operation":_registerModel.operation,//经营范围
+                                                 @"reservedtelephone":_registerModel.reservedtelephone,//预留电话
+                                                 @"question":_registerModel.question,//密保提问
+                                                 @"answer":_registerModel.answer,//密保回答
+                                                 @"auditing":@"",//是否审核通过(yes为审核通过,这个值 的获取需要以调用CheckCompany接口的返回情况而定)
+                                                 @"uType":self.type==4?@(2):@(1)//用户类型(1:企业服务商,2:小薇企业)
+                                                 }];
+    }else{
+        //企业服务商
+        url = kRegisterUser;
+        [params setValuesForKeysWithDictionary:@{@"name":_registerModel.name,
+                                                 @"pwd":_registerModel.pwd,
+                                                 @"confirmPwd":_registerModel.confirmPwd,
+                                                 @"orgName":_registerModel.orgName,
+                                                 @"orgType":_registerModel.orgType,
+                                                 @"orgCode":_registerModel.orgCode,
+                                                 @"contact":_registerModel.contact,
+                                                 @"mobile":_registerModel.mobile,
+                                                 @"email":IsStrEmpty(_registerModel.email)?@"":_registerModel.email,
+                                                 @"telephone":IsStrEmpty(_registerModel.telephone)?@"":_registerModel.telephone,
+                                                 @"sType":@"1",
+                                                 @"comCode":_registerModel.regOrg,//企业注册号
+                                                 @"operation":_registerModel.operation,//经营范围
+                                                 @"reservedtelephone":_registerModel.reservedtelephone,//预留电话
+                                                 @"question":@"",//密保提问
+                                                 @"answer":@"",//密保回答
+                                                 @"auditing":@"",//是否审核通过(yes为审核通过,这个值 的获取需要以调用CheckCompany接口的返回情况而定)
+                                                 @"uType":self.type==4?@(2):@(1)//用户类型(1:企业服务商,2:小薇企业)
+                                                 }];
+        if (_typeArray.count > 0) {
+            [params setObject:_typeArray forKey:@"sTypeArr"];
+        }
+    }
+    [RegisterModel registWithUrl:url params:params block:^(BOOL success) {
+        if (success) {
+            [self.navigationController popToRootViewControllerAnimated:YES];
+            //                XWForgetViewController *forgetPwdVc = [[XWForgetViewController alloc] init];
+            //                forgetPwdVc.type = 1;
+            //                [self.navigationController pushViewController:forgetPwdVc animated:YES];
+        }
+    }];
 }
 #pragma mark - 数据验证
 - (BOOL)verification{
@@ -408,6 +498,14 @@
         }
         if (![NSString valiMobileNum:_registerModel.mobile]) {
             [MBProgressHUD alertInfo:@"手机号格式不正确"];
+            return NO;
+        }
+        if (IsStrEmpty(_registerModel.question)) {
+            [MBProgressHUD alertInfo:@"请选择安全提示问题"];
+            return NO;
+        }
+        if (IsStrEmpty(_registerModel.answer)) {
+            [MBProgressHUD alertInfo:@"请输入安全提示答案"];
             return NO;
         }
         
@@ -453,7 +551,14 @@
                 return NO;
             }
         }
-        
+        if (IsStrEmpty(_registerModel.question)) {
+            [MBProgressHUD alertInfo:@"请选择安全提示问题"];
+            return NO;
+        }
+        if (IsStrEmpty(_registerModel.answer)) {
+            [MBProgressHUD alertInfo:@"请输入安全提示答案"];
+            return NO;
+        }
         NSMutableArray *arrayP = [NSMutableArray array];
         for (int i = 0; i < 10; i++) {
             NSString *tag = [NSString stringWithFormat:@"tag%d",i];
@@ -589,8 +694,11 @@
 //        [self addSection2];
 //    }else{
         [self addSection0];
+    
 //    }
     self.automaticallyAdjustsScrollViewInsets = YES;
+    
+    [self getCompanyType];
     //    self.tableView.tableFooterView = self.footerView;
 }
 - (void)didReceiveMemoryWarning {

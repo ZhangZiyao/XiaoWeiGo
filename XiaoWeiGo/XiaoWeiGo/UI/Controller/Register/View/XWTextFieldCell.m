@@ -28,6 +28,7 @@
     if (self.rowDescriptor.lineHidden) {
         self.line.hidden = YES;
     }
+    self.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
     self.textField.textAlignment = NSTextAlignmentLeft;
     if ([self.rowDescriptor.tag isEqualToString:XWRegisterPhoneTF]) {
         [self.textField addTarget:self action:@selector(textFieldChange:) forControlEvents:UIControlEventEditingChanged];

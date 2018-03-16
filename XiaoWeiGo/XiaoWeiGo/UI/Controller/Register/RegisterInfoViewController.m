@@ -143,7 +143,7 @@
     row.action.formSelector = @selector(selectAction:);
     row.value = IsStrEmpty(self.registerModel.question)?@"请设置密码提示问题":self.registerModel.question;
     [section addFormRow:row];
-    row = [XLFormRowDescriptor formRowDescriptorWithTag:@"ANSWER" rowType:XLFormRowDescriptorTypePhone title:@"＊"];
+    row = [XLFormRowDescriptor formRowDescriptorWithTag:@"ANSWER" rowType:XLFormRowDescriptorTypeText title:@"＊"];
     row.cellClass = [XWTextFieldCell class];
     row.textFieldMaxNumberOfCharacters = @13;
     [row.cellConfigAtConfigure setObject:@"请输入密保提示答案" forKey:@"textField.placeholder"];
@@ -461,10 +461,10 @@
 //        }
         [RegisterModel registWithUrl:url params:params block:^(BOOL success) {
             if (success) {
-//                [self.navigationController popToRootViewControllerAnimated:YES];
-                XWForgetViewController *forgetPwdVc = [[XWForgetViewController alloc] init];
-                forgetPwdVc.type = 1;
-                [self.navigationController pushViewController:forgetPwdVc animated:YES];
+                [self.navigationController popToRootViewControllerAnimated:YES];
+//                XWForgetViewController *forgetPwdVc = [[XWForgetViewController alloc] init];
+//                forgetPwdVc.type = 1;
+//                [self.navigationController pushViewController:forgetPwdVc animated:YES];
             }
         }];
     }

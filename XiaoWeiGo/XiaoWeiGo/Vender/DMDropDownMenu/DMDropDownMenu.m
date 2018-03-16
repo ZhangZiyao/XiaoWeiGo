@@ -90,6 +90,7 @@
 
 - (void)tapAction
 {
+    [[UIApplication sharedApplication].keyWindow endEditing:YES];
     if (!_openEnable) {
         return;
     }

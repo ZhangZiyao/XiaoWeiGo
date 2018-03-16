@@ -50,7 +50,7 @@
 //AddServiceCollect(添加服务到收藏表)
 #define kAddServiceCollect @"/AddServiceCollect"
 //GetCompanyInfo(获取小薇企业列表)
-#define kGetCompanyInfo @"/GetCompanyInfo"
+#define kGetCompanyInfo @"/GetCompanyType"
 //SetServiceLink(增加机构服务点赞数量)
 #define kSetServiceLink @"/SetServiceLink"
 //GetDmdInfo(获取需求信息)
@@ -63,6 +63,8 @@
 #define kRegisterGeneralUser @"/RegisterGeneralUser"
 //检查用户是否在企业数据表里
 #define kCheckCompnay @"/CheckCompnay"
+//
+#define kGetCompanyType @"/GetCompanyType"
 //获取用户信息
 #define kGetUserInfo @"/GetUserInfo"
 //修改用户信息

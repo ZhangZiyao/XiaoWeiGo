@@ -10,6 +10,8 @@
 
 @interface XWResetPwdViewController : XWBaseViewController
 
+@property (nonatomic, copy) NSString *account;
+
 @property (nonatomic, copy) NSString *question;
 
 @property (nonatomic, copy) NSString *answer;

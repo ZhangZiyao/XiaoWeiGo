@@ -95,11 +95,11 @@ NSString *const XLFormTextFieldMaxNumberOfCharacters = @"textFieldMaxNumberOfCha
     self.textField.clearButtonMode = UITextFieldViewModeWhileEditing;
     if ([self.rowDescriptor.rowType isEqualToString:XLFormRowDescriptorTypeText]){
         self.textField.autocorrectionType = UITextAutocorrectionTypeDefault;
-        self.textField.autocapitalizationType = UITextAutocapitalizationTypeSentences;
+//        self.textField.autocapitalizationType = UITextAutocapitalizationTypeSentences;
     }
     else if ([self.rowDescriptor.rowType isEqualToString:XLFormRowDescriptorTypeName]){
         self.textField.autocorrectionType = UITextAutocorrectionTypeNo;
-        self.textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
+//        self.textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
     }
     else if ([self.rowDescriptor.rowType isEqualToString:XLFormRowDescriptorTypeEmail]){
         self.textField.keyboardType = UIKeyboardTypeEmailAddress;
