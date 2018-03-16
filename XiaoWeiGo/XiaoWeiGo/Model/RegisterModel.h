@@ -31,5 +31,8 @@
 @property (nonatomic, copy) NSString *answer;//密保回答
 @property (nonatomic, copy) NSString *auditing;//是否审核通过(yes为审核通过,这个值 的获取需要以调用CheckCompany接口的返回情况而定)
 
+//@property (nonatomic, assign)BOOL auditing;
+@property (nonatomic, assign)int companyId;
+@property (nonatomic, copy) NSString *companyTypeName;
 
 @end

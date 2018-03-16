@@ -14,12 +14,11 @@
 #import "XWTextFieldViewCell.h"
 #import "XWQuestionViewCell.h"
 #import "MKActionSheet.h"
+#import "XWCompanyTypeListController.h"
 
 @interface XWRegisterSecStepController ()
 {
-    BOOL auditing;
-    int companyId;
-    NSString *companyTypeName;
+    NSArray *companyTypeArray;
 }
 @property (nonatomic, strong) NSMutableArray *typeArray;
 @property (nonatomic, strong) RegisterModel *registerModel;
@@ -90,7 +89,7 @@
     [self addSection1];
 }
 - (void)addSection1{
-    XLFormSectionDescriptor *section = [XLFormSectionDescriptor formSectionWithTitle:@"服务类别"];
+    XLFormSectionDescriptor *section = [XLFormSectionDescriptor formSection];
     XLFormRowDescriptor * row;
     WS(weakSelf);
     // 基本信息 Section
@@ -116,11 +115,18 @@
     [self addSection2];
 }
 - (void)addSection2{
-    XLFormSectionDescriptor *section = [XLFormSectionDescriptor formSectionWithTitle:@"服务类别"];
+    XLFormSectionDescriptor *section = [XLFormSectionDescriptor formSection];
     XLFormRowDescriptor * row;
     WS(weakSelf);
     // 基本信息 Section
     section = [XLFormSectionDescriptor formSection];
+    
+    row = [XLFormRowDescriptor formRowDescriptorWithTag:@"COMPANYTYPE" rowType:XLFormRowDescriptorTypeSelectorActionSheet title:@"＊"];
+    row.cellClass = [XWQuestionViewCell class];
+    row.action.formSelector = @selector(selectAction:);
+    row.value = IsStrEmpty(self.registerModel.question)?@"请选择行业类别":self.registerModel.question;
+    [section addFormRow:row];
+    
     // 账号 1-50
     row = [XLFormRowDescriptor formRowDescriptorWithTag:XWRegisterAccountTF rowType:XLFormRowDescriptorTypeAccount title:@"＊"];
     row.cellClass = [XWTextFieldCell class];
@@ -290,6 +296,10 @@
             rowDescriptor.value = array[buttonIndex];
             [weakSelf.tableView reloadData];
         }];
+    }else if ([rowDescriptor.tag isEqualToString:@"COMPANYTYPE"]){
+        
+        XWCompanyTypeListController *listVc = [[XWCompanyTypeListController alloc] init];
+        [self.navigationController pushViewController:listVc animated:YES];
     }
 }
 
@@ -324,7 +334,7 @@
 }
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
     UIView *footer = [[UIView alloc] init];
-    if (section == 3) {
+    if (section == 4) {
         footer = self.footerView;
     }
     return footer;
@@ -376,11 +386,11 @@
         NSString *message = responseData[0];
         if ([message containsString:@"success"]) {
             //成功
-            auditing = YES;
+            _registerModel.auditing = @"yes";
             //            [MBProgressHUD alertInfo:@"注册成功"];
         }else{
             //用户名不存在
-            auditing = NO;
+            _registerModel.auditing = @"no";
             [MBProgressHUD alertInfo:@"用户名不存在"];
         }
         
@@ -388,23 +398,7 @@
         
     }];
 }
-#pragma mark -  获取行业类别
-- (void)getCompanyType{
-    RequestManager *manager = [[RequestManager alloc] init];
-    manager.isShowLoading = NO;
-    [manager POSTRequestUrlStr:kGetCompanyInfo parms:nil success:^(id responseData) {
-        
-//        NSString *message = responseData[0];
-        //        companyId =
-        //        companyTypeName = ;
-//        if (companyId) {
-//            [self commitRegisterInfo];
-//        }
-        
-    } fail:^(NSError *error) {
-        
-    }];
-}
+
 - (void)commitRegisterInfo{
     //    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *url;
@@ -422,7 +416,7 @@
                                                  @"mobile":_registerModel.mobile,
                                                  @"email":IsStrEmpty(_registerModel.email)?@"":_registerModel.email,
                                                  @"telephone":IsStrEmpty(_registerModel.telephone)?@"":_registerModel.telephone,
-                                                 @"sType":@(companyId),//判断是否为空
+                                                 @"sType":@(_registerModel.companyId),//判断是否为空
                                                  @"comCode":_registerModel.regOrg,//企业注册号
                                                  @"operation":_registerModel.operation,//经营范围
                                                  @"reservedtelephone":_registerModel.reservedtelephone,//预留电话
@@ -697,8 +691,6 @@
     
 //    }
     self.automaticallyAdjustsScrollViewInsets = YES;
-    
-    [self getCompanyType];
     //    self.tableView.tableFooterView = self.footerView;
 }
 - (void)didReceiveMemoryWarning {

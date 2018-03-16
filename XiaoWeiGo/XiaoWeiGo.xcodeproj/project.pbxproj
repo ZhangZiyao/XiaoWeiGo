@@ -243,6 +243,7 @@
 		17B21A5D205BB963006881B5 /* MKActionSheetAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 17B21A56205BB963006881B5 /* MKActionSheetAdd.m */; };
 		17B21A5E205BB963006881B5 /* MKASOrientationConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 17B21A58205BB963006881B5 /* MKASOrientationConfig.m */; };
 		17B21A5F205BB963006881B5 /* MKASRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 17B21A5A205BB963006881B5 /* MKASRootViewController.m */; };
+		17B21A62205BCD59006881B5 /* XWCompanyTypeListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 17B21A61205BCD59006881B5 /* XWCompanyTypeListController.m */; };
 		17D70A5E2025368C00122A11 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 17D70A5D2025368C00122A11 /* AppDelegate.mm */; };
 		17D70A642025368C00122A11 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17D70A622025368C00122A11 /* Main.storyboard */; };
 		17D70A662025368C00122A11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 17D70A652025368C00122A11 /* Assets.xcassets */; };
@@ -798,6 +799,8 @@
 		17B21A58205BB963006881B5 /* MKASOrientationConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKASOrientationConfig.m; sourceTree = "<group>"; };
 		17B21A59205BB963006881B5 /* MKASRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKASRootViewController.h; sourceTree = "<group>"; };
 		17B21A5A205BB963006881B5 /* MKASRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKASRootViewController.m; sourceTree = "<group>"; };
+		17B21A60205BCD59006881B5 /* XWCompanyTypeListController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XWCompanyTypeListController.h; sourceTree = "<group>"; };
+		17B21A61205BCD59006881B5 /* XWCompanyTypeListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XWCompanyTypeListController.m; sourceTree = "<group>"; };
 		17D70A592025368C00122A11 /* XiaoWeiGo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XiaoWeiGo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		17D70A5C2025368C00122A11 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		17D70A5D2025368C00122A11 /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
@@ -1890,6 +1893,8 @@
 				177F18402051763C00D252EC /* XWRegisterSecStepController.m */,
 				177F18422051766600D252EC /* XWScanViewController.h */,
 				177F18432051766600D252EC /* XWScanViewController.m */,
+				17B21A60205BCD59006881B5 /* XWCompanyTypeListController.h */,
+				17B21A61205BCD59006881B5 /* XWCompanyTypeListController.m */,
 			);
 			path = Register;
 			sourceTree = "<group>";
@@ -2907,6 +2912,7 @@
 				174B7913202CBC22002FDB23 /* MyDemandViewController.m in Sources */,
 				17386B9D20464AF5005B3271 /* LLAssetManager.m in Sources */,
 				17915F38205A9829004E40CB /* XHInputView.m in Sources */,
+				17B21A62205BCD59006881B5 /* XWCompanyTypeListController.m in Sources */,
 				17D70B62202710EA00122A11 /* NSString+XLFormAdditions.m in Sources */,
 				173C4E2B2030623500FE5DDB /* XWSecondTabViewController.m in Sources */,
 				17D70B61202710EA00122A11 /* NSPredicate+XLFormAdditions.m in Sources */,
