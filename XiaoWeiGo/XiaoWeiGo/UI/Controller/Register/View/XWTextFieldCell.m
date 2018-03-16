@@ -25,11 +25,13 @@
     
     self.textField.tagString = self.rowDescriptor.tag;
     self.textFieldMaxNumberOfCharacters = self.rowDescriptor.textFieldMaxNumberOfCharacters;
-    
-    if ([self.rowDescriptor.tag isEqualToString:XWRegisterPhoneTF]) {
+    if (self.rowDescriptor.lineHidden) {
         self.line.hidden = YES;
     }
     self.textField.textAlignment = NSTextAlignmentLeft;
+    if ([self.rowDescriptor.tag isEqualToString:XWRegisterPhoneTF]) {
+        [self.textField addTarget:self action:@selector(textFieldChange:) forControlEvents:UIControlEventEditingChanged];
+    }
     
     [self.textField mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.textLabel.mas_right).offset(20*kScaleW);
@@ -49,7 +51,6 @@
         make.height.mas_equalTo(0.5);
         make.bottom.equalTo(self.contentView);
     }];
-    
 }
 - (UILabel *)line{
     if (!_line) {
@@ -57,6 +58,23 @@
         _line.backgroundColor = UIColorFromRGB16(0xdddddd);
     }
     return _line;
+}
+- (void)textFieldChange:(RWTextField *)textField{
+    if ([self.rowDescriptor.tag isEqualToString:XWRegisterPhoneTF]) {
+        //判断是否包含－
+        NSRange range = [textField.text rangeOfString:@"-"];
+        bool bo = false;
+        if (range.location ==NSNotFound) {
+            bo = false;
+        }else{
+            bo = true;
+        }
+        //手机号格式逻辑
+        if(textField.text.length==4 && !bo){
+            textField.text = StringPush(textField.text, @"-", @"");
+        }
+    }
+    
 }
 - (void)awakeFromNib {
     [super awakeFromNib];

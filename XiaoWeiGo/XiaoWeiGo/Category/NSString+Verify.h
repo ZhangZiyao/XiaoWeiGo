@@ -18,7 +18,7 @@
 +(BOOL)isCorrectAlipayAccount:(NSString *)str;
 //
 +(BOOL)isCorrectRealName:(NSString *)str;
-
++ (BOOL)isPureInt:(NSString *)string;
 + (NSString *)ifNull:(NSString *)string;
 //是否为空字符串
 +(BOOL)isEmpty:(NSString *)str;

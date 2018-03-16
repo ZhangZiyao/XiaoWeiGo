@@ -54,6 +54,7 @@
     self.textLabel.font = [UIFont rw_regularFontSize:15];
     self.detailTextLabel.font = [UIFont rw_regularFontSize:15];
     self.textLabel.textColor  = UIColorFromRGB16(0x666666);
+    
 }
 
 -(void)highlight

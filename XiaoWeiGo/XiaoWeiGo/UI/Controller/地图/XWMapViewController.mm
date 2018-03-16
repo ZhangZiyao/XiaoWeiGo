@@ -43,9 +43,11 @@
     
     startNode = [[BMKPlanNode alloc] init];
     endNode = [[BMKPlanNode alloc] init];
+    
+    [self addBottomView];
 }
-- (void)bottomView{
-    UIView *bottomView = [[UIView alloc] init];
+- (void)addBottomView{
+    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 200)];
     bottomView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:bottomView];
     
@@ -57,11 +59,35 @@
     UILabel *label = [[UILabel alloc] init];
     label.text = @"最快";
     [bottomView addSubview:label];
+    
     UIButton *button = [[UIButton alloc] init];
     [button setTitle:@"导航" forState:UIControlStateNormal];
     button.layer.cornerRadius = 5.0;
     button.layer.masksToBounds = YES;
     [bottomView addSubview:button];
+    
+    [bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(self.view);
+        make.left.equalTo(self.view);
+        make.right.equalTo(self.view);
+        make.height.mas_equalTo(200);
+    }];
+    [button mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(bottomView).offset(20*kScaleH);
+        make.right.equalTo(bottomView).offset(20*kScaleH);
+        make.size.mas_equalTo(CGSizeMake(100*kScaleW, 80*kScaleH));
+    }];
+    [durationLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(bottomView).offset(20*kScaleH);
+        make.left.equalTo(bottomView).offset(20*kScaleH);
+        make.right.equalTo(button.mas_left).offset(-20*kScaleH);
+    }];
+    [label mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(bottomView).offset(-20*kScaleH);
+        make.left.equalTo(durationLabel);
+        make.width.mas_equalTo(200);
+    }];
+    
 }
 - (void)geoSearch{
     BMKGeoCodeSearchOption *geocodeSearchOption = [[BMKGeoCodeSearchOption alloc]init];

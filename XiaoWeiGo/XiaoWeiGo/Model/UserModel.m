@@ -109,6 +109,13 @@ static NSString *const UMSG     = @"msg";
                 NSLog(@"环信注册成功");
             }
             block(YES);
+        }else if ([NSString isPureInt:message] && [message intValue] > -1) {
+            [MBProgressHUD alertInfo:@"注册成功"];
+            EMError *error = [[EMClient sharedClient] registerWithUsername:[params objectForKey:@"name"] password:[params objectForKey:@"name"]];
+            if (error==nil) {
+                NSLog(@"环信注册成功");
+            }
+            block(YES);
         }else if ([message containsString:@"repeat"]){
             [MBProgressHUD alertInfo:@"用户名已被注册"];
             block(NO);

@@ -11,6 +11,8 @@
 #import "RegisterModel.h"
 #import "XWButtonViewCell.h"
 #import "XWForgetViewController.h"
+#import "XWQuestionViewCell.h"
+#import "MKActionSheet.h"
 
 @interface RegisterInfoViewController ()
 
@@ -113,6 +115,7 @@
     row = [XLFormRowDescriptor formRowDescriptorWithTag:XWRegisterMobileTF rowType:XLFormRowDescriptorTypePhone title:@"＊"];
     row.cellClass = [XWTextFieldCell class];
     row.textFieldMaxNumberOfCharacters = @13;
+    row.lineHidden = YES;
     [row.cellConfigAtConfigure setObject:@"请输入手机" forKey:@"textField.placeholder"];
     [row.cellConfigAtConfigure setObject:@(NSTextAlignmentRight) forKey:@"textField.textAlignment"];
     row.required = YES;
@@ -127,211 +130,264 @@
     
     [self.form addFormSection:section];
     NSLog(@"%@",self.form.formSections);
-}
-- (void)addSection0{
-    XLFormDescriptor * formDescriptor = [XLFormDescriptor formDescriptor];
-    self.form = formDescriptor;
-    XLFormSectionDescriptor * section;
-    XLFormRowDescriptor * row;
     
+    [self addSection3];
+}
+- (void)addSection3{
     WS(weakSelf);
-    // 基本信息 Section
-    section = [XLFormSectionDescriptor formSection];
-    // 账号 1-50
-    row = [XLFormRowDescriptor formRowDescriptorWithTag:XWRegisterAccountTF rowType:XLFormRowDescriptorTypeAccount title:@"＊"];
-    row.cellClass = [XWTextFieldCell class];
-    row.textFieldMaxNumberOfCharacters = @20;
-    [row.cellConfigAtConfigure setObject:@"请输入账号" forKey:@"textField.placeholder"];
-    row.onChangeBlock = ^(id  _Nullable oldValue, id  _Nullable newValue, XLFormRowDescriptor * _Nonnull rowDescriptor) {
-        if (newValue) {
-            weakSelf.registerModel.name = [NSString stringWithFormat:@"%@",newValue];
-        }else{
-            weakSelf.registerModel.name = nil;
-        }
-    };
-    row.required = YES;
-    [section addFormRow:row];
-    
-    // 密码 2-50
-    row = [XLFormRowDescriptor formRowDescriptorWithTag:XWRegisterPasswordTF rowType:XLFormRowDescriptorTypePassword title:@"＊"];
-    row.cellClass = [XWTextFieldCell class];
-    row.textFieldMaxNumberOfCharacters = @20;
-    [row.cellConfigAtConfigure setObject:@"请输入密码" forKey:@"textField.placeholder"];
-    row.required = YES;
-    row.onChangeBlock = ^(id  _Nullable oldValue, id  _Nullable newValue, XLFormRowDescriptor * _Nonnull rowDescriptor) {
-        if (newValue) {
-            weakSelf.registerModel.pwd = [NSString stringWithFormat:@"%@",newValue];
-        }else{
-            weakSelf.registerModel.pwd = nil;
-        }
-    };
-    [section addFormRow:row];
-    // 密码 2-10
-    row = [XLFormRowDescriptor formRowDescriptorWithTag:XWRegisterRePasswordTF rowType:XLFormRowDescriptorTypePassword title:@"＊"];
-    row.cellClass = [XWTextFieldCell class];
-    row.textFieldMaxNumberOfCharacters = @20;
-    [row.cellConfigAtConfigure setObject:@"请再次输入密码" forKey:@"textField.placeholder"];
-    row.required = YES;
-    row.onChangeBlock = ^(id  _Nullable oldValue, id  _Nullable newValue, XLFormRowDescriptor * _Nonnull rowDescriptor) {
-        if (newValue) {
-            weakSelf.registerModel.confirmPwd = [NSString stringWithFormat:@"%@",newValue];
-        }else{
-            weakSelf.registerModel.confirmPwd = nil;
-        }
-    };
-    [section addFormRow:row];
-    // 公司名称 2-50
-    row = [XLFormRowDescriptor formRowDescriptorWithTag:XWRegisterCompanyNameTF rowType:XLFormRowDescriptorTypeText title:@"＊"];
-    row.cellClass = [XWTextFieldCell class];
-    row.textFieldMaxNumberOfCharacters = @30;
-    [row.cellConfigAtConfigure setObject:@"请输入公司名称" forKey:@"textField.placeholder"];
-    [row.cellConfigAtConfigure setObject:@(NSTextAlignmentRight) forKey:@"textField.textAlignment"];
-    row.required = YES;
-    row.onChangeBlock = ^(id  _Nullable oldValue, id  _Nullable newValue, XLFormRowDescriptor * _Nonnull rowDescriptor) {
-        if (newValue) {
-            weakSelf.registerModel.orgName = [NSString stringWithFormat:@"%@",newValue];
-        }else{
-            weakSelf.registerModel.orgName = nil;
-        }
-    };
-    [section addFormRow:row];
-    // 公司性质 2-15
-    row = [XLFormRowDescriptor formRowDescriptorWithTag:XWRegisterCompanyNatureTF rowType:XLFormRowDescriptorTypeText title:@"＊"];
-    row.cellClass = [XWTextFieldCell class];
-    row.textFieldMaxNumberOfCharacters = @20;
-    [row.cellConfigAtConfigure setObject:@"请输入公司性质" forKey:@"textField.placeholder"];
-    [row.cellConfigAtConfigure setObject:@(NSTextAlignmentRight) forKey:@"textField.textAlignment"];
-    row.required = YES;
-    row.onChangeBlock = ^(id  _Nullable oldValue, id  _Nullable newValue, XLFormRowDescriptor * _Nonnull rowDescriptor) {
-        if (newValue) {
-            weakSelf.registerModel.orgType = [NSString stringWithFormat:@"%@",newValue];
-        }else{
-            weakSelf.registerModel.orgType = nil;
-        }
-    };
-    [section addFormRow:row];
-    // 组织机构代码证号或社会信用代码 2-15
-    row = [XLFormRowDescriptor formRowDescriptorWithTag:XWRegisterOrgCodeTF rowType:XLFormRowDescriptorTypeNumber title:@"＊"];
-    row.cellClass = [XWTextFieldCell class];
-    row.textFieldMaxNumberOfCharacters = @20;
-    [row.cellConfigAtConfigure setObject:self.type==4?@"请输入组织机构代码证号或社会信用代码":@"请输入组织机构代码证号" forKey:@"textField.placeholder"];
-    [row.cellConfigAtConfigure setObject:@(NSTextAlignmentRight) forKey:@"textField.textAlignment"];
-    row.required = YES;
-    row.onChangeBlock = ^(id  _Nullable oldValue, id  _Nullable newValue, XLFormRowDescriptor * _Nonnull rowDescriptor) {
-        if (newValue) {
-            weakSelf.registerModel.orgCode = [NSString stringWithFormat:@"%@",newValue];
-        }else{
-            weakSelf.registerModel.orgCode = nil;
-        }
-    };
-    [section addFormRow:row];
-    // 联系人 5-50
-    row = [XLFormRowDescriptor formRowDescriptorWithTag:XWRegisterLinkManTF rowType:XLFormRowDescriptorTypeText title:@"＊"];
-    row.cellClass = [XWTextFieldCell class];
-    row.textFieldMaxNumberOfCharacters = @20;
-    [row.cellConfigAtConfigure setObject:@"请输入联系人" forKey:@"textField.placeholder"];
-    [row.cellConfigAtConfigure setObject:@(NSTextAlignmentRight) forKey:@"textField.textAlignment"];
-    row.required = YES;
-    [row addValidator:[XLFormValidator emailValidator]];
-    row.onChangeBlock = ^(id  _Nullable oldValue, id  _Nullable newValue, XLFormRowDescriptor * _Nonnull rowDescriptor) {
-        if (newValue) {
-            weakSelf.registerModel.contact = [NSString stringWithFormat:@"%@",newValue];
-        }else{
-            weakSelf.registerModel.contact = nil;
-        }
-    };
-    [section addFormRow:row];
-    // 邮箱 2-100
-    row = [XLFormRowDescriptor formRowDescriptorWithTag:XWRegisterEmailTF rowType:XLFormRowDescriptorTypeEmail title:@"＊"];
-    row.cellClass = [XWTextFieldCell class];
-    row.textFieldMaxNumberOfCharacters = @30;
-    [row.cellConfigAtConfigure setObject:@"请输入邮箱" forKey:@"textField.placeholder"];
-    [row.cellConfigAtConfigure setObject:@(NSTextAlignmentRight) forKey:@"textField.textAlignment"];
-    row.required = YES;
-    row.onChangeBlock = ^(id  _Nullable oldValue, id  _Nullable newValue, XLFormRowDescriptor * _Nonnull rowDescriptor) {
-        if (newValue) {
-            weakSelf.registerModel.email = [NSString stringWithFormat:@"%@",newValue];
-        }else{
-            weakSelf.registerModel.email = nil;
-        }
-    };
-    [section addFormRow:row];
-    // 手机 2-100
-    row = [XLFormRowDescriptor formRowDescriptorWithTag:XWRegisterMobileTF rowType:XLFormRowDescriptorTypePhone title:@"＊"];
-    row.cellClass = [XWTextFieldCell class];
-    row.textFieldMaxNumberOfCharacters = @13;
-    [row.cellConfigAtConfigure setObject:@"请输入手机" forKey:@"textField.placeholder"];
-    [row.cellConfigAtConfigure setObject:@(NSTextAlignmentRight) forKey:@"textField.textAlignment"];
-    row.required = YES;
-    row.onChangeBlock = ^(id  _Nullable oldValue, id  _Nullable newValue, XLFormRowDescriptor * _Nonnull rowDescriptor) {
-        if (newValue) {
-            weakSelf.registerModel.mobile = [NSString stringWithFormat:@"%@",newValue];
-        }else{
-            weakSelf.registerModel.mobile = nil;
-        }
-    };
-    [section addFormRow:row];
-    // 固定电话 2-100
-    row = [XLFormRowDescriptor formRowDescriptorWithTag:XWRegisterMobileTF rowType:XLFormRowDescriptorTypeAccount title:@"＊"];
-    row.cellClass = [XWTextFieldCell class];
-    row.textFieldMaxNumberOfCharacters = @13;
-    [row.cellConfigAtConfigure setObject:@"请输入固定电话xxxx-xxxxxxxx" forKey:@"textField.placeholder"];
-    [row.cellConfigAtConfigure setObject:@(NSTextAlignmentRight) forKey:@"textField.textAlignment"];
-    row.required = YES;
-    row.onChangeBlock = ^(id  _Nullable oldValue, id  _Nullable newValue, XLFormRowDescriptor * _Nonnull rowDescriptor) {
-        if (newValue) {
-            weakSelf.registerModel.telephone = [NSString stringWithFormat:@"%@",newValue];
-        }else{
-            weakSelf.registerModel.telephone = nil;
-        }
-    };
-    [section addFormRow:row];
-    
-    [self.form addFormSection:section];
-    NSLog(@"%@",self.form.formSections);
-    
-    [self addSection1];
-}
-- (void)addSection1{
-    XLFormSectionDescriptor *section = [XLFormSectionDescriptor formSectionWithTitle:@"服务类别"];
+    XLFormSectionDescriptor *section = [XLFormSectionDescriptor formSection];
     XLFormRowDescriptor * row;
     
-    NSArray *array = @[@"我要贷款",@"创业创新",@"知识产权",@"共享会计",@"法律服务",@"优惠政策",@"ISO认证",@"展会服务",@"工商注册",@"其他服务"];
-    for (int i = 0; i < array.count; i ++) {
-        row = [XLFormRowDescriptor formRowDescriptorWithTag:[NSString stringWithFormat:@"tag%d",i] rowType:XLFormRowDescriptorTypeText title:array[i]];
-        row.cellClass = [XWButtonViewCell class];
-        row.value = @(NO);
-        [section addFormRow:row];
-    }
-    
+    row = [XLFormRowDescriptor formRowDescriptorWithTag:@"QUESTION" rowType:XLFormRowDescriptorTypeSelectorActionSheet title:@"＊"];
+    row.cellClass = [XWQuestionViewCell class];
+    row.action.formSelector = @selector(selectAction:);
+    row.value = IsStrEmpty(self.registerModel.question)?@"请设置密码提示问题":self.registerModel.question;
+    [section addFormRow:row];
+    row = [XLFormRowDescriptor formRowDescriptorWithTag:@"ANSWER" rowType:XLFormRowDescriptorTypePhone title:@"＊"];
+    row.cellClass = [XWTextFieldCell class];
+    row.textFieldMaxNumberOfCharacters = @13;
+    [row.cellConfigAtConfigure setObject:@"请输入密保提示答案" forKey:@"textField.placeholder"];
+    [row.cellConfigAtConfigure setObject:@(NSTextAlignmentRight) forKey:@"textField.textAlignment"];
+    row.required = YES;
+    row.lineHidden = YES;
+    row.onChangeBlock = ^(id  _Nullable oldValue, id  _Nullable newValue, XLFormRowDescriptor * _Nonnull rowDescriptor) {
+        if (newValue) {
+            weakSelf.registerModel.answer = [NSString stringWithFormat:@"%@",newValue];
+        }else{
+            weakSelf.registerModel.answer = nil;
+        }
+    };
+    [section addFormRow:row];
     [self.form addFormSection:section];
 }
+#pragma mark - row点击事件
+- (void)selectAction:(XLFormRowDescriptor *)rowDescriptor{
+    [self.view endEditing:YES];
+    WS(weakSelf);
+    if ([rowDescriptor.tag isEqualToString:@"QUESTION"]){
+        NSArray *array = @[@"您最喜欢的颜色是什么？",@"您父亲的姓名是什么？",@"您母亲的姓名是什么？",@"您出生年月是几月几日？"];
+        MKActionSheet *sheet = [[MKActionSheet alloc] initWithTitle:nil buttonTitleArray:array selectType:MKActionSheetSelectType_selected];
+        
+        NSInteger index = [array indexOfObject:_registerModel.question];
+        sheet.selectedIndex = index;
+        sheet.needCancelButton = NO;
+        sheet.showAccessory = YES;
+        [sheet showWithBlock:^(MKActionSheet *actionSheet, NSInteger buttonIndex) {
+            NSLog(@"button Index : %ld",(long)buttonIndex);
+            weakSelf.registerModel.question = array[buttonIndex];
+            rowDescriptor.value = array[buttonIndex];
+            [weakSelf.tableView reloadData];
+        }];
+    }
+}
+//- (void)addSection0{
+//    XLFormDescriptor * formDescriptor = [XLFormDescriptor formDescriptor];
+//    self.form = formDescriptor;
+//    XLFormSectionDescriptor * section;
+//    XLFormRowDescriptor * row;
+//
+//    WS(weakSelf);
+//    // 基本信息 Section
+//    section = [XLFormSectionDescriptor formSection];
+//    // 账号 1-50
+//    row = [XLFormRowDescriptor formRowDescriptorWithTag:XWRegisterAccountTF rowType:XLFormRowDescriptorTypeAccount title:@"＊"];
+//    row.cellClass = [XWTextFieldCell class];
+//    row.textFieldMaxNumberOfCharacters = @20;
+//    [row.cellConfigAtConfigure setObject:@"请输入账号" forKey:@"textField.placeholder"];
+//    row.onChangeBlock = ^(id  _Nullable oldValue, id  _Nullable newValue, XLFormRowDescriptor * _Nonnull rowDescriptor) {
+//        if (newValue) {
+//            weakSelf.registerModel.name = [NSString stringWithFormat:@"%@",newValue];
+//        }else{
+//            weakSelf.registerModel.name = nil;
+//        }
+//    };
+//    row.required = YES;
+//    [section addFormRow:row];
+//
+//    // 密码 2-50
+//    row = [XLFormRowDescriptor formRowDescriptorWithTag:XWRegisterPasswordTF rowType:XLFormRowDescriptorTypePassword title:@"＊"];
+//    row.cellClass = [XWTextFieldCell class];
+//    row.textFieldMaxNumberOfCharacters = @20;
+//    [row.cellConfigAtConfigure setObject:@"请输入密码" forKey:@"textField.placeholder"];
+//    row.required = YES;
+//    row.onChangeBlock = ^(id  _Nullable oldValue, id  _Nullable newValue, XLFormRowDescriptor * _Nonnull rowDescriptor) {
+//        if (newValue) {
+//            weakSelf.registerModel.pwd = [NSString stringWithFormat:@"%@",newValue];
+//        }else{
+//            weakSelf.registerModel.pwd = nil;
+//        }
+//    };
+//    [section addFormRow:row];
+//    // 密码 2-10
+//    row = [XLFormRowDescriptor formRowDescriptorWithTag:XWRegisterRePasswordTF rowType:XLFormRowDescriptorTypePassword title:@"＊"];
+//    row.cellClass = [XWTextFieldCell class];
+//    row.textFieldMaxNumberOfCharacters = @20;
+//    [row.cellConfigAtConfigure setObject:@"请再次输入密码" forKey:@"textField.placeholder"];
+//    row.required = YES;
+//    row.onChangeBlock = ^(id  _Nullable oldValue, id  _Nullable newValue, XLFormRowDescriptor * _Nonnull rowDescriptor) {
+//        if (newValue) {
+//            weakSelf.registerModel.confirmPwd = [NSString stringWithFormat:@"%@",newValue];
+//        }else{
+//            weakSelf.registerModel.confirmPwd = nil;
+//        }
+//    };
+//    [section addFormRow:row];
+//    // 公司名称 2-50
+//    row = [XLFormRowDescriptor formRowDescriptorWithTag:XWRegisterCompanyNameTF rowType:XLFormRowDescriptorTypeText title:@"＊"];
+//    row.cellClass = [XWTextFieldCell class];
+//    row.textFieldMaxNumberOfCharacters = @30;
+//    [row.cellConfigAtConfigure setObject:@"请输入公司名称" forKey:@"textField.placeholder"];
+//    [row.cellConfigAtConfigure setObject:@(NSTextAlignmentRight) forKey:@"textField.textAlignment"];
+//    row.required = YES;
+//    row.onChangeBlock = ^(id  _Nullable oldValue, id  _Nullable newValue, XLFormRowDescriptor * _Nonnull rowDescriptor) {
+//        if (newValue) {
+//            weakSelf.registerModel.orgName = [NSString stringWithFormat:@"%@",newValue];
+//        }else{
+//            weakSelf.registerModel.orgName = nil;
+//        }
+//    };
+//    [section addFormRow:row];
+//    // 公司性质 2-15
+//    row = [XLFormRowDescriptor formRowDescriptorWithTag:XWRegisterCompanyNatureTF rowType:XLFormRowDescriptorTypeText title:@"＊"];
+//    row.cellClass = [XWTextFieldCell class];
+//    row.textFieldMaxNumberOfCharacters = @20;
+//    [row.cellConfigAtConfigure setObject:@"请输入公司性质" forKey:@"textField.placeholder"];
+//    [row.cellConfigAtConfigure setObject:@(NSTextAlignmentRight) forKey:@"textField.textAlignment"];
+//    row.required = YES;
+//    row.onChangeBlock = ^(id  _Nullable oldValue, id  _Nullable newValue, XLFormRowDescriptor * _Nonnull rowDescriptor) {
+//        if (newValue) {
+//            weakSelf.registerModel.orgType = [NSString stringWithFormat:@"%@",newValue];
+//        }else{
+//            weakSelf.registerModel.orgType = nil;
+//        }
+//    };
+//    [section addFormRow:row];
+//    // 组织机构代码证号或社会信用代码 2-15
+//    row = [XLFormRowDescriptor formRowDescriptorWithTag:XWRegisterOrgCodeTF rowType:XLFormRowDescriptorTypeNumber title:@"＊"];
+//    row.cellClass = [XWTextFieldCell class];
+//    row.textFieldMaxNumberOfCharacters = @20;
+//    [row.cellConfigAtConfigure setObject:self.type==4?@"请输入组织机构代码证号或社会信用代码":@"请输入组织机构代码证号" forKey:@"textField.placeholder"];
+//    [row.cellConfigAtConfigure setObject:@(NSTextAlignmentRight) forKey:@"textField.textAlignment"];
+//    row.required = YES;
+//    row.onChangeBlock = ^(id  _Nullable oldValue, id  _Nullable newValue, XLFormRowDescriptor * _Nonnull rowDescriptor) {
+//        if (newValue) {
+//            weakSelf.registerModel.orgCode = [NSString stringWithFormat:@"%@",newValue];
+//        }else{
+//            weakSelf.registerModel.orgCode = nil;
+//        }
+//    };
+//    [section addFormRow:row];
+//    // 联系人 5-50
+//    row = [XLFormRowDescriptor formRowDescriptorWithTag:XWRegisterLinkManTF rowType:XLFormRowDescriptorTypeText title:@"＊"];
+//    row.cellClass = [XWTextFieldCell class];
+//    row.textFieldMaxNumberOfCharacters = @20;
+//    [row.cellConfigAtConfigure setObject:@"请输入联系人" forKey:@"textField.placeholder"];
+//    [row.cellConfigAtConfigure setObject:@(NSTextAlignmentRight) forKey:@"textField.textAlignment"];
+//    row.required = YES;
+//    [row addValidator:[XLFormValidator emailValidator]];
+//    row.onChangeBlock = ^(id  _Nullable oldValue, id  _Nullable newValue, XLFormRowDescriptor * _Nonnull rowDescriptor) {
+//        if (newValue) {
+//            weakSelf.registerModel.contact = [NSString stringWithFormat:@"%@",newValue];
+//        }else{
+//            weakSelf.registerModel.contact = nil;
+//        }
+//    };
+//    [section addFormRow:row];
+//    // 邮箱 2-100
+//    row = [XLFormRowDescriptor formRowDescriptorWithTag:XWRegisterEmailTF rowType:XLFormRowDescriptorTypeEmail title:@"＊"];
+//    row.cellClass = [XWTextFieldCell class];
+//    row.textFieldMaxNumberOfCharacters = @30;
+//    [row.cellConfigAtConfigure setObject:@"请输入邮箱" forKey:@"textField.placeholder"];
+//    [row.cellConfigAtConfigure setObject:@(NSTextAlignmentRight) forKey:@"textField.textAlignment"];
+//    row.required = YES;
+//    row.onChangeBlock = ^(id  _Nullable oldValue, id  _Nullable newValue, XLFormRowDescriptor * _Nonnull rowDescriptor) {
+//        if (newValue) {
+//            weakSelf.registerModel.email = [NSString stringWithFormat:@"%@",newValue];
+//        }else{
+//            weakSelf.registerModel.email = nil;
+//        }
+//    };
+//    [section addFormRow:row];
+//    // 手机 2-100
+//    row = [XLFormRowDescriptor formRowDescriptorWithTag:XWRegisterMobileTF rowType:XLFormRowDescriptorTypePhone title:@"＊"];
+//    row.cellClass = [XWTextFieldCell class];
+//    row.textFieldMaxNumberOfCharacters = @13;
+//    [row.cellConfigAtConfigure setObject:@"请输入手机" forKey:@"textField.placeholder"];
+//    [row.cellConfigAtConfigure setObject:@(NSTextAlignmentRight) forKey:@"textField.textAlignment"];
+//    row.required = YES;
+//    row.onChangeBlock = ^(id  _Nullable oldValue, id  _Nullable newValue, XLFormRowDescriptor * _Nonnull rowDescriptor) {
+//        if (newValue) {
+//            weakSelf.registerModel.mobile = [NSString stringWithFormat:@"%@",newValue];
+//        }else{
+//            weakSelf.registerModel.mobile = nil;
+//        }
+//    };
+//    [section addFormRow:row];
+//    // 固定电话 2-100
+//    row = [XLFormRowDescriptor formRowDescriptorWithTag:XWRegisterMobileTF rowType:XLFormRowDescriptorTypeAccount title:@"＊"];
+//    row.cellClass = [XWTextFieldCell class];
+//    row.textFieldMaxNumberOfCharacters = @13;
+//    [row.cellConfigAtConfigure setObject:@"请输入固定电话xxxx-xxxxxxxx" forKey:@"textField.placeholder"];
+//    [row.cellConfigAtConfigure setObject:@(NSTextAlignmentRight) forKey:@"textField.textAlignment"];
+//    row.required = YES;
+//    row.onChangeBlock = ^(id  _Nullable oldValue, id  _Nullable newValue, XLFormRowDescriptor * _Nonnull rowDescriptor) {
+//        if (newValue) {
+//            weakSelf.registerModel.telephone = [NSString stringWithFormat:@"%@",newValue];
+//        }else{
+//            weakSelf.registerModel.telephone = nil;
+//        }
+//    };
+//    [section addFormRow:row];
+//
+//    [self.form addFormSection:section];
+//    NSLog(@"%@",self.form.formSections);
+//
+//    [self addSection1];
+//}
+//- (void)addSection1{
+//    XLFormSectionDescriptor *section = [XLFormSectionDescriptor formSectionWithTitle:@"服务类别"];
+//    XLFormRowDescriptor * row;
+//
+//    NSArray *array = @[@"我要贷款",@"创业创新",@"知识产权",@"共享会计",@"法律服务",@"优惠政策",@"ISO认证",@"展会服务",@"工商注册",@"其他服务"];
+//    for (int i = 0; i < array.count; i ++) {
+//        row = [XLFormRowDescriptor formRowDescriptorWithTag:[NSString stringWithFormat:@"tag%d",i] rowType:XLFormRowDescriptorTypeText title:array[i]];
+//        row.cellClass = [XWButtonViewCell class];
+//        row.value = @(NO);
+//        [section addFormRow:row];
+//    }
+//
+//    [self.form addFormSection:section];
+//}
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 100*kScaleH;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    if (section == 0) {
+//    if (section == 0) {
         return 8.0f;
-    }else{
-        return 70*kScaleH;
-    }
+//    }else{
+//        return 70*kScaleH;
+//    }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    if (self.type==6) {
+//    if (self.type==6) {
         //一般用户
-        return 450*kScaleH;
-    }else{
-        if (section==1){
-            return 250*kScaleH;
+        if (section == 0) {
+            return 8.0f;
         }else{
-            return 0.01f;
+            return 350*kScaleH;
         }
-    }
+//    }else{
+//        if (section==1){
+//            return 250*kScaleH;
+//        }else{
+//            return 0.01f;
+//        }
+//    }
 //    return 0.01f;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
     UIView *footer = [[UIView alloc] init];
-    if ((section==0&&self.type==6) || (section==1&&self.type!=6)) {
+    if (section==1&&self.type==6) {
         footer = self.footerView;
     }
     return footer;
@@ -375,32 +431,34 @@
         //    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         NSString *url;
         NSMutableDictionary *params = [NSMutableDictionary dictionary];
-        if (self.type == 6) {
+//        if (self.type == 6) {
             url = kRegisterGeneralUser;
             [params setValuesForKeysWithDictionary:@{@"name":_registerModel.name,
                                                      @"pwd":_registerModel.pwd,
                                                      @"confirmPwd":_registerModel.confirmPwd,
                                                      @"contact":_registerModel.contact,
-                                                     @"mobile":_registerModel.mobile
-                                                     }];
-        }else{
-            url = kRegisterUser;
-            [params setValuesForKeysWithDictionary:@{@"name":_registerModel.name,
-                                                     @"pwd":_registerModel.pwd,
-                                                     @"confirmPwd":_registerModel.confirmPwd,
-                                                     @"contact":_registerModel.contact,
                                                      @"mobile":_registerModel.mobile,
-                                                     @"orgName":_registerModel.orgName,
-                                                     @"orgType":_registerModel.orgType,
-                                                     @"orgCode":_registerModel.orgCode,
-                                                     @"email":_registerModel.email,
-                                                     @"telephone":_registerModel.telephone,
-                                                     @"uType":self.type==4?@(2):@(1)//用户类型(1:企业服务商,2:小薇企业)
+                                                     @"question":_registerModel.question,
+                                                     @"answer":_registerModel.answer
                                                      }];
-            if (_typeArray.count > 0) {
-                [params setObject:_typeArray forKey:@"sTypeArr"];
-            }
-        }
+//        }else{
+//            url = kRegisterUser;
+//            [params setValuesForKeysWithDictionary:@{@"name":_registerModel.name,
+//                                                     @"pwd":_registerModel.pwd,
+//                                                     @"confirmPwd":_registerModel.confirmPwd,
+//                                                     @"contact":_registerModel.contact,
+//                                                     @"mobile":_registerModel.mobile,
+//                                                     @"orgName":_registerModel.orgName,
+//                                                     @"orgType":_registerModel.orgType,
+//                                                     @"orgCode":_registerModel.orgCode,
+//                                                     @"email":_registerModel.email,
+//                                                     @"telephone":_registerModel.telephone,
+//                                                     @"uType":self.type==4?@(2):@(1)//用户类型(1:企业服务商,2:小薇企业)
+//                                                     }];
+//            if (_typeArray.count > 0) {
+//                [params setObject:_typeArray forKey:@"sTypeArr"];
+//            }
+//        }
         [RegisterModel registWithUrl:url params:params block:^(BOOL success) {
             if (success) {
 //                [self.navigationController popToRootViewControllerAnimated:YES];
@@ -443,6 +501,14 @@
         }
         if (![NSString valiMobileNum:_registerModel.mobile]) {
             [MBProgressHUD alertInfo:@"手机号格式不正确"];
+            return NO;
+        }
+        if (IsStrEmpty(_registerModel.question)) {
+            [MBProgressHUD alertInfo:@"请选择安全提示问题"];
+            return NO;
+        }
+        if (IsStrEmpty(_registerModel.answer)) {
+            [MBProgressHUD alertInfo:@"请输入安全提示答案"];
             return NO;
         }
         
@@ -622,7 +688,7 @@
     if (self.type == 6) {
         [self addSection2];
     }else{
-        [self addSection0];
+//        [self addSection0];
     }
     self.automaticallyAdjustsScrollViewInsets = YES;
 //    self.tableView.tableFooterView = self.footerView;

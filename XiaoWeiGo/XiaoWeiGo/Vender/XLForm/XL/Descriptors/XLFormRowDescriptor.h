@@ -58,6 +58,7 @@ typedef void(^XLDidEditBlock)(id __nullable oldValue,id __nullable newValue,XLFo
 @property (nonatomic) CGFloat height;
 @property (nonatomic, nullable) id rowEntity;
 @property (nonatomic, assign) BOOL editable;
+@property (nonatomic, assign) BOOL lineHidden;
 
 @property (nonatomic) NSNumber *textFieldMaxNumberOfCharacters;
 

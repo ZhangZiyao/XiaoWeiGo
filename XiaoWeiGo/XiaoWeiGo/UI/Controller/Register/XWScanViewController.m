@@ -50,9 +50,8 @@
     NSString *stringValue;
     if ([metadataObjects count] >0)
     {
-        WS(weakSelf);
+//        WS(weakSelf);
         [RWSoundManager palySoundName:@"saomiao.wav"];
-        
         
         AVMetadataMachineReadableCodeObject * metadataObject = [metadataObjects objectAtIndex:0];
         stringValue = metadataObject.stringValue;

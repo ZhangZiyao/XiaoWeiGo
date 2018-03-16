@@ -227,7 +227,7 @@
     };
     [section addFormRow:row];
     // 固定电话 2-100
-    row = [XLFormRowDescriptor formRowDescriptorWithTag:XWRegisterMobileTF rowType:XLFormRowDescriptorTypeAccount title:@"  "];
+    row = [XLFormRowDescriptor formRowDescriptorWithTag:XWRegisterPhoneTF rowType:XLFormRowDescriptorTypeAccount title:@"  "];
     row.cellClass = [XWTextFieldCell class];
     row.textFieldMaxNumberOfCharacters = @13;
     [row.cellConfigAtConfigure setObject:@"请输入固定电话xxxx-xxxxxxxx" forKey:@"textField.placeholder"];

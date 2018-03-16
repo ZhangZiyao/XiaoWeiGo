@@ -115,7 +115,7 @@
         make.height.mas_equalTo(90*kScaleH);
     }];
     self.question = array[0];
-    dropDown.openEnable = self.type==1?YES:NO;
+    dropDown.openEnable = YES;
     UITextField *_textField = [[UITextField alloc] init];
     _textField.delegate = self;
     _textField.placeholder = @"请填写答案";

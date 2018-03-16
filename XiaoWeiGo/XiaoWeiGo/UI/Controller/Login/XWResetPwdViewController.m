@@ -100,6 +100,10 @@
     }];
 }
 - (void)nextStep{
+    if (IsStrEmpty(APPDELEGATE.user.uId)) {
+        [MBProgressHUD alertInfo:@"暂时不可用"];
+        return;
+    }
     if (_pwdTF.text.length == 0) {
         [MBProgressHUD alertInfo:@"请输入新密码"];
         return;
@@ -116,6 +120,7 @@
         [MBProgressHUD alertInfo:@"两次密码输入不一致"];
         return;
     }
+    
     NSDictionary *params = @{@"uId":APPDELEGATE.user.uId,
                              @"question":self.question,
                              @"answer":self.answer,

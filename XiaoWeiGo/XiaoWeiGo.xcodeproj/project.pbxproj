@@ -188,7 +188,6 @@
 		174B78F4202C8F11002FDB23 /* XWRecommendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 174B78F3202C8F11002FDB23 /* XWRecommendViewController.m */; };
 		174B78F7202C9020002FDB23 /* XWMineInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 174B78F6202C9020002FDB23 /* XWMineInfoViewController.m */; };
 		174B78FA202C9246002FDB23 /* XWButtonViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 174B78F9202C9246002FDB23 /* XWButtonViewCell.m */; };
-		174B78FD202C94FB002FDB23 /* RegisterTagCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 174B78FC202C94FB002FDB23 /* RegisterTagCell.m */; };
 		174B7900202CA895002FDB23 /* RWValidateButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 174B78FF202CA894002FDB23 /* RWValidateButton.m */; };
 		174B7904202CA8B9002FDB23 /* TYTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 174B7903202CA8B9002FDB23 /* TYTimer.m */; };
 		174B7907202CB141002FDB23 /* HomeTabBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 174B7906202CB141002FDB23 /* HomeTabBaseViewController.m */; };
@@ -238,6 +237,12 @@
 		1788E0B4203C08ED00933CD5 /* DMDropDownMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 1788E0B3203C08ED00933CD5 /* DMDropDownMenu.m */; };
 		1788E0B7203C20EF00933CD5 /* XWSafetyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1788E0B6203C20EF00933CD5 /* XWSafetyViewController.m */; };
 		17915F38205A9829004E40CB /* XHInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 17915F36205A9828004E40CB /* XHInputView.m */; };
+		17B21A50205BB59B006881B5 /* XWQuestionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 17B21A4F205BB59B006881B5 /* XWQuestionViewCell.m */; };
+		17B21A5B205BB963006881B5 /* MKActionSheet.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 17B21A52205BB963006881B5 /* MKActionSheet.bundle */; };
+		17B21A5C205BB963006881B5 /* MKActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 17B21A54205BB963006881B5 /* MKActionSheet.m */; };
+		17B21A5D205BB963006881B5 /* MKActionSheetAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 17B21A56205BB963006881B5 /* MKActionSheetAdd.m */; };
+		17B21A5E205BB963006881B5 /* MKASOrientationConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 17B21A58205BB963006881B5 /* MKASOrientationConfig.m */; };
+		17B21A5F205BB963006881B5 /* MKASRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 17B21A5A205BB963006881B5 /* MKASRootViewController.m */; };
 		17D70A5E2025368C00122A11 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 17D70A5D2025368C00122A11 /* AppDelegate.mm */; };
 		17D70A642025368C00122A11 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17D70A622025368C00122A11 /* Main.storyboard */; };
 		17D70A662025368C00122A11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 17D70A652025368C00122A11 /* Assets.xcassets */; };
@@ -700,8 +705,6 @@
 		174B78F6202C9020002FDB23 /* XWMineInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XWMineInfoViewController.m; sourceTree = "<group>"; };
 		174B78F8202C9246002FDB23 /* XWButtonViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XWButtonViewCell.h; sourceTree = "<group>"; };
 		174B78F9202C9246002FDB23 /* XWButtonViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XWButtonViewCell.m; sourceTree = "<group>"; };
-		174B78FB202C94FB002FDB23 /* RegisterTagCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RegisterTagCell.h; sourceTree = "<group>"; };
-		174B78FC202C94FB002FDB23 /* RegisterTagCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RegisterTagCell.m; sourceTree = "<group>"; };
 		174B78FE202CA894002FDB23 /* RWValidateButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RWValidateButton.h; sourceTree = "<group>"; };
 		174B78FF202CA894002FDB23 /* RWValidateButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RWValidateButton.m; sourceTree = "<group>"; };
 		174B7902202CA8B9002FDB23 /* TYTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TYTimer.h; sourceTree = "<group>"; };
@@ -784,6 +787,17 @@
 		1788E0B6203C20EF00933CD5 /* XWSafetyViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XWSafetyViewController.m; sourceTree = "<group>"; };
 		17915F36205A9828004E40CB /* XHInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHInputView.m; sourceTree = "<group>"; };
 		17915F37205A9828004E40CB /* XHInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHInputView.h; sourceTree = "<group>"; };
+		17B21A4E205BB59B006881B5 /* XWQuestionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XWQuestionViewCell.h; sourceTree = "<group>"; };
+		17B21A4F205BB59B006881B5 /* XWQuestionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XWQuestionViewCell.m; sourceTree = "<group>"; };
+		17B21A52205BB963006881B5 /* MKActionSheet.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MKActionSheet.bundle; sourceTree = "<group>"; };
+		17B21A53205BB963006881B5 /* MKActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKActionSheet.h; sourceTree = "<group>"; };
+		17B21A54205BB963006881B5 /* MKActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKActionSheet.m; sourceTree = "<group>"; };
+		17B21A55205BB963006881B5 /* MKActionSheetAdd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKActionSheetAdd.h; sourceTree = "<group>"; };
+		17B21A56205BB963006881B5 /* MKActionSheetAdd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKActionSheetAdd.m; sourceTree = "<group>"; };
+		17B21A57205BB963006881B5 /* MKASOrientationConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKASOrientationConfig.h; sourceTree = "<group>"; };
+		17B21A58205BB963006881B5 /* MKASOrientationConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKASOrientationConfig.m; sourceTree = "<group>"; };
+		17B21A59205BB963006881B5 /* MKASRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKASRootViewController.h; sourceTree = "<group>"; };
+		17B21A5A205BB963006881B5 /* MKASRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKASRootViewController.m; sourceTree = "<group>"; };
 		17D70A592025368C00122A11 /* XiaoWeiGo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XiaoWeiGo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		17D70A5C2025368C00122A11 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		17D70A5D2025368C00122A11 /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
@@ -1653,6 +1667,22 @@
 			path = DMDropDownMenu;
 			sourceTree = "<group>";
 		};
+		17B21A51205BB963006881B5 /* MKActionSheet */ = {
+			isa = PBXGroup;
+			children = (
+				17B21A52205BB963006881B5 /* MKActionSheet.bundle */,
+				17B21A53205BB963006881B5 /* MKActionSheet.h */,
+				17B21A54205BB963006881B5 /* MKActionSheet.m */,
+				17B21A55205BB963006881B5 /* MKActionSheetAdd.h */,
+				17B21A56205BB963006881B5 /* MKActionSheetAdd.m */,
+				17B21A57205BB963006881B5 /* MKASOrientationConfig.h */,
+				17B21A58205BB963006881B5 /* MKASOrientationConfig.m */,
+				17B21A59205BB963006881B5 /* MKASRootViewController.h */,
+				17B21A5A205BB963006881B5 /* MKASRootViewController.m */,
+			);
+			path = MKActionSheet;
+			sourceTree = "<group>";
+		};
 		17D70A502025368C00122A11 = {
 			isa = PBXGroup;
 			children = (
@@ -1738,6 +1768,7 @@
 		17D70A90202538EC00122A11 /* Vender */ = {
 			isa = PBXGroup;
 			children = (
+				17B21A51205BB963006881B5 /* MKActionSheet */,
 				17915F37205A9828004E40CB /* XHInputView.h */,
 				17915F36205A9828004E40CB /* XHInputView.m */,
 				1782E104203D91C70058F008 /* CopyAbleLabel.h */,
@@ -2198,12 +2229,12 @@
 				17D70B7220271B4800122A11 /* XWTextFieldCell.m */,
 				174B78F8202C9246002FDB23 /* XWButtonViewCell.h */,
 				174B78F9202C9246002FDB23 /* XWButtonViewCell.m */,
-				174B78FB202C94FB002FDB23 /* RegisterTagCell.h */,
-				174B78FC202C94FB002FDB23 /* RegisterTagCell.m */,
 				1771116A2057F98800198860 /* XWLabelViewCell.h */,
 				1771116B2057F98800198860 /* XWLabelViewCell.m */,
 				1771116D205803D400198860 /* XWTextFieldViewCell.h */,
 				1771116E205803D400198860 /* XWTextFieldViewCell.m */,
+				17B21A4E205BB59B006881B5 /* XWQuestionViewCell.h */,
+				17B21A4F205BB59B006881B5 /* XWQuestionViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2575,6 +2606,7 @@
 				17386BAA20464AF5005B3271 /* FriendsSendsPicturesSelectBigNIcon@2x.png in Resources */,
 				17386CC62046610F005B3271 /* user@2x.png in Resources */,
 				17386BB520464AF5005B3271 /* VideoSendIcon@2x.png in Resources */,
+				17B21A5B205BB963006881B5 /* MKActionSheet.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2668,7 +2700,6 @@
 				17D70B64202710EA00122A11 /* XLFormRightDetailCell.m in Sources */,
 				17386BFB20464B5F005B3271 /* UINavigationBar+LLExt.m in Sources */,
 				17386C5E204651F3005B3271 /* LLClientManager.m in Sources */,
-				174B78FD202C94FB002FDB23 /* RegisterTagCell.m in Sources */,
 				1782DFF8203D87D20058F008 /* XWCommentHeaderView.m in Sources */,
 				17D70AC420253D3B00122A11 /* NSString+AttributedString.m in Sources */,
 				172CD7EE202DC3C6003A804B /* XWModel.m in Sources */,
@@ -2746,6 +2777,7 @@
 				174B78F4202C8F11002FDB23 /* XWRecommendViewController.m in Sources */,
 				983272DF203411C60027AA20 /* XWCommentViewCell.m in Sources */,
 				172CD808202DE2A6003A804B /* WSDatePickerView.m in Sources */,
+				17B21A5E205BB963006881B5 /* MKASOrientationConfig.m in Sources */,
 				17D70B54202710EA00122A11 /* XLFormStepCounterCell.m in Sources */,
 				17D70BB62027321600122A11 /* XWLawServiceViewController.m in Sources */,
 				173C4E2E2030627A00FE5DDB /* XWBaseHeaderView.m in Sources */,
@@ -2805,6 +2837,7 @@
 				171F7E2B202F2898006A42FC /* XWServiceDetailViewController.m in Sources */,
 				17D70AAD2025395D00122A11 /* UINavigationController+FDFullscreenPopGesture.m in Sources */,
 				173C4E252030255900FE5DDB /* XWTextTableViewCell.m in Sources */,
+				17B21A5D205BB963006881B5 /* MKActionSheetAdd.m in Sources */,
 				17D70AB32025396500122A11 /* UIColor+Extension.m in Sources */,
 				17386CD02046EAEE005B3271 /* XWReadDocViewController.m in Sources */,
 				17D70B68202710EA00122A11 /* XLFormRegexValidator.m in Sources */,
@@ -2822,6 +2855,7 @@
 				174B790B202CB864002FDB23 /* UserModel.m in Sources */,
 				172CD818202DFD94003A804B /* XWSupplyDetailViewController.m in Sources */,
 				17386C39204651B3005B3271 /* LLMessageModel.m in Sources */,
+				17B21A5F205BB963006881B5 /* MKASRootViewController.m in Sources */,
 				17386BB920464AF5005B3271 /* LLImageScrollView.m in Sources */,
 				17D70B4E202710EA00122A11 /* XLFormInlineSelectorCell.m in Sources */,
 				17D70B66202710EA00122A11 /* XLFormRowNavigationAccessoryView.m in Sources */,
@@ -2838,6 +2872,7 @@
 				17386C8620465652005B3271 /* LLMessageDateCell.m in Sources */,
 				172CD7EB202DC1A6003A804B /* YHTTPRequest.m in Sources */,
 				173C4E16202FF44F00FE5DDB /* XWOrgViewCell.m in Sources */,
+				17B21A50205BB59B006881B5 /* XWQuestionViewCell.m in Sources */,
 				17386C9E20465F0A005B3271 /* LLCollectionEmotionTip.m in Sources */,
 				174B7919202CBC4A002FDB23 /* MySupplyViewController.m in Sources */,
 				17386BF520464B5F005B3271 /* NSDate+LLExt.m in Sources */,
@@ -2898,6 +2933,7 @@
 				17D70AB820253C3F00122A11 /* UIFont+RWFont.m in Sources */,
 				17386BFE20464B5F005B3271 /* UITextView+LLDebugOnly.m in Sources */,
 				17D70BAA202731CF00122A11 /* XWSearchViewController.m in Sources */,
+				17B21A5C205BB963006881B5 /* MKActionSheet.m in Sources */,
 				17386C8A20465652005B3271 /* LLMessageTextCell.m in Sources */,
 				17386C60204651F4005B3271 /* LLSDKError.m in Sources */,
 				17386C44204651D6005B3271 /* LLPushOptions.m in Sources */,
