@@ -146,7 +146,7 @@
         case 1:
         {
             XWMapViewController *mapVc = [XWMapViewController new];
-            mapVc.address = self.model.sAddress;
+            mapVc.address = self.cmodel.sAddress;
             [self.navigationController pushViewController:mapVc animated:YES];
         }
             break;

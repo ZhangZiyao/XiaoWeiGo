@@ -244,6 +244,7 @@
 		17B21A5E205BB963006881B5 /* MKASOrientationConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 17B21A58205BB963006881B5 /* MKASOrientationConfig.m */; };
 		17B21A5F205BB963006881B5 /* MKASRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 17B21A5A205BB963006881B5 /* MKASRootViewController.m */; };
 		17B21A62205BCD59006881B5 /* XWCompanyTypeListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 17B21A61205BCD59006881B5 /* XWCompanyTypeListController.m */; };
+		17B21A65205BFB20006881B5 /* NaviViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 17B21A64205BFB20006881B5 /* NaviViewController.m */; };
 		17D70A5E2025368C00122A11 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 17D70A5D2025368C00122A11 /* AppDelegate.mm */; };
 		17D70A642025368C00122A11 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17D70A622025368C00122A11 /* Main.storyboard */; };
 		17D70A662025368C00122A11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 17D70A652025368C00122A11 /* Assets.xcassets */; };
@@ -801,6 +802,8 @@
 		17B21A5A205BB963006881B5 /* MKASRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKASRootViewController.m; sourceTree = "<group>"; };
 		17B21A60205BCD59006881B5 /* XWCompanyTypeListController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XWCompanyTypeListController.h; sourceTree = "<group>"; };
 		17B21A61205BCD59006881B5 /* XWCompanyTypeListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XWCompanyTypeListController.m; sourceTree = "<group>"; };
+		17B21A63205BFB20006881B5 /* NaviViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NaviViewController.h; sourceTree = "<group>"; };
+		17B21A64205BFB20006881B5 /* NaviViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NaviViewController.m; sourceTree = "<group>"; };
 		17D70A592025368C00122A11 /* XiaoWeiGo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XiaoWeiGo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		17D70A5C2025368C00122A11 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		17D70A5D2025368C00122A11 /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
@@ -2434,6 +2437,8 @@
 				98840D34202A000E008D9892 /* XWMapViewController.mm */,
 				175267562043F015006BB0D9 /* RouteAnnotation.h */,
 				175267552043F015006BB0D9 /* RouteAnnotation.mm */,
+				17B21A63205BFB20006881B5 /* NaviViewController.h */,
+				17B21A64205BFB20006881B5 /* NaviViewController.m */,
 			);
 			path = "地图";
 			sourceTree = "<group>";
@@ -2884,6 +2889,7 @@
 				17386CB620465FEF005B3271 /* LLAudioManager.m in Sources */,
 				17D70AB22025396500122A11 /* UIImage+RWImage.m in Sources */,
 				17D70B4B202710EA00122A11 /* XLFormDateCell.m in Sources */,
+				17B21A65205BFB20006881B5 /* NaviViewController.m in Sources */,
 				17D70B7F20272B7800122A11 /* RequestManager.m in Sources */,
 				171F7E15202EF2DB006A42FC /* XWDownFileViewController.m in Sources */,
 				177111672057E74600198860 /* RWSoundManager.m in Sources */,
