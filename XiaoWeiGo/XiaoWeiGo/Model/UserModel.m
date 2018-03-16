@@ -116,6 +116,9 @@ static NSString *const UMSG     = @"msg";
                 NSLog(@"环信注册成功");
             }
             block(YES);
+        }else if ([message intValue] == -1){
+            [MBProgressHUD alertInfo:@"注册成功"];//用户注册成功,但需要管理员审核(用户不可用)
+            block(YES);
         }else if ([message containsString:@"repeat"]){
             [MBProgressHUD alertInfo:@"用户名已被注册"];
             block(NO);
@@ -124,6 +127,9 @@ static NSString *const UMSG     = @"msg";
             block(NO);
         }else if ([message containsString:@"failed"]){
             [MBProgressHUD alertInfo:@"注册失败，请稍后重试"];
+            block(NO);
+        }else if ([message containsString:@"typeError"]){
+            [MBProgressHUD alertInfo:@"注册用户类型出错"];
             block(NO);
         }else{
             [MBProgressHUD alertInfo:message];

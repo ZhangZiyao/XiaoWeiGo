@@ -10,9 +10,10 @@
 
 @interface XWCompanyTypeListController ()<UITableViewDelegate,UITableViewDataSource>
 {
-    NSMutableArray *dataSource;
+    
 }
 @property (nonatomic,strong) UITableView *tableView;
+@property (nonatomic,strong) NSMutableArray *dataSource;
 @end
 
 @implementation XWCompanyTypeListController
@@ -20,13 +21,13 @@
     [super viewDidLoad];
     self.title = @"行业类别";
     [self showBackItem];
-    dataSource = [NSMutableArray array];
+    self.dataSource = [NSMutableArray array];
     [self getCompanyTypeList];
+    [self layoutSubview];
 }
 
 - (void)layoutSubview{
     [self.view addSubview:self.tableView];
-    
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view);
         make.top.equalTo(self.view);
@@ -40,25 +41,25 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"oneList"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+//        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.textLabel.font = [UIFont rw_regularFontSize:15];
         cell.textLabel.textColor = UIColorFromRGB16(0x666666);
     }
     
-    cell.textLabel.text = [[dataSource objectAtIndex:indexPath.row] objectForKey:@"typeName"];
+    cell.textLabel.text = [[self.dataSource objectAtIndex:indexPath.row] objectForKey:@"typeName"];
     
     return cell;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return dataSource.count;
+    return self.dataSource.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 100.0*kScaleH;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    if (dataSource.count > 0) {
-        self.selectCompanyBlock([[dataSource[indexPath.row] objectForKey:@"ID"] intValue], [dataSource[indexPath.row] objectForKey:@"typeName"]);
+    if (self.dataSource.count > 0) {
+        self.selectCompanyBlock([[self.dataSource[indexPath.row] objectForKey:@"ID"] intValue], [self.dataSource[indexPath.row] objectForKey:@"typeName"]);
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
@@ -67,7 +68,9 @@
         _tableView = [[UITableView alloc] init];
         _tableView.delegate = self;
         _tableView.dataSource = self;
-        
+        _tableView.estimatedRowHeight = 0;
+        _tableView.estimatedSectionFooterHeight = 0;
+        _tableView.estimatedSectionHeaderHeight = 0;
     }
     return _tableView;
 }
@@ -85,7 +88,7 @@
         //        if (companyId) {
         //            [self commitRegisterInfo];
         //        }
-        dataSource = [NSMutableArray arrayWithArray:responseData];
+        self.dataSource = [NSMutableArray arrayWithArray:responseData];
         [self.tableView reloadData];
         
     } fail:^(NSError *error) {

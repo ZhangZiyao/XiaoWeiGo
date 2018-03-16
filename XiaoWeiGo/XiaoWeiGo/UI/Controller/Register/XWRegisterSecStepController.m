@@ -17,9 +17,7 @@
 #import "XWCompanyTypeListController.h"
 
 @interface XWRegisterSecStepController ()
-{
-    NSArray *companyTypeArray;
-}
+
 @property (nonatomic, strong) NSMutableArray *typeArray;
 @property (nonatomic, strong) RegisterModel *registerModel;
 @property (nonatomic, strong) UIView *footerView;
@@ -45,7 +43,7 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     _registerModel.orgCode = [self.dict objectForKey:@"code"];
-    _registerModel.orgType = [self.dict objectForKey:@"有限责任公司"];
+    _registerModel.orgType = @"有限责任公司";//
     _registerModel.regOrg = [self.dict objectForKey:@"rcode"];
     _registerModel.orgName = [self.dict objectForKey:@"name"];
     _registerModel.operation = [self.dict objectForKey:@"fanwei"];
@@ -299,6 +297,13 @@
     }else if ([rowDescriptor.tag isEqualToString:@"COMPANYTYPE"]){
         
         XWCompanyTypeListController *listVc = [[XWCompanyTypeListController alloc] init];
+        WS(weakSelf);
+        listVc.selectCompanyBlock = ^(int cId, NSString *cType) {
+            weakSelf.registerModel.companyId = cId;
+            weakSelf.registerModel.companyTypeName = cType;
+            rowDescriptor.value = cType;
+            [weakSelf.tableView reloadData];
+        };
         [self.navigationController pushViewController:listVc animated:YES];
     }
 }
@@ -374,7 +379,7 @@
 #pragma mark - 提交注册请求
 - (void)commitRegisterRequest{
     if ([self verification] == YES) {
-        
+        [self checkCompany];
     }
 }
 #pragma mark -
@@ -391,8 +396,9 @@
         }else{
             //用户名不存在
             _registerModel.auditing = @"no";
-            [MBProgressHUD alertInfo:@"用户名不存在"];
         }
+        //正式提交注册请求
+        [self commitRegisterInfo];
         
     } fail:^(NSError *error) {
         
@@ -422,8 +428,8 @@
                                                  @"reservedtelephone":_registerModel.reservedtelephone,//预留电话
                                                  @"question":_registerModel.question,//密保提问
                                                  @"answer":_registerModel.answer,//密保回答
-                                                 @"auditing":@"",//是否审核通过(yes为审核通过,这个值 的获取需要以调用CheckCompany接口的返回情况而定)
-                                                 @"uType":self.type==4?@(2):@(1)//用户类型(1:企业服务商,2:小薇企业)
+                                                 @"auditing":@"yes",//是否审核通过(yes为审核通过,这个值 的获取需要以调用CheckCompany接口的返回情况而定)
+                                                 @"uType":@(2)//用户类型(1:企业服务商,2:小薇企业)
                                                  }];
     }else{
         //企业服务商
@@ -438,14 +444,14 @@
                                                  @"mobile":_registerModel.mobile,
                                                  @"email":IsStrEmpty(_registerModel.email)?@"":_registerModel.email,
                                                  @"telephone":IsStrEmpty(_registerModel.telephone)?@"":_registerModel.telephone,
-                                                 @"sType":@"1",
+//                                                 @"sType":@(_registerModel.companyId),
                                                  @"comCode":_registerModel.regOrg,//企业注册号
                                                  @"operation":_registerModel.operation,//经营范围
                                                  @"reservedtelephone":_registerModel.reservedtelephone,//预留电话
-                                                 @"question":@"",//密保提问
-                                                 @"answer":@"",//密保回答
-                                                 @"auditing":@"",//是否审核通过(yes为审核通过,这个值 的获取需要以调用CheckCompany接口的返回情况而定)
-                                                 @"uType":self.type==4?@(2):@(1)//用户类型(1:企业服务商,2:小薇企业)
+                                                 @"question":_registerModel.question,//密保提问
+                                                 @"answer":_registerModel.answer,//密保回答
+                                                 @"auditing":@"yes",//是否审核通过(yes为审核通过,这个值 的获取需要以调用CheckCompany接口的返回情况而定)
+                                                 @"uType":@(1)//用户类型(1:企业服务商,2:小薇企业)
                                                  }];
         if (_typeArray.count > 0) {
             [params setObject:_typeArray forKey:@"sTypeArr"];
@@ -462,7 +468,10 @@
 }
 #pragma mark - 数据验证
 - (BOOL)verification{
-    
+    if (IsStrEmpty(_registerModel.companyTypeName)) {
+        [MBProgressHUD alertInfo:@"请选择行业类别"];
+        return NO;
+    }
     if (IsStrEmpty(_registerModel.name)) {
         [MBProgressHUD alertInfo:@"请输入账号"];
         return NO;
@@ -545,6 +554,7 @@
                 return NO;
             }
         }
+        
         if (IsStrEmpty(_registerModel.question)) {
             [MBProgressHUD alertInfo:@"请选择安全提示问题"];
             return NO;
