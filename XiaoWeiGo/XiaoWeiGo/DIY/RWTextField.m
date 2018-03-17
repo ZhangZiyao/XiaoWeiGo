@@ -41,7 +41,7 @@
     //光标颜色
 //    self.tintColor= RWTextColor;
     
-    [self setTintColor:[UIColor colorWithHex:@"999999"]];
+    [self setTintColor:[UIColor textGrayColor]];
     [self setTintAdjustmentMode:UIViewTintAdjustmentModeNormal];
     self.clearButtonMode = UITextFieldViewModeWhileEditing;
     self.autocapitalizationType = UITextAutocapitalizationTypeNone;
@@ -81,7 +81,7 @@
     field.font = font;
     field.textColor = color;
 //    field.tintColor = RWTextColor;
-    [field setTintColor:[UIColor colorWithHex:@"999999"]];
+    [field setTintColor:[UIColor textGrayColor]];
     [field setTintAdjustmentMode:UIViewTintAdjustmentModeNormal];
     field.keyboardType = keyboardType;
     //    field.font = [UIFont systemFontOfSize:16];
@@ -100,7 +100,7 @@
     //    field.textColor = color;
     field.keyboardType = keyboardType;
 //    field.tintColor = UIColorFromRGB16(0x666666);
-    [field setTintColor:[UIColor colorWithHex:@"999999"]];
+    [field setTintColor:[UIColor textGrayColor]];
     [field setTintAdjustmentMode:UIViewTintAdjustmentModeNormal];
     //    field.font = [UIFont systemFontOfSize:16];
     field.textColor = UIColorFromRGB16(0x666666);
@@ -116,7 +116,7 @@
     field.placeholder = placeHolder;
     field.font = [UIFont rw_regularFontSize:16];
     field.textColor = UIColorFromRGB16(0x666666);
-    [field setTintColor:[UIColor colorWithHex:@"999999"]];
+    [field setTintColor:[UIColor textGrayColor]];
     [field setTintAdjustmentMode:UIViewTintAdjustmentModeNormal];
     field.clearButtonMode = UITextFieldViewModeWhileEditing;
     [field setAutocapitalizationType:UITextAutocapitalizationTypeNone];

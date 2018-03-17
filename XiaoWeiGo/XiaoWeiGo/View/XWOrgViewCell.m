@@ -16,7 +16,7 @@
     self.titleLabel.text = _smodel.sTitle;;
     self.detailLabel0.text = StringPush(@"服务类型：", _smodel.serviceName, @"");
     self.detailLabel1.text = StringPush(@"机构名称：", _smodel.orgName, @"");
-    self.leftImageView.image = [UIImage imageNamed:[NSString getImageNameWithCategory:_smodel.category]];
+    self.leftImageView.image = (self.cType==20)?[UIImage imageNamed:@"suggest_placeholder"] :[UIImage imageNamed:[NSString getImageNameWithCategory:_smodel.category]];
 }
 - (void)awakeFromNib {
     [super awakeFromNib];

@@ -90,7 +90,7 @@
     if (!_firstLabel) {
         _firstLabel = [[UILabel alloc] init];
         _firstLabel.text = @"转账方式一：";
-        _firstLabel.textColor = [UIColor colorWithHex:@"666666"];
+        _firstLabel.textColor = [UIColor textBlackColor];
         _firstLabel.font = [UIFont rw_mediumFontSize:20.0];
     }
     return _firstLabel;
@@ -100,7 +100,7 @@
     if (!_firstDLabel) {
         _firstDLabel = [[UILabel alloc] init];
         _firstDLabel.text = @"添加朋友付款";
-        _firstDLabel.textColor = [UIColor colorWithHex:@"666666"];
+        _firstDLabel.textColor = [UIColor textBlackColor];
         _firstDLabel.font = [UIFont rw_mediumFontSize:15.0];
     }
     return _firstDLabel;
@@ -109,7 +109,7 @@
     if (!_accountLabel) {
         _accountLabel = [[UILabel alloc] init];
         _accountLabel.text = @"微信号/手机号";
-        _accountLabel.textColor = [UIColor colorWithHex:@"666666"];
+        _accountLabel.textColor = [UIColor textBlackColor];
         _accountLabel.font = [UIFont rw_mediumFontSize:15.0];
     }
     return _accountLabel;
@@ -118,7 +118,7 @@
     if (!_secondLabel) {
         _secondLabel = [[UILabel alloc] init];
         _secondLabel.text = @"转账方式二：";
-        _secondLabel.textColor = [UIColor colorWithHex:@"666666"];
+        _secondLabel.textColor = [UIColor textBlackColor];
         _secondLabel.font = [UIFont rw_mediumFontSize:20.0];
     }
     return _secondLabel;
@@ -127,7 +127,7 @@
     if (!_secondDLabel) {
         _secondDLabel = [[UILabel alloc] init];
         _secondDLabel.text = @"扫二维码付款";
-        _secondDLabel.textColor = [UIColor colorWithHex:@"666666"];
+        _secondDLabel.textColor = [UIColor textBlackColor];
         _secondDLabel.font = [UIFont rw_mediumFontSize:15.0];
     }
     return _secondDLabel;

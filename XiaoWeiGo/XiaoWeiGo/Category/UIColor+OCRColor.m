@@ -22,4 +22,7 @@
 + (UIColor *)textBlackColor{
     return UIColorFromRGB16(0x666666);
 }
++ (UIColor *)textGrayColor{
+    return UIColorFromRGB16(0x999999);
+}
 @end

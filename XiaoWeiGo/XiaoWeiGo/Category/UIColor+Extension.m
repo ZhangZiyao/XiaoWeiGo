@@ -37,7 +37,7 @@
 
 + (UIColor *)colorWithHex:(NSString *)stringToConvert
 {
-    return [self colorwithHexString:stringToConvert];
+    return [self colorWithHex:[stringToConvert integerValue] alpha:1];
 }
 +(UIColor *)colorWithHex:(NSUInteger)color alpha:(CGFloat)alpha {
     return [UIColor colorWithRed:((color & 0xff0000) >> 16) / 255.0f

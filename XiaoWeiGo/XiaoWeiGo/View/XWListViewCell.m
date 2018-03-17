@@ -55,7 +55,7 @@
     _dmodel = dmodel;
     self.moreBtn.hidden = YES;
     self.titleLabel.text = dmodel.dTitle;
-    self.detailLabel0.text = [NSString stringWithFormat:@"%@:%@",self.categoryName[category-1],dmodel.serviceName];
+    self.detailLabel0.text = [NSString stringWithFormat:@"%@:%@",self.categoryName[category==0?0:category-1],dmodel.serviceName];
     self.detailLabel1.text = StringPush(@"截止时间:", dmodel.endTime, @"");
 }
 
@@ -259,14 +259,14 @@
 - (UIImageView *)line{
     if (!_line) {
         _line = [[UIImageView alloc] init];
-        _line.backgroundColor = [UIColor colorWithHex:@"e2e2e2"];;
+        _line.backgroundColor = [UIColor OCRMainColor];;
     }
     return _line;
 }
 - (UILabel *)titleLabel{
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc] init];
-        _titleLabel.textColor = [UIColor colorWithHex:@"666666"];
+        _titleLabel.textColor = [UIColor textBlackColor];
         _titleLabel.font = [UIFont rw_mediumFontSize:14.0];
         _titleLabel.text = @"公司注册，代理记账";
     }
@@ -275,7 +275,7 @@
 - (UILabel *)detailLabel0{
     if (!_detailLabel0) {
         _detailLabel0 = [[UILabel alloc] init];
-        _detailLabel0.textColor = [UIColor colorWithHex:@"999999"];
+        _detailLabel0.textColor = [UIColor textGrayColor];
         _detailLabel0.font = [UIFont rw_regularFontSize:10];
         _detailLabel0.text = @"工商注册：工商登记等政务代理";
     }
@@ -284,7 +284,7 @@
 - (UILabel *)detailLabel1{
     if (!_detailLabel1) {
         _detailLabel1 = [[UILabel alloc] init];
-        _detailLabel1.textColor = [UIColor colorWithHex:@"999999"];
+        _detailLabel1.textColor = [UIColor textGrayColor];
         _detailLabel1.font = [UIFont rw_regularFontSize:10];
         _detailLabel1.text = @"浙江奉化去某某企业管理咨询有限公司";
     }

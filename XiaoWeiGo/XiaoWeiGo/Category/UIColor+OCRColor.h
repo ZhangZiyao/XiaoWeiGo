@@ -18,4 +18,5 @@
 
 + (UIColor *)textBlackColor;
 
++ (UIColor *)textGrayColor;
 @end

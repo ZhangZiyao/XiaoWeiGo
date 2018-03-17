@@ -55,7 +55,7 @@
     [self addSubview:_menuBtn];
     
     self.curText = [[UILabel alloc] initWithFrame:CGRectMake(25*kScaleH, 0, self.frame.size.width - 30, self.frame.size.height)];
-    _curText.textColor = [UIColor colorWithHex:@"666666"];
+    _curText.textColor = [UIColor textBlackColor];
     _curText.textAlignment = NSTextAlignmentLeft;
     _curText.font = [UIFont rw_regularFontSize:15];
     [_menuBtn addSubview:_curText];
@@ -161,7 +161,7 @@
         label.backgroundColor = [UIColor clearColor];
         label.textAlignment = NSTextAlignmentLeft;
         label.font = [UIFont rw_regularFontSize:15];
-        label.textColor = [UIColor colorWithHex:@"666666"];
+        label.textColor = [UIColor textBlackColor];
         label.tag = 1000;
         label.numberOfLines = 0;
         [cell addSubview:label];

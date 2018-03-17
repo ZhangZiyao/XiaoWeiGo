@@ -151,6 +151,13 @@
                             <constraint firstItem="pYo-cC-1Qz" firstAttribute="top" secondItem="pc1-Ud-Jjz" secondAttribute="top" id="yoo-3y-pQs"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="chatInputView" destination="xlD-Ez-qL9" id="7JT-Jf-Bjc"/>
+                        <outlet property="chatInputViewBottomConstraint" destination="Acb-dW-Vwb" id="WLk-fJ-jng"/>
+                        <outlet property="tableView" destination="pYo-cC-1Qz" id="9xv-ih-vdQ"/>
+                        <outlet property="tableViewBottomConstraint" destination="2iD-GJ-Whi" id="xpX-kS-AMq"/>
+                        <outlet property="tableViewHeightConstraint" destination="qLq-FD-LKp" id="ilc-M8-ezN"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NWs-RC-gAv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -108,7 +108,7 @@ static const CGFloat        kIndicatorDefaultHeight = 3.0;
         _separatorBottom.frame = frame;
     }
     if (!_normalTextColor) {
-        _normalTextColor = [UIColor colorWithHex:@"666666"];
+        _normalTextColor = [UIColor textBlackColor];
     }
     if (!_selectedTextColor) {
         _selectedTextColor = navColor;

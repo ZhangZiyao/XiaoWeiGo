@@ -174,7 +174,7 @@
         _titleLabel.textColor = UIColorFromRGB16(0X666666);
         _titleLabel.font = [UIFont rw_regularFontSize:20.0];
         _titleLabel.textAlignment = NSTextAlignmentCenter;
-        _titleLabel.text = @"企业信用服务评价";
+        _titleLabel.text = @"服务质量评价";
     }
     return _titleLabel;
 }

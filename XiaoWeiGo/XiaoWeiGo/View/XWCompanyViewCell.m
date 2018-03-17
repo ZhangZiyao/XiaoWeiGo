@@ -35,8 +35,8 @@
     self.detailLabel.text = model.orgSketch;
     self.detailLabel1.text = model.telephone;
     self.detailLabel2.text = [NSString stringWithFormat:@"浏览量 %d",model.visits];
-    NSArray *imageArr = @[@"loan_img_avatar",@"innovation_img_avatar",@"property_img_avatar",@"shared_img_avatar",@"legal_img_avatar",@"discount_img_avatar",@"certification_img_avatar",@"exhibition_img_avatar",@"registered_img_avatar",@"other_img_avatar"];
-    self.smallImageView.image = [UIImage imageNamed:imageArr[model.ID-1]];
+//    NSArray *imageArr = @[@"loan_img_avatar",@"innovation_img_avatar",@"property_img_avatar",@"shared_img_avatar",@"legal_img_avatar",@"discount_img_avatar",@"certification_img_avatar",@"exhibition_img_avatar",@"registered_img_avatar",@"other_img_avatar"];
+    self.smallImageView.image = [UIImage imageNamed:@"book_placeholder"];
 }
 - (void)createCell{
     [self.contentView addSubview:self.titleLabel];
@@ -106,14 +106,14 @@
 - (UIImageView *)line{
     if (!_line) {
         _line = [[UIImageView alloc] init];
-        _line.backgroundColor = [UIColor colorWithHex:@"e2e2e2"];;
+        _line.backgroundColor = [UIColor OCRMainColor];;
     }
     return _line;
 }
 - (UILabel *)titleLabel{
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc] init];
-        _titleLabel.textColor = [UIColor colorWithHex:@"666666"];
+        _titleLabel.textColor = [UIColor textBlackColor];
         _titleLabel.font = [UIFont rw_mediumFontSize:14.0];
 //        _titleLabel.text = @"公司注册，代理记账";
     }
@@ -122,7 +122,7 @@
 - (UILabel *)detailLabel{
     if (!_detailLabel) {
         _detailLabel = [[UILabel alloc] init];
-        _detailLabel.textColor = [UIColor colorWithHex:@"999999"];
+        _detailLabel.textColor = [UIColor textGrayColor];
         _detailLabel.font = [UIFont rw_regularFontSize:10];
 //        _detailLabel.text = @"工商注册：工商登记等政务代理";
     }
@@ -131,7 +131,7 @@
 - (UILabel *)detailLabel1{
     if (!_detailLabel1) {
         _detailLabel1 = [[UILabel alloc] init];
-        _detailLabel1.textColor = [UIColor colorWithHex:@"999999"];
+        _detailLabel1.textColor = [UIColor textGrayColor];
         _detailLabel1.font = [UIFont rw_regularFontSize:10];
 //        _detailLabel1.text = @"浙江奉化去某某企业管理咨询有限公司";
     }
@@ -140,7 +140,7 @@
 - (UILabel *)detailLabel2{
     if (!_detailLabel2) {
         _detailLabel2 = [[UILabel alloc] init];
-        _detailLabel2.textColor = [UIColor colorWithHex:@"999999"];
+        _detailLabel2.textColor = [UIColor textGrayColor];
         _detailLabel2.font = [UIFont rw_regularFontSize:10];
     }
     return _detailLabel2;

@@ -2,11 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "news_placeholder.png",
+      "filename" : "map_loc.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "map_loc@2x.png",
       "scale" : "2x"
     },
     {

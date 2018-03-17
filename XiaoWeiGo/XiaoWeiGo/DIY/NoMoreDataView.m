@@ -21,7 +21,7 @@
 - (void)initView:(CGRect)frame{
     self.frame = frame;
     UIView *footerView = [[UIView alloc] initWithFrame:self.frame];
-    UILabel *label = [RWFactionUI createLabelWith:footerView.bounds text:@"没有更多数据了" textColor:[UIColor colorWithHex:@"666666"] textFont:[UIFont rw_regularFontSize:14] textAlignment:NSTextAlignmentCenter];
+    UILabel *label = [RWFactionUI createLabelWith:footerView.bounds text:@"没有更多数据了" textColor:[UIColor textBlackColor] textFont:[UIFont rw_regularFontSize:14] textAlignment:NSTextAlignmentCenter];
     [footerView addSubview:label];
     [self addSubview:footerView];
 }

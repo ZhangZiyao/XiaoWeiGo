@@ -12,6 +12,7 @@
 #import "XWLoginViewController.h"
 #import <BaiduMapAPI_Map/BMKMapComponent.h>
 #import "CheckVersion.h"
+#import "BNCoreServices.h"
 
 @interface AppDelegate ()
 {
@@ -64,6 +65,14 @@
     options.apnsCertName = @"develop";//develop,distribution
     [[EMClient sharedClient] initializeSDKWithOptions:options];
     //百度地图
+    
+    [BNCoreServices_Instance initServices:BAIDU_NAVI_AK];
+    //TTS在线授权
+    [BNCoreServices_Instance setTTSAppId:BAIDY_NAVI_APPID];
+    //设置是否自动退出导航
+    [BNCoreServices_Instance setAutoExitNavi:NO];
+    [BNCoreServices_Instance startServicesAsyn:nil fail:nil];
+    
     _mapManager = [[BMKMapManager alloc]init];
     // 如果要关注网络及授权验证事件，请设定     generalDelegate参数
     BOOL ret = [_mapManager start:BAIDU_MAP_APP_KEY  generalDelegate:nil];

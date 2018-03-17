@@ -131,7 +131,7 @@
         _collectBtn = [[UIButton alloc] init];
         [_collectBtn setTitle:@"收藏" forState:UIControlStateNormal];
         [_collectBtn.titleLabel setFont:[UIFont rw_regularFontSize:14.0]];
-        [_collectBtn setBackgroundColor:[UIColor colorWithHex:@"fe7401"]];
+        [_collectBtn setBackgroundColor:UIColorFromRGB16(0xfe7401)];
         _collectBtn.layer.cornerRadius = 5;
         _collectBtn.layer.masksToBounds = YES;
         [_collectBtn addTarget:self action:@selector(collectBtnClick) forControlEvents:UIControlEventTouchUpInside];
@@ -143,7 +143,7 @@
         _likeBtn = [[UIButton alloc] init];
         [_likeBtn setTitle:@"点赞" forState:UIControlStateNormal];
         [_likeBtn.titleLabel setFont:[UIFont rw_regularFontSize:14.0]];
-        [_likeBtn setBackgroundColor:[UIColor colorWithHex:@"fe7401"]];
+        [_likeBtn setBackgroundColor:UIColorFromRGB16(0xfe7401)];
         _likeBtn.layer.cornerRadius = 5;
         _likeBtn.layer.masksToBounds = YES;
         [_likeBtn addTarget:self action:@selector(likeBtnClick) forControlEvents:UIControlEventTouchUpInside];
@@ -161,7 +161,7 @@
 - (UILabel *)likeNumLabel{
     if (!_likeNumLabel) {
         _likeNumLabel = [[UILabel alloc] init];
-        _likeNumLabel.textColor = [UIColor colorWithHex:@"fe7401"];
+        _likeNumLabel.textColor = UIColorFromRGB16(0xfe7401);
         _likeNumLabel.font = [UIFont rw_regularFontSize:14.0];
     }
     return _likeNumLabel;
@@ -172,7 +172,7 @@
         _titleLabel.textColor = UIColorFromRGB16(0X666666);
         _titleLabel.font = [UIFont rw_regularFontSize:20.0];
         _titleLabel.textAlignment = NSTextAlignmentCenter;
-        _titleLabel.text = @"企业信用服务评价";
+        _titleLabel.text = @"服务质量评价";
     }
     return _titleLabel;
 }
