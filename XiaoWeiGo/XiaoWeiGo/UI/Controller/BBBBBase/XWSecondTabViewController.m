@@ -77,7 +77,7 @@
         make.height.mas_equalTo(90*kScaleH);
     }];
     CALayer *topLayer = [CALayer layer];
-    topLayer.backgroundColor = [UIColor colorWithHex:@"e2e2e2"].CGColor;
+    topLayer.backgroundColor = [UIColor OCRMainColor].CGColor;
     topLayer.frame = CGRectMake(0, 0, ScreenWidth, 0.5);
     [saveBtn.layer addSublayer:topLayer];
     
@@ -91,11 +91,11 @@
         return;
     }
     if (IsStrEmpty(_demand.serviceName)) {
-        [MBProgressHUD alertInfo:@"请填写行业领域"];
+        [MBProgressHUD alertInfo:@"请填写需求领域"];
         return;
     }
     if (IsStrEmpty(_demand.dContent)) {
-        [MBProgressHUD alertInfo:@"请填写服务内容"];
+        [MBProgressHUD alertInfo:@"请填写需求内容"];
         return;
     }
     if (IsStrEmpty(_demand.endTime)) {
@@ -137,8 +137,8 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"demandCell"];
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"demandCell"];
-        cell.textLabel.textColor = [UIColor colorWithHex:@"666666"];
-        cell.detailTextLabel.textColor = [UIColor colorWithHex:@"999999"];
+        cell.textLabel.textColor = [UIColor textBlackColor];
+        cell.detailTextLabel.textColor = [UIColor textGrayColor];
         cell.detailTextLabel.font = [UIFont rw_regularFontSize:14.0];
     }
     cell.textLabel.text = self.dataSource[indexPath.row][0];
@@ -229,7 +229,7 @@
 }
 - (NSMutableArray *)dataSource{
     if (!_dataSource) {
-        _dataSource = [NSMutableArray arrayWithArray:@[@[@"需求标题",@"请填写需求标题"],@[@"行业领域",@"请填写主要行业领域"],@[@"服务内容",@"请详细填写主要内容"],@[@"截止时间",@"请选择截止时间"]]];
+        _dataSource = [NSMutableArray arrayWithArray:@[@[@"需求标题",@"请填写需求标题"],@[@"需求领域",@"请填写主要需求领域"],@[@"需求内容",@"请详细填写主要内容"],@[@"截止时间",@"请选择截止时间"]]];
     }
     return _dataSource;
 }

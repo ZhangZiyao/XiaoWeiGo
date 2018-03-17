@@ -54,44 +54,45 @@
 }
 - (UIView *)headerView{
     if (!_headerView) {
-        _headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 260*kScaleH)];
+        _headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 140*kScaleH)];
         _headerView.backgroundColor = bgColor;
-        UIView *bgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 180*kScaleH)];
+        UIView *bgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 70*kScaleH)];
         bgView.backgroundColor = [UIColor whiteColor];
         [_headerView addSubview:bgView];
-        UIImageView *coverImageView = [[UIImageView alloc] init];
-        [coverImageView sd_setImageWithURL:[NSURL URLWithString:@""] placeholderImage:[UIImage imageNamed:@"toll_img_avatar"]];
-        [_headerView addSubview:coverImageView];
+//        UIImageView *coverImageView = [[UIImageView alloc] init];
+//        [coverImageView sd_setImageWithURL:[NSURL URLWithString:@""] placeholderImage:[UIImage imageNamed:@"toll_img_avatar"]];
+//        [_headerView addSubview:coverImageView];
         UILabel *orgNameLabel = [[UILabel alloc] init];
         orgNameLabel.textColor = [UIColor textBlackColor];
         orgNameLabel.text = self.model.orgName;
         orgNameLabel.font = [UIFont rw_regularFontSize:15.0];
-        [_headerView addSubview:orgNameLabel];
-        UIButton *saveBtn = [[UIButton alloc] init];
-        [saveBtn setBackgroundColor:[UIColor whiteColor]];
-        [saveBtn setTitle:@"收藏" forState:UIControlStateNormal];
-        [saveBtn setImage:[UIImage imageNamed:@"def_icon_collection"] forState:UIControlStateNormal];
-        [saveBtn setImage:[UIImage imageNamed:@"def_icon_collection_selected"] forState:UIControlStateSelected];
-        [saveBtn setTitleColor:mainColor forState:UIControlStateNormal];
-        [saveBtn.titleLabel setFont:[UIFont rw_regularFontSize:14.0]];
-        [saveBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, 10, 0, 0)];
-        [_headerView addSubview:saveBtn];
-        [saveBtn addTarget:self action:@selector(collectBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-        [saveBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.equalTo(_headerView).offset(-40*kScaleW);
-            make.bottom.equalTo(_headerView).offset(-110*kScaleH);
-            make.height.mas_equalTo(50*kScaleH);
-            make.width.mas_equalTo(120*kScaleW);
-        }];
-        [coverImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(_headerView).offset(25*kScaleW);
-            make.top.equalTo(_headerView).offset(25*kScaleW);
-            make.size.mas_equalTo(CGSizeMake(120*kScaleW, 120*kScaleH));
-        }];
+        [bgView addSubview:orgNameLabel];
+//        UIButton *saveBtn = [[UIButton alloc] init];
+//        [saveBtn setBackgroundColor:[UIColor whiteColor]];
+//        [saveBtn setTitle:@"收藏" forState:UIControlStateNormal];
+//        [saveBtn setImage:[UIImage imageNamed:@"def_icon_collection"] forState:UIControlStateNormal];
+//        [saveBtn setImage:[UIImage imageNamed:@"def_icon_collection_selected"] forState:UIControlStateSelected];
+//        [saveBtn setTitleColor:mainColor forState:UIControlStateNormal];
+//        [saveBtn.titleLabel setFont:[UIFont rw_regularFontSize:14.0]];
+//        [saveBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, 10, 0, 0)];
+//        [_headerView addSubview:saveBtn];
+//        [saveBtn addTarget:self action:@selector(collectBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+//        [saveBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.right.equalTo(_headerView).offset(-40*kScaleW);
+//            make.bottom.equalTo(_headerView).offset(-110*kScaleH);
+//            make.height.mas_equalTo(50*kScaleH);
+//            make.width.mas_equalTo(120*kScaleW);
+//        }];
+//        [coverImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.left.equalTo(_headerView).offset(25*kScaleW);
+//            make.top.equalTo(_headerView).offset(25*kScaleW);
+//            make.size.mas_equalTo(CGSizeMake(120*kScaleW, 120*kScaleH));
+//        }];
         [orgNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(coverImageView.mas_right).offset(20*kScaleW);
-            make.right.equalTo(_headerView).offset(-20*kScaleW);
-            make.centerY.equalTo(coverImageView);
+            make.left.equalTo(bgView).offset(35*kScaleW);
+            make.right.equalTo(bgView).offset(-30*kScaleW);
+            make.top.equalTo(bgView);
+            make.height.mas_equalTo(70*kScaleH);
         }];
         NSArray *dataArr = @[@"服务内容",@"机构简介"];
         _segmentedControl = [[YUSegmentedControl alloc] initWithTitles:dataArr];

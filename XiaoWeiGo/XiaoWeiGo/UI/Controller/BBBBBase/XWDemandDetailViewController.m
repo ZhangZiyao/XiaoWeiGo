@@ -71,7 +71,7 @@
                 make.height.mas_equalTo(90*kScaleH);
             }];
             CALayer *topLayer = [CALayer layer];
-            topLayer.backgroundColor = [UIColor colorWithHex:@"e2e2e2"].CGColor;
+            topLayer.backgroundColor = [UIColor OCRMainColor].CGColor;
             topLayer.frame = CGRectMake(0, 0, ScreenWidth, 0.5);
             [saveBtn.layer addSublayer:topLayer];
         }else{
@@ -82,12 +82,12 @@
                 make.width.mas_equalTo(ScreenWidth/2);
             }];
             CALayer *topLayer = [CALayer layer];
-            topLayer.backgroundColor = [UIColor colorWithHex:@"e2e2e2"].CGColor;
+            topLayer.backgroundColor = [UIColor OCRMainColor].CGColor;
             topLayer.frame = CGRectMake(0, 0, ScreenWidth/2, 0.5);
             [saveBtn.layer addSublayer:topLayer];
             if (i == 0) {
                 CALayer *rightLayer = [CALayer layer];
-                rightLayer.backgroundColor = [UIColor colorWithHex:@"e2e2e2"].CGColor;
+                rightLayer.backgroundColor = [UIColor OCRMainColor].CGColor;
                 rightLayer.frame = CGRectMake(ScreenWidth/2, 0, 0.5, 90*kScaleH);
                 [saveBtn.layer addSublayer:rightLayer];
             }

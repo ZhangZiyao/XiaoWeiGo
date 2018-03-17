@@ -44,7 +44,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"downCell"];
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"downCell"];
-        cell.textLabel.textColor = [UIColor colorWithHex:@"666666"];
+        cell.textLabel.textColor = [UIColor textBlackColor];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     cell.imageView.image = [UIImage imageNamed:self.dataSource[indexPath.section][0]];

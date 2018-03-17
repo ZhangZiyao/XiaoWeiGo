@@ -19,8 +19,9 @@
 #import "XWServiceViewCell.h"
 #import "XWApplyLoanViewController.h"
 #import "XWMapViewController.h"
+//#import "LLUtils.h"
 
-@interface XWServiceDetailViewController ()<UITableViewDataSource, UITableViewDelegate,YUSegmentedControlDelegate>
+@interface XWServiceDetailViewController ()<UITableViewDataSource, UITableViewDelegate>
 {
     NSInteger index;
 }
@@ -36,15 +37,15 @@
     self.title = @"服务详情";
     [self showBackItem];
 }
-- (void)didSelectedAtIndex:(NSUInteger)newIndex didDeselectAtIndex:(NSUInteger)oldIndex{
-    if (newIndex == 0) {
-        XWDisDetailViewController *discountVc = [[XWDisDetailViewController alloc] init];
-        [self.navigationController pushViewController:discountVc animated:YES];
-    }else{
-        XWDownFileViewController *downVc = [[XWDownFileViewController alloc] init];
-        [self.navigationController pushViewController:downVc animated:YES];
-    }
-}
+//- (void)didSelectedAtIndex:(NSUInteger)newIndex didDeselectAtIndex:(NSUInteger)oldIndex{
+//    if (newIndex == 0) {
+//        XWDisDetailViewController *discountVc = [[XWDisDetailViewController alloc] init];
+//        [self.navigationController pushViewController:discountVc animated:YES];
+//    }else{
+//        XWDownFileViewController *downVc = [[XWDownFileViewController alloc] init];
+//        [self.navigationController pushViewController:downVc animated:YES];
+//    }
+//}
 - (void)segmentedControlTapped:(YUSegmentedControl *)sender {
     NSLog(@" %ld",sender.selectedSegmentIndex);
     index = sender.selectedSegmentIndex+1;
@@ -92,24 +93,63 @@
         }];
         
         NSArray *dataArr = @[@"优惠政策",@"附件下载"];
-        _segmentedControl = [[YUSegmentedControl alloc] initWithTitles:dataArr];
-        _segmentedControl.delegate = self;
-        _segmentedControl.normalTextColor = navColor;
-        _segmentedControl.backgroundColor = [UIColor whiteColor];
-        _segmentedControl.showsIndicator = NO;
-        _segmentedControl.showsVerticalDivider = YES;
-        _segmentedControl.showsTopSeparator = NO;
-        _segmentedControl.showsBottomSeparator = NO;
-//        [_segmentedControl addTarget:self action:@selector(segmentedControlTapped:) forControlEvents:UIControlEventValueChanged];
-        [_headerView addSubview:_segmentedControl];
-        [_segmentedControl mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.bottom.equalTo(_headerView);
-            make.left.equalTo(_headerView);
-            make.right.equalTo(_headerView);
-            make.height.mas_equalTo(64*kScaleH);
+        for (int i = 0 ; i < dataArr.count; i ++) {
+            UIButton *button = [[UIButton alloc] init];
+            button.tag = i;
+            [button setBackgroundColor:[UIColor whiteColor]];
+            [button setTitle:dataArr[i] forState:UIControlStateNormal];
+            
+            if (i == 1) {
+                [button setImage:[UIImage imageNamed:@"def_icon_download"] forState:UIControlStateNormal];
+            }
+            [button setTitleColor:mainColor forState:UIControlStateNormal];
+            [button.titleLabel setFont:[UIFont rw_regularFontSize:14.0]];
+            [button setTitleEdgeInsets:UIEdgeInsetsMake(0, 10, 0, 0)];
+            [_headerView addSubview:button];
+            [button addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
+            [button mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(_headerView).offset(ScreenWidth/2*i);
+                make.width.mas_equalTo(ScreenWidth/2);
+                make.height.mas_equalTo(64*kScaleH);
+                make.bottom.equalTo(_headerView);
+            }];
+        }
+        UILabel *lineL = [[UILabel alloc] init];
+        lineL.backgroundColor = LineColor;
+        [_headerView addSubview:lineL];
+        [lineL mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(_headerView);
+            make.height.mas_equalTo(30*kScaleH);
+            make.width.mas_equalTo(0.5);
+            make.bottom.equalTo(_headerView).offset(-17*kScaleH);
         }];
+//        _segmentedControl = [[YUSegmentedControl alloc] initWithTitles:dataArr];
+//        _segmentedControl.delegate = self;
+//        _segmentedControl.normalTextColor = navColor;
+//        _segmentedControl.backgroundColor = [UIColor whiteColor];
+//        _segmentedControl.showsIndicator = NO;
+//        _segmentedControl.showsVerticalDivider = YES;
+//        _segmentedControl.showsTopSeparator = NO;
+//        _segmentedControl.showsBottomSeparator = NO;
+////        [_segmentedControl addTarget:self action:@selector(segmentedControlTapped:) forControlEvents:UIControlEventValueChanged];
+//        [_headerView addSubview:_segmentedControl];
+//        [_segmentedControl mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.bottom.equalTo(_headerView);
+//            make.left.equalTo(_headerView);
+//            make.right.equalTo(_headerView);
+//            make.height.mas_equalTo(64*kScaleH);
+//        }];
     }
     return _headerView;
+}
+- (void)btnClick:(UIButton *)sender{
+    if (sender.tag == 0) {
+        XWDisDetailViewController *discountVc = [[XWDisDetailViewController alloc] init];
+        [self.navigationController pushViewController:discountVc animated:YES];
+    }else{
+        XWDownFileViewController *downVc = [[XWDownFileViewController alloc] init];
+        [self.navigationController pushViewController:downVc animated:YES];
+    }
 }
 - (void)addBottomView{
     NSArray *array ;
@@ -150,12 +190,12 @@
             }];
         }
         CALayer *topLayer = [CALayer layer];
-        topLayer.backgroundColor = [UIColor colorWithHex:@"e2e2e2"].CGColor;
+        topLayer.backgroundColor = [UIColor OCRMainColor].CGColor;
         topLayer.frame = CGRectMake(0, 0, ScreenWidth/array.count, 0.5);
         [saveBtn.layer addSublayer:topLayer];
         if (i == 0) {
             CALayer *rightLayer = [CALayer layer];
-            rightLayer.backgroundColor = [UIColor colorWithHex:@"e2e2e2"].CGColor;
+            rightLayer.backgroundColor = [UIColor OCRMainColor].CGColor;
             rightLayer.frame = CGRectMake(ScreenWidth/array.count, 0, 0.5, 90*kScaleH);
             [saveBtn.layer addSublayer:rightLayer];
         }
@@ -187,9 +227,9 @@
     }else{
         //联系
         if (APPDELEGATE.user.loginType == 1 || APPDELEGATE.user.loginType == 2) {
-            [MBProgressHUD alertInfo:@"功能正在开发，敬请期待～"];
-            //            XWContactViewController *contactVc = [[XWContactViewController alloc] init];
-            //            [self.navigationController pushViewController:contactVc animated:YES];
+//            [MBProgressHUD alertInfo:@"功能正在开发，敬请期待～"];
+//            XWContactViewController *contactVc = [[LLUtils mainStoryboard] instantiateViewControllerWithIdentifier:@"ChatViewController"];
+//            [self.navigationController pushViewController:contactVc animated:YES];
 
         }else{
             [MBProgressHUD alertInfo:@"您没有此权限哦～"];
@@ -209,7 +249,7 @@
         //    [cell resetCellWithData:@"" andType:index];
         return cell;
     }else{
-        if (self.model.category == 1) {
+//        if (self.model.category == 1) {
             if (indexPath.section == 1) {
                 UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"orders222"];
                 if (!cell) {
@@ -246,30 +286,30 @@
                 }
                 return cell;
             }
-        }else{
-            XWTextViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"orders22"];
-            if (!cell) {
-                cell = [[XWTextViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"orders22"];
-            }
-            cell.bottomLine.hidden = YES;
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            
-            if (indexPath.section == 1){
-                cell.titleLabel.text = [NSString stringWithFormat:@"标准收费：%@ 元",self.model.price];
-            }else if (indexPath.section == 2){
-                cell.titleLabel.text = [NSString stringWithFormat:@"服务机构：%@",self.model.orgName];
-            }else if (indexPath.section == 3){
-                cell.titleLabel.text = [NSString stringWithFormat:@"地址：%@",self.model.sAddress];
-            }else{
-                
-            }
-            [cell.titleLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(cell.leftLine.mas_right).offset(20*kScaleW);
-                make.right.equalTo(cell.contentView).offset(-30*kScaleW);
-                make.centerY.equalTo(cell.leftLine);
-            }];
-            return cell;
-        }
+//        }else{
+//            XWTextViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"orders22"];
+//            if (!cell) {
+//                cell = [[XWTextViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"orders22"];
+//            }
+//            cell.bottomLine.hidden = YES;
+//            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+//
+//            if (indexPath.section == 1){
+//                cell.titleLabel.text = [NSString stringWithFormat:@"标准收费：%@ 元",self.model.price];
+//            }else if (indexPath.section == 2){
+//                cell.titleLabel.text = [NSString stringWithFormat:@"服务机构：%@",self.model.orgName];
+//            }else if (indexPath.section == 3){
+//                cell.titleLabel.text = [NSString stringWithFormat:@"地址：%@",self.model.sAddress];
+//            }else{
+//
+//            }
+//            [cell.titleLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
+//                make.left.equalTo(cell.leftLine.mas_right).offset(20*kScaleW);
+//                make.right.equalTo(cell.contentView).offset(-30*kScaleW);
+//                make.centerY.equalTo(cell.leftLine);
+//            }];
+//            return cell;
+//        }
     }
     
 }
@@ -281,11 +321,11 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (self.model.category == 1) {
+//    if (self.model.category == 1) {
         if (indexPath.section == 2) {
-            XWChargeViewController *serVc = [[XWChargeViewController alloc] init];
-            serVc.commonModel = self.model;
-            [self.navigationController pushViewController:serVc animated:YES];
+//            XWChargeViewController *serVc = [[XWChargeViewController alloc] init];
+//            serVc.commonModel = self.model;
+//            [self.navigationController pushViewController:serVc animated:YES];
         }else if (indexPath.section == 3){
             XWServiceDetailSecViewController *serVc = [[XWServiceDetailSecViewController alloc] init];
             serVc.model = self.model;
@@ -295,28 +335,28 @@
             page.address = self.model.sAddress;
             [self.navigationController pushViewController:page animated:YES];
         }
-    }else{
-        if (indexPath.section == 1) {
-            XWChargeViewController *serVc = [[XWChargeViewController alloc] init];
-            serVc.commonModel = self.model;
-            [self.navigationController pushViewController:serVc animated:YES];
-        }else if (indexPath.section == 2){
-            XWServiceDetailSecViewController *serVc = [[XWServiceDetailSecViewController alloc] init];
-            serVc.model = self.model;
-            [self.navigationController pushViewController:serVc animated:YES];
-        }else if(indexPath.section == 3){
-            XWMapViewController *page = [XWMapViewController new];
-            page.address = self.model.sAddress;
-            [self.navigationController pushViewController:page animated:YES];
-        }
-    }
+//    }else{
+//        if (indexPath.section == 1) {
+//            XWChargeViewController *serVc = [[XWChargeViewController alloc] init];
+//            serVc.commonModel = self.model;
+//            [self.navigationController pushViewController:serVc animated:YES];
+//        }else if (indexPath.section == 2){
+//            XWServiceDetailSecViewController *serVc = [[XWServiceDetailSecViewController alloc] init];
+//            serVc.model = self.model;
+//            [self.navigationController pushViewController:serVc animated:YES];
+//        }else if(indexPath.section == 3){
+//            XWMapViewController *page = [XWMapViewController new];
+//            page.address = self.model.sAddress;
+//            [self.navigationController pushViewController:page animated:YES];
+//        }
+//    }
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    if (self.model.category == 1) {
+//    if (self.model.category == 1) {
         return 5;
-    }else{
-        return 4;
-    }
+//    }else{
+//        return 4;
+//    }
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return 1;
