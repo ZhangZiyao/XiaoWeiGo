@@ -102,7 +102,7 @@
 - (UILabel *)likeNumLabel{
     if (!_likeNumLabel) {
         _likeNumLabel = [[UILabel alloc] init];
-        _likeNumLabel.textColor = [UIColor colorWithHex:@"666666"];
+        _likeNumLabel.textColor = [UIColor textBlackColor];
         _likeNumLabel.font = [UIFont rw_regularFontSize:14.0];
     }
     return _likeNumLabel;
@@ -110,7 +110,7 @@
 - (UILabel *)accountNameLabel{
     if (!_accountNameLabel) {
         _accountNameLabel = [[UILabel alloc] init];
-        _accountNameLabel.textColor = [UIColor colorWithHex:@"666666"];
+        _accountNameLabel.textColor = [UIColor textBlackColor];
         _accountNameLabel.font = [UIFont rw_regularFontSize:14.0];
     }
     return _accountNameLabel;
@@ -118,7 +118,7 @@
 - (UILabel *)timeLabel{
     if (!_timeLabel) {
         _timeLabel = [[UILabel alloc] init];
-        _timeLabel.textColor = [UIColor colorWithHex:@"999999"];
+        _timeLabel.textColor = [UIColor textGrayColor];
         _timeLabel.font = [UIFont rw_regularFontSize:14.0];
     }
     return _timeLabel;
@@ -126,7 +126,7 @@
 - (UILabel *)commentDetailLabel{
     if (!_commentDetailLabel) {
         _commentDetailLabel = [[UILabel alloc] init];
-        _commentDetailLabel.textColor = [UIColor colorWithHex:@"666666"];
+        _commentDetailLabel.textColor = [UIColor textBlackColor];
         _commentDetailLabel.font = [UIFont rw_regularFontSize:14.0];
     }
     return _commentDetailLabel;

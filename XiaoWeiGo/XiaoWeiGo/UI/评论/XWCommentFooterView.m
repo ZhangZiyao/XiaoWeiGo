@@ -67,7 +67,7 @@
 - (UILabel *)likeNumLabel{
     if (!_likeNumLabel) {
         _likeNumLabel = [[UILabel alloc] init];
-        _likeNumLabel.textColor = [UIColor colorWithHex:@"666666"];
+        _likeNumLabel.textColor = [UIColor textBlackColor];
         _likeNumLabel.font = [UIFont rw_regularFontSize:14.0];
     }
     return _likeNumLabel;
