@@ -38,7 +38,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"mineCell"];
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"mineCell"];
-        cell.textLabel.textColor = [UIColor colorWithHex:@"666666"];
+        cell.textLabel.textColor = [UIColor textBlackColor];
     }
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.textLabel.text = self.dataSource[indexPath.section][indexPath.row];

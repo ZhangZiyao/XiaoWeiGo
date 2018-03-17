@@ -90,7 +90,7 @@
         _textField = [[UITextField alloc] init];
         _textField.delegate = self;
         _textField.backgroundColor = [UIColor whiteColor];
-        _textField.textColor = [UIColor colorWithHex:@"666666"];
+        _textField.textColor = [UIColor textBlackColor];
         _textField.layer.cornerRadius = 5.0;
         _textField.font = [UIFont rw_regularFontSize:15.0];
         _textField.layer.masksToBounds = YES;

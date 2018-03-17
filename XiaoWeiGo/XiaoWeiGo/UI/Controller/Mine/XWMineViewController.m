@@ -100,9 +100,9 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"mineCell"];
     }
-    cell.imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"mine_icon_icon%d",(int)indexPath.row+1]];
+    cell.imageView.image = [UIImage imageNamed:self.dataSource[indexPath.row][1]];
     cell.textLabel.text = self.dataSource[indexPath.row][0];
-    cell.textLabel.textColor = [UIColor colorWithHex:@"666666"];
+    cell.textLabel.textColor = [UIColor textBlackColor];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
@@ -185,10 +185,10 @@
     if (!_dataSource) {
         UserModel *user = APPDELEGATE.user;
         if (APPDELEGATE.user.loginType == 1 || APPDELEGATE.user.loginType == 2) {
-            _dataSource = [NSMutableArray arrayWithArray:@[@[@"我发布的需求",@""],@[@"我的收藏",@""],@[@"我的设置",@""]]];
+            _dataSource = [NSMutableArray arrayWithArray:@[@[@"我发布的需求",@"mine_icon_icon2"],@[@"我的收藏",@"mine_icon_icon3"],@[@"我的设置",@"mine_icon_icon4"]]];
             
         }else{
-            _dataSource = [NSMutableArray arrayWithArray:@[@[@"我的收藏",@""],@[@"我的设置",@""]]];
+            _dataSource = [NSMutableArray arrayWithArray:@[@[@"我的收藏",@"mine_icon_icon3"],@[@"我的设置",@"mine_icon_icon4"]]];
         }
     }
     return _dataSource;

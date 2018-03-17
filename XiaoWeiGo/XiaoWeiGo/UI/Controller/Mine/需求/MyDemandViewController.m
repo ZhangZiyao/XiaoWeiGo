@@ -31,13 +31,13 @@
     self.title = @"我发布的需求";
     [self showBackItem];
     self.view.backgroundColor = [UIColor whiteColor];
-    status = -1;
+    status = 0;
     _pageIndex = 0;
     [self getDataList];
 }
 - (void)segmentedControlTapped:(YUSegmentedControl *)sender {
     NSLog(@" %ld",sender.selectedSegmentIndex);
-    status = sender.selectedSegmentIndex-1;
+    status = sender.selectedSegmentIndex;
     
     [self getDataList];
 }
@@ -56,7 +56,7 @@
         make.width.mas_equalTo(340*kScaleW);
     }];
     
-    NSArray *dataArr = @[@"全部",@"待审核",@"审核通过",@"退回"];
+    NSArray *dataArr = @[@"待审核",@"审核通过",@"退回"];
     _segmentedControl = [[YUSegmentedControl alloc] initWithTitles:dataArr];
     _segmentedControl.backgroundColor = [UIColor whiteColor];
     _segmentedControl.showsBottomSeparator = YES;

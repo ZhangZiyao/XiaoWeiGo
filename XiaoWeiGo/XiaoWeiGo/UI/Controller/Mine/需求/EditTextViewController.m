@@ -56,7 +56,7 @@
         make.height.mas_equalTo(90*kScaleH);
     }];
     CALayer *topLayer = [CALayer layer];
-    topLayer.backgroundColor = [UIColor colorWithHex:@"e2e2e2"].CGColor;
+    topLayer.backgroundColor = [UIColor OCRMainColor].CGColor;
     topLayer.frame = CGRectMake(0, 0, ScreenWidth, 0.5);
     [saveBtn.layer addSublayer:topLayer];
 }

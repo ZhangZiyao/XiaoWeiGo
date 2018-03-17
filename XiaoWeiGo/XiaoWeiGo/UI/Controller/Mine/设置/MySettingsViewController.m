@@ -34,7 +34,7 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"settings"];
         cell.textLabel.font = [UIFont rw_regularFontSize:16];
-        cell.textLabel.textColor = [UIColor colorWithHex:@"666666"];
+        cell.textLabel.textColor = [UIColor textBlackColor];
     }
     if (indexPath.section == 0) {
         cell.textLabel.text = @"关于我们";
@@ -78,7 +78,7 @@
     UIView *footerView = [[UIView alloc] init];
     if (section == 1) {
         UIButton *logoutBtn = [RWFactionUI createButtonWith:CGRectMake(35*kScaleW, 30*kScaleH, ScreenWidth-70*kScaleW, 90*kScaleH) title:@"退出登录" backgroundImage:nil textColor:[UIColor whiteColor] target:self selector:@selector(logout)];
-        logoutBtn.backgroundColor = [UIColor colorWithHex:@"f54a48"];
+        logoutBtn.backgroundColor = UIColorFromRGB16(0xf54a48);
         logoutBtn.layer.cornerRadius = 5;
         logoutBtn.layer.masksToBounds = YES;
         [footerView addSubview:logoutBtn];
