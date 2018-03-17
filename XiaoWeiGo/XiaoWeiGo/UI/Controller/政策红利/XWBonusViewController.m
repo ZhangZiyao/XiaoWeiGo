@@ -144,7 +144,7 @@
         cell = [[XWTextViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identify];
     }
     cell.titleLabel.text = model.aTitle;
-    cell.detailLabel.text = IsStrEmpty(model.subTitle)?model.issueTime:model.subTitle;;
+    cell.detailLabel.text = [NSString ifNull:model.subTitle];
     return cell;
 }
 

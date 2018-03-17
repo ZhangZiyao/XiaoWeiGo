@@ -43,7 +43,7 @@
         cell = [[XWOrgViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"company"];
     }
 //    cell.type = _catagory;
-//    cell.cType = 0;
+    cell.cType = 20;
     cell.smodel = self.dataSource[indexPath.row];
     return cell;
 }

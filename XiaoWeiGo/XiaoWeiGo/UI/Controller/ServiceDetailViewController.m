@@ -111,7 +111,7 @@
 //        make.right.equalTo(self.view);
 //        make.height.mas_equalTo(100*kScaleH);
 //    }];
-    NSArray *bottomImageArr = @[@"registered_icon_ma1",@"registered_icon_ma2",@"registered_icon_ma3",@"registered_icon_ma4"];
+    NSArray *bottomImageArr = @[@"registered_icon_ma1",@"registered_icon_ma2"];
     CGFloat btnWidth = 72*kScaleW;
     for (int i = 0; i < bottomImageArr.count; i ++) {
         UIButton *btn = [[UIButton alloc] init];
@@ -120,7 +120,11 @@
         btn.tag = i;
         [btn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(bottomView);
-            make.left.equalTo(bottomView).offset(200*kScaleW+(btnWidth+30*kScaleW)*i);
+            if (i == 0) {
+                make.centerX.equalTo(bottomView).offset(-btnWidth);
+            }else{
+                make.centerX.equalTo(bottomView).offset(btnWidth);
+            }
             make.size.mas_equalTo(CGSizeMake(btnWidth, btnWidth));
         }];
         [btn addTarget:self action:@selector(bottomBtnClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -323,7 +327,7 @@
 //            make.height.mas_equalTo(90*kScaleH);
 //        }];
         CALayer *topLayer = [CALayer layer];
-        topLayer.backgroundColor = [UIColor colorWithHex:@"e2e2e2"].CGColor;
+        topLayer.backgroundColor = [UIColor OCRMainColor].CGColor;
         topLayer.frame = CGRectMake(0, 0, ScreenWidth, 0.5);
         [_publishBtn.layer addSublayer:topLayer];
     }

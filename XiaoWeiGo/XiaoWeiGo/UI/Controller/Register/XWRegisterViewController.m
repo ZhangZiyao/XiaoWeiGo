@@ -25,10 +25,10 @@
 }
 - (void)layoutSubviews{
     
-    UILabel *label = [RWFactionUI createLabelWith:CGRectMake(0, 0, ScreenWidth, 40) text:@"注册专项特权" textColor:[UIColor colorWithHex:@"296DD5"] textFont:[UIFont rw_regularFontSize:18] textAlignment:NSTextAlignmentCenter];
+    UILabel *label = [RWFactionUI createLabelWith:CGRectMake(0, 0, ScreenWidth, 40) text:@"注册专项特权" textColor:UIColorFromRGB16(0x296DD5) textFont:[UIFont rw_regularFontSize:18] textAlignment:NSTextAlignmentCenter];
     [self.view addSubview:label];
     
-    UILabel *label1 = [RWFactionUI createLabelWith:CGRectMake(0, 0, ScreenWidth, 40) text:@"请选择注册类型 " textColor:[UIColor colorWithHex:@"999999"] textFont:[UIFont rw_regularFontSize:14] textAlignment:NSTextAlignmentCenter];
+    UILabel *label1 = [RWFactionUI createLabelWith:CGRectMake(0, 0, ScreenWidth, 40) text:@"请选择注册类型 " textColor:[UIColor textGrayColor] textFont:[UIFont rw_regularFontSize:14] textAlignment:NSTextAlignmentCenter];
     [self.view addSubview:label1];
     
     [label mas_makeConstraints:^(MASConstraintMaker *make) {

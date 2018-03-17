@@ -14,8 +14,11 @@
 #import <BaiduMapAPI_Utils/BMKUtilsComponent.h>
 #import <BaiduMapAPI_Search/BMKSearchComponent.h>
 #import "RouteAnnotation.h"
+#import "BNRoutePlanModel.h"
+#import "BNCoreServices.h"
+#import "BNaviModel.h"
 
-@interface XWMapViewController ()<BMKMapViewDelegate,BMKLocationServiceDelegate,BMKRouteSearchDelegate,BMKGeoCodeSearchDelegate>
+@interface XWMapViewController ()<BMKMapViewDelegate,BMKLocationServiceDelegate,BMKRouteSearchDelegate,BMKGeoCodeSearchDelegate,BNNaviUIManagerDelegate,BNNaviRoutePlanDelegate>
 {
     BMKLocationService *_locService;
     BMKRouteSearch *_routeSearch;
@@ -29,13 +32,14 @@
     NSInteger selectedIndex;
     
     CLLocation *currentLocation;
-    
+    BOOL loc;
 }
 @property (nonatomic, strong) YUSegmentedControl *segmentedControl;
 //@property (nonatomic, strong) BMKMapView *mapView;
 //@property (nonatomic, strong) BMKMapView *nowLocation;
 @property (nonatomic, strong) UILabel *durationLabel;
 @property (nonatomic, strong) UILabel *label;
+@property (nonatomic, strong) UIView *bottomView;
 @end
 
 @implementation XWMapViewController
@@ -52,58 +56,8 @@
         endNode.name = self.address;
     }
     
-    [self addBottomView];
 }
-- (void)addBottomView{
-    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 200)];
-    bottomView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:bottomView];
-    
-    UILabel *durationLabel = [[UILabel alloc] init];
-    durationLabel.textColor = [UIColor blackColor];
-    durationLabel.font = [UIFont boldSystemFontOfSize:17.0];
-    [bottomView addSubview:durationLabel];
-    self.durationLabel = durationLabel;
-    
-    UILabel *label = [[UILabel alloc] init];
-    
-    label.textColor = UIColorFromRGB16(0x56bc8b);
-    label.font = [UIFont rw_regularFontSize:15.0];
-    [bottomView addSubview:label];
-    self.label = label;
-    
-    UIButton *button = [[UIButton alloc] init];
-    [button setImage:[UIImage imageNamed:@"map_arrow"] forState:UIControlStateNormal];
-    [button setTitle:@"导航" forState:UIControlStateNormal];
-    [button.titleLabel setFont:[UIFont rw_regularFontSize:14.0]];
-    [button setBackgroundColor:UIColorFromRGB16(0x3385ff)];
-    button.layer.cornerRadius = 3.0;
-    button.layer.masksToBounds = YES;
-    [bottomView addSubview:button];
-    
-    [bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self.view);
-        make.left.equalTo(self.view);
-        make.right.equalTo(self.view);
-        make.height.mas_equalTo(150*kScaleH);
-    }];
-    [button mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(bottomView).offset(20*kScaleH);
-        make.right.equalTo(bottomView).offset(-20*kScaleH);
-        make.size.mas_equalTo(CGSizeMake(100*kScaleW, 50*kScaleH));
-    }];
-    [durationLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(bottomView).offset(30*kScaleH);
-        make.left.equalTo(bottomView).offset(20*kScaleH);
-        make.right.equalTo(button.mas_left).offset(-20*kScaleH);
-    }];
-    [label mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(bottomView).offset(-20*kScaleH);
-        make.left.equalTo(durationLabel);
-        make.width.mas_equalTo(200);
-    }];
-    
-}
+
 - (void)geoSearch{
     BMKGeoCodeSearchOption *geocodeSearchOption = [[BMKGeoCodeSearchOption alloc]init];
 //    geocodeSearchOption.city= _cityText.text;
@@ -216,10 +170,80 @@
         make.left.equalTo(self.view);
         make.top.equalTo(self.view).offset(44);
         make.right.equalTo(self.view);
-        make.bottom.equalTo(self.view).offset(-150*kScaleH);
+        make.bottom.equalTo(self.view);
+    }];
+    UIButton *button = [[UIButton alloc] init];
+    [button setImage:[UIImage imageNamed:@"map_loc"] forState:UIControlStateNormal];
+    [button setBackgroundColor:[UIColor whiteColor]];
+    button.layer.cornerRadius = 1.0;
+    button.layer.masksToBounds = YES;
+    [button addTarget:self action:@selector(getMyLocation) forControlEvents:UIControlEventTouchUpInside];
+    [_mapView addSubview:button];
+    [button mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_mapView).offset(20*kScaleW);
+        make.size.mas_equalTo(CGSizeMake(60*kScaleW, 60*kScaleH));
+        make.bottom.equalTo(_mapView).offset(-20*kScaleH);
     }];
     
+    [self addBottomView];
+    
     [self onClickNewBusSearch];
+}
+- (void)getMyLocation{
+    loc = YES;
+    [_locService startUserLocationService];
+}
+- (void)addBottomView{
+    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 200)];
+    bottomView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:bottomView];
+    self.bottomView = bottomView;
+    
+    UILabel *durationLabel = [[UILabel alloc] init];
+    durationLabel.textColor = [UIColor blackColor];
+    durationLabel.font = [UIFont boldSystemFontOfSize:17.0];
+    [bottomView addSubview:durationLabel];
+    self.durationLabel = durationLabel;
+    
+    UILabel *label = [[UILabel alloc] init];
+    
+    label.textColor = UIColorFromRGB16(0x56bc8b);
+    label.font = [UIFont rw_regularFontSize:15.0];
+    [bottomView addSubview:label];
+    self.label = label;
+    
+    UIButton *button = [[UIButton alloc] init];
+    [button setImage:[UIImage imageNamed:@"map_arrow"] forState:UIControlStateNormal];
+    [button setTitle:@"导航" forState:UIControlStateNormal];
+    [button.titleLabel setFont:[UIFont rw_regularFontSize:14.0]];
+    [button setBackgroundColor:UIColorFromRGB16(0x3385ff)];
+    button.layer.cornerRadius = 3.0;
+    button.layer.masksToBounds = YES;
+    [button addTarget:self action:@selector(startNavi) forControlEvents:UIControlEventTouchUpInside];
+    [bottomView addSubview:button];
+    
+    [bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(self.view);
+        make.left.equalTo(self.view);
+        make.right.equalTo(self.view);
+        make.height.mas_equalTo(150*kScaleH);
+    }];
+    [button mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(bottomView).offset(20*kScaleH);
+        make.right.equalTo(bottomView).offset(-20*kScaleH);
+        make.size.mas_equalTo(CGSizeMake(100*kScaleW, 50*kScaleH));
+    }];
+    [durationLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(bottomView).offset(30*kScaleH);
+        make.left.equalTo(bottomView).offset(20*kScaleH);
+        make.right.equalTo(button.mas_left).offset(-20*kScaleH);
+    }];
+    [label mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(bottomView).offset(-20*kScaleH);
+        make.left.equalTo(durationLabel);
+        make.width.mas_equalTo(200);
+    }];
+    self.bottomView.hidden = YES;
 }
 - (void)onGetGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKGeoCodeResult *)result errorCode:(BMKSearchErrorCode)error
 {
@@ -287,7 +311,8 @@
 {
     NSLog(@"didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
 //    _mapView.centerCoordinate = CLLocationCoordinate2DMake(userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude);
-    if (IsStrEmpty(self.address)) {
+    if (IsStrEmpty(self.address) || loc) {
+        loc = NO;
         [_mapView setCenterCoordinate:userLocation.location.coordinate animated:YES];
     }
     [_mapView updateLocationData:userLocation];
@@ -626,7 +651,7 @@
         [self mapViewFitPolyLine:polyLine];
     }
 }
-
+#pragma mark - 显示路程信息
 - (void)calculateDuration:(BMKTime *)duration andDistance:(int)distance{
     NSMutableString *string = [NSMutableString string];
     if (duration.dates > 0) {
@@ -650,6 +675,14 @@
     self.durationLabel.text = string;
     
     self.label.text = @"最快";
+    self.bottomView.hidden = NO;
+    [_mapView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view);
+        make.top.equalTo(self.view).offset(44);
+        make.right.equalTo(self.view);
+        make.bottom.equalTo(self.view).offset(-150*kScaleH);
+    }];
+    
 }
 -(void)onClickDriveSearch
 {
@@ -841,4 +874,89 @@
         _geocodesearch = nil;
     }
 }
+//发起导航
+- (void)startNavi
+{
+    if ((!IsStrEmpty(endNode.name)) && (!IsStrEmpty(startNode.name)) && !hasRoute) {
+        return;
+    }
+    //节点数组
+    NSMutableArray *nodesArray = [[NSMutableArray alloc]    initWithCapacity:2];
+    
+    //起点
+    BNRoutePlanNode *start = [[BNRoutePlanNode alloc] init];
+    start.pos = [[BNPosition alloc] init];
+    start.pos.x = startNode.pt.latitude;
+    start.pos.y = startNode.pt.longitude;
+    start.pos.eType = BNCoordinate_BaiduMapSDK;
+    [nodesArray addObject:start];
+    
+    //终点
+    BNRoutePlanNode *end = [[BNRoutePlanNode alloc] init];
+    end.pos = [[BNPosition alloc] init];
+    end.pos.x = endNode.pt.latitude;
+    end.pos.y = endNode.pt.longitude;
+    end.pos.eType = BNCoordinate_BaiduMapSDK;
+    [nodesArray addObject:end];
+    
+    //关闭openURL,不想跳转百度地图可以设为YES
+    [BNCoreServices_RoutePlan setDisableOpenUrl:YES];
+    [BNCoreServices_RoutePlan startNaviRoutePlan:BNRoutePlanMode_Recommend naviNodes:nodesArray time:nil delegete:self userInfo:nil];
+    //发起路径规划
+//    [BNCoreServices_RoutePlan startNaviRoutePlan:BNRoutePlanMode_Recommend naviNodes:nodesArray time:nil delegete:self userInfo:nil];
+}
+//算路成功后，在回调函数中发起导航，如下：
+//算路成功回调
+-(void)routePlanDidFinished:(NSDictionary *)userInfo
+{
+    NSLog(@"算路成功");
+    
+    //路径规划成功，开始导航
+    [BNCoreServices_UI showPage:BNaviUI_NormalNavi delegate:self extParams:nil];
+}
+- (id)naviPresentedViewController {
+    return self;
+}
+//算路失败回调
+- (void)routePlanDidFailedWithError:(NSError *)error andUserInfo:(NSDictionary*)userInfo
+{
+    NSString *message;
+    switch ([error code]%10000)
+    {
+        case BNAVI_ROUTEPLAN_ERROR_LOCATIONFAILED:
+            NSLog(@"暂时无法获取您的位置,请稍后重试");
+            message = @"暂时无法获取您的位置,请稍后重试";
+            break;
+        case BNAVI_ROUTEPLAN_ERROR_ROUTEPLANFAILED:
+            NSLog(@"无法发起导航");
+            message = @"无法发起导航";
+            break;
+        case BNAVI_ROUTEPLAN_ERROR_LOCATIONSERVICECLOSED:
+            NSLog(@"定位服务未开启,请到系统设置中打开定位服务。");
+            message = @"定位服务未开启,请到系统设置中打开定位服务。";
+            break;
+        case BNAVI_ROUTEPLAN_ERROR_NODESTOONEAR:
+            NSLog(@"起终点距离起终点太近");
+            message = @"起终点距离起终点太近";
+            break;
+        default:
+            NSLog(@"算路失败");
+            message = @"路线获取失败，请稍后重试";
+            break;
+    }
+    [MBProgressHUD alertInfo:message];
+}
+
+//算路取消回调
+-(void)routePlanDidUserCanceled:(NSDictionary*)userInfo {
+    NSLog(@"算路取消");
+}
+
+#pragma mark - 安静退出导航
+
+- (void)exitNaviUI
+{
+    [BNCoreServices_UI exitPage:EN_BNavi_ExitTopVC animated:YES extraInfo:nil];
+}
+
 @end

@@ -82,7 +82,7 @@
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.textColor = UIColorFromRGB16(0x4b4946);
-        _titleLabel.font = [UIFont rw_regularFontSize:16];
+        _titleLabel.font = [UIFont rw_regularFontSize:16.0];
     }
     return _titleLabel;
 }
@@ -90,8 +90,9 @@
     if (!_detailLabel) {
         _detailLabel = [[UILabel alloc] init];
         _detailLabel.textColor = UIColorFromRGB16(0x838383);
-        _detailLabel.font = [UIFont rw_regularFontSize:16];
-        _detailLabel.adjustsFontSizeToFitWidth = YES;
+        _detailLabel.font = [UIFont rw_regularFontSize:15.0];
+//        _detailLabel.adjustsFontSizeToFitWidth = YES;
+        _detailLabel.textAlignment = NSTextAlignmentRight;
     }
     return _detailLabel;
 }

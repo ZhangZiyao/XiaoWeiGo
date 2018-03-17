@@ -40,8 +40,8 @@
         FSCustomButton *button = [[FSCustomButton alloc] init];
         button.backgroundColor = [UIColor whiteColor];
         button.adjustsTitleTintColorAutomatically = YES;
-        [button setTitleColor:[UIColor colorWithHex:@"666666"] forState:UIControlStateNormal];
-        [button setTitleColor:[UIColor colorWithHex:@"1aa4ec"] forState:UIControlStateSelected];
+        [button setTitleColor:[UIColor textBlackColor] forState:UIControlStateNormal];
+        [button setTitleColor:UIColorFromRGB16(0x1aa4ec) forState:UIControlStateSelected];
         button.titleLabel.font = [UIFont rw_regularFontSize:13];
         [button setTitle:array[i][1] forState:UIControlStateNormal];
         [button setImage:[UIImage imageNamed:array[i][0]] forState:UIControlStateNormal];

@@ -49,7 +49,7 @@
     
     UIButton *searchBtn = [[UIButton alloc] init];
     [searchBtn setTitle:@"搜索" forState:UIControlStateNormal];
-    [searchBtn setBackgroundColor:[UIColor colorWithHex:@"edc440"]];
+    [searchBtn setBackgroundColor:UIColorFromRGB16(0xedc440)];
     [searchBtn.titleLabel setFont:[UIFont rw_regularFontSize:15.0]];
     [self.view addSubview:searchBtn];
     [searchBtn addTarget:self action:@selector(searchDataRequest) forControlEvents:UIControlEventTouchUpInside];

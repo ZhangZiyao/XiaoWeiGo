@@ -380,7 +380,7 @@
     FSCustomButton *btn2 = [[FSCustomButton alloc] initWithFrame:CGRectMake(ScreenWidth-170*kScaleW, 0, 150*kScaleW, 64*kScaleH)];
     [btn2 setTitle:@"查看更多" forState:UIControlStateNormal];
     [btn2.titleLabel setFont:[UIFont rw_regularFontSize:12]];
-    [btn2 setTitleColor:[UIColor colorWithHex:@"999999"] forState:UIControlStateNormal];
+    [btn2 setTitleColor:[UIColor textGrayColor] forState:UIControlStateNormal];
     [btn2 setImage:[UIImage imageNamed:@"home_icon_more"] forState:UIControlStateNormal];
     btn2.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 5);
     btn2.buttonImagePosition = FSCustomButtonImagePositionRight;

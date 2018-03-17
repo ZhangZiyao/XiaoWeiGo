@@ -399,10 +399,10 @@
         [commitBtn.titleLabel setFont:[UIFont rw_regularFontSize:16]];
         commitBtn.layer.cornerRadius = 5;
         commitBtn.layer.masksToBounds = YES;
-        [commitBtn setBackgroundColor:[UIColor colorWithHex:@"3b78d8"]];
+        [commitBtn setBackgroundColor:UIColorFromRGB16(0x3b78d8)];
         [footer addSubview:commitBtn];
         UIButton *backbtn = [RWFactionUI createButtonWith:CGRectMake(20*kScaleW, 145*kScaleH, ScreenWidth-40*kScaleW, 85*kScaleH) title:@"返  回" backgroundImage:nil textColor:[UIColor whiteColor] target:self selector:@selector(navLeftItemClick)];
-        [backbtn setBackgroundColor:[UIColor colorWithHex:@"f54a48"]];
+        [backbtn setBackgroundColor:UIColorFromRGB16(0xf54a48)];
         [backbtn.titleLabel setFont:[UIFont rw_regularFontSize:16]];
         backbtn.layer.cornerRadius = 5;
         backbtn.layer.masksToBounds = YES;

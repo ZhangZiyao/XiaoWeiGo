@@ -23,7 +23,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"企业名录";
+    self.title = @"小微企业名录";
     [self showBackItem];
     _pageIndex = 0;
     [self getDataList];

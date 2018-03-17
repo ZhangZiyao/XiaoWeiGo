@@ -67,9 +67,9 @@
             make.width.mas_equalTo(170*kScaleW);
         }];
         if (i == 0) {
-            saveBtn.backgroundColor = [UIColor colorWithHex:@"01acf1"];
+            saveBtn.backgroundColor = UIColorFromRGB16(0x01acf1);
         }else{
-            saveBtn.backgroundColor = [UIColor colorWithHex:@"cd1f20"];
+            saveBtn.backgroundColor = UIColorFromRGB16(0xcd1f20);
         }
         saveBtn.layer.cornerRadius = 5;
         saveBtn.layer.masksToBounds = YES;
@@ -80,7 +80,7 @@
     UILabel *label0 = [RWFactionUI createLabelWith:CGRectMake(0, 0, 0, 0) text:@"“小微加油”奉化小微企业服务共享平台" textColor:[UIColor textBlackColor] textFont:[UIFont rw_regularFontSize:18.0] textAlignment:0];
     UILabel *label1 = [RWFactionUI createLabelWith:CGRectMake(0, 0, 0, 0) text:@"友情提醒" textColor:[UIColor textBlackColor] textFont:[UIFont rw_regularFontSize:16.0] textAlignment:0];
     NSString *string = @"1.手指长按二维码识别图片 \n2.在别人手机里扫描二维码 \n3.扫码成功后点击右上角的【。。。】，选择“发送给朋友”、“分享到朋友圈”、“收藏”、“分享到手机QQ”、“分享到QQ空间”";
-    UILabel *label2 = [RWFactionUI createLabelWith:CGRectMake(0, 0, 0, 0) text:string textColor:[UIColor colorWithHex:@"999999"] textFont:[UIFont rw_regularFontSize:16.0] textAlignment:0];
+    UILabel *label2 = [RWFactionUI createLabelWith:CGRectMake(0, 0, 0, 0) text:string textColor:[UIColor textGrayColor] textFont:[UIFont rw_regularFontSize:16.0] textAlignment:0];
     label2.numberOfLines = 0;
     [self.view addSubview:label0];
     [self.view addSubview:label1];

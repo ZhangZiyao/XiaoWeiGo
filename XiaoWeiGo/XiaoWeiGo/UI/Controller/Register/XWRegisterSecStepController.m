@@ -260,7 +260,9 @@
     };
     [section addFormRow:row];
     [self.form addFormSection:section];
-    [self addSection4];
+    if (self.type == 5) {//企业服务商
+        [self addSection4];
+    }
 }
 - (void)addSection4{
     XLFormSectionDescriptor *section = [XLFormSectionDescriptor formSectionWithTitle:@"服务类别"];
@@ -351,10 +353,10 @@
         [commitBtn.titleLabel setFont:[UIFont rw_regularFontSize:16]];
         commitBtn.layer.cornerRadius = 5;
         commitBtn.layer.masksToBounds = YES;
-        [commitBtn setBackgroundColor:[UIColor colorWithHex:@"3b78d8"]];
+        [commitBtn setBackgroundColor:UIColorFromRGB16(0x3b78d8)];
         [footer addSubview:commitBtn];
         UIButton *backbtn = [RWFactionUI createButtonWith:CGRectMake(20*kScaleW, 145*kScaleH, ScreenWidth-40*kScaleW, 85*kScaleH) title:@"返  回" backgroundImage:nil textColor:[UIColor whiteColor] target:self selector:@selector(navLeftItemClick)];
-        [backbtn setBackgroundColor:[UIColor colorWithHex:@"f54a48"]];
+        [backbtn setBackgroundColor:UIColorFromRGB16(0xf54a48)];
         [backbtn.titleLabel setFont:[UIFont rw_regularFontSize:16]];
         backbtn.layer.cornerRadius = 5;
         backbtn.layer.masksToBounds = YES;
@@ -562,17 +564,19 @@
             [MBProgressHUD alertInfo:@"请输入安全提示答案"];
             return NO;
         }
-        NSMutableArray *arrayP = [NSMutableArray array];
-        for (int i = 0; i < 10; i++) {
-            NSString *tag = [NSString stringWithFormat:@"tag%d",i];
-            XLFormRowDescriptor *feeRow = [self.form formRowWithTag:tag];
-            if (feeRow.value) {
-                [arrayP addObject:[NSString stringWithFormat:@"%i",i+1]];
+        if (self.type == 5) {
+            NSMutableArray *arrayP = [NSMutableArray array];
+            for (int i = 0; i < 10; i++) {
+                NSString *tag = [NSString stringWithFormat:@"tag%d",i];
+                XLFormRowDescriptor *feeRow = [self.form formRowWithTag:tag];
+                if (feeRow.value) {
+                    [arrayP addObject:[NSString stringWithFormat:@"%i",i+1]];
+                }
             }
-        }
-        
-        if (arrayP.count > 0) {
-            _typeArray = [NSMutableArray arrayWithArray:arrayP];
+            
+            if (arrayP.count > 0) {
+                _typeArray = [NSMutableArray arrayWithArray:arrayP];
+            }
         }
         
     }
