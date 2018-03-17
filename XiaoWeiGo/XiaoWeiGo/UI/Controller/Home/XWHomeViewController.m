@@ -491,11 +491,19 @@
         [cell resetDataWithModel:model type:XWNewsPictureCellType];
         return cell;
     }else{
-        XWCommandCell *cell = [tableView dequeueReusableCellWithIdentifier:@"demandCell"];
+//        XWCommandCell *cell = [tableView dequeueReusableCellWithIdentifier:@"demandCell"];
+//        if (!cell) {
+//            cell = [[XWCommandCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"demandCell"];
+//        }
+//        cell.model = self.dataSource[indexPath.row];
+//        return cell;
+        XWListViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"homeTabc"];
         if (!cell) {
-            cell = [[XWCommandCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"demandCell"];
+            cell = [[XWListViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"homeTabc"];
         }
-        cell.model = self.dataSource[indexPath.row];
+        cell.type = HHShowNoPictureCellType;
+        //        cell.dmodel = self.dataSource[indexPath.row];
+        [cell resetDataWith:self.dataSource[indexPath.row] category:0];
         return cell;
     }
 }
@@ -558,7 +566,7 @@
     FSCustomButton *btn2 = [[FSCustomButton alloc] initWithFrame:CGRectMake(ScreenWidth-170*kScaleW, 0, 150*kScaleW, 64*kScaleH)];
     [btn2 setTitle:@"查看更多" forState:UIControlStateNormal];
     [btn2.titleLabel setFont:[UIFont rw_regularFontSize:12]];
-    [btn2 setTitleColor:[UIColor colorWithHex:@"999999"] forState:UIControlStateNormal];
+    [btn2 setTitleColor:[UIColor textGrayColor] forState:UIControlStateNormal];
     [btn2 setImage:[UIImage imageNamed:@"home_icon_more"] forState:UIControlStateNormal];
     btn2.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 5);
     btn2.buttonImagePosition = FSCustomButtonImagePositionRight;
@@ -597,7 +605,7 @@
         //设置每张图片的停留时间，默认值为5s，最少为2s
         _circleView.time = 4;
         //设置分页控件的颜色
-        [_circleView setPageColor:[UIColor whiteColor] andCurrentPageColor:[UIColor colorWithHex:@"8ad8ee"]];
+        [_circleView setPageColor:[UIColor whiteColor] andCurrentPageColor:UIColorFromRGB16(0x8ad8ee)];
         //设置分页控件的位置，默认为PositionBottomCenter
         _circleView.pagePosition = PositionBottomCenter;
         

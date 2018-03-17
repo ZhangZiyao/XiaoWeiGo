@@ -106,7 +106,7 @@
 - (UILabel *)titleLabel{
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc] init];
-        _titleLabel.textColor = [UIColor colorWithHex:@"666666"];
+        _titleLabel.textColor = [UIColor textBlackColor];
         _titleLabel.font = [UIFont rw_regularFontSize:14];
     }
     return _titleLabel;
@@ -114,7 +114,7 @@
 - (UILabel *)detailLabel{
     if (!_detailLabel) {
         _detailLabel = [[UILabel alloc] init];
-        _detailLabel.textColor = [UIColor colorWithHex:@"999999"];
+        _detailLabel.textColor = [UIColor textGrayColor];
         _detailLabel.font = [UIFont rw_regularFontSize:13];
         _detailLabel.numberOfLines = 2;
     }

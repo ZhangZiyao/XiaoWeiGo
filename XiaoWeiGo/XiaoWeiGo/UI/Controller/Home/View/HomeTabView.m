@@ -36,7 +36,7 @@
         FSCustomButton *button = [[FSCustomButton alloc] init];
         button.backgroundColor = [UIColor whiteColor];
         button.adjustsTitleTintColorAutomatically = YES;
-        [button setTintColor:[UIColor colorWithHex:@"666666"]];
+        [button setTintColor:[UIColor textBlackColor]];
         button.titleLabel.font = [UIFont rw_regularFontSize:13];
         [button setTitle:array[i][1] forState:UIControlStateNormal];
         [button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"home_icon_nav%d",i+1]] forState:UIControlStateNormal];
