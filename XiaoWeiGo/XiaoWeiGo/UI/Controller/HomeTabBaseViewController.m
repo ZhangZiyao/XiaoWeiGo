@@ -36,7 +36,7 @@
 
 @property (nonatomic, strong) UIImageView *center_btn3;
 @property (nonatomic, strong) UIView *centerView;
-@property (nonatomic, strong) UIView *centerView1;
+//@property (nonatomic, strong) UIView *centerView1;
 @property (nonatomic, assign) HHShowTableCellType cellType;
 @end
 
@@ -446,66 +446,66 @@
     }
     return _tableView;
 }
-- (UIView *)centerView1{
-    if (!_centerView1) {
-        _centerView1 = [[UIView alloc] init];
-        _centerView1.backgroundColor = [UIColor whiteColor];
-        
-        //        NSArray *array = @[@[@"政策红利",@"各种扶持政策",@"FD6101",@"home_img_policy"],@[@"信用信息公示",@"登录后查看",@""],@[@"",@"",@""]];
-        view1 = [[HomeCustomView alloc] init];
-        view1.delegate = self;
-        view1.tag = 1010;
-        //        view1.linePosition = CustomLinePositionRight;
-        view1.imagePosition = CustomImagePositionFirst;
-        view1.titleLabel.text = @"我要贷款信息";
-        view1.titleLabel.textColor = UIColorFromRGB16(0xFD6101);
-        view1.detailLabel.text = @"总有一款适合你的产品";
-        view1.smallImageView.image = [UIImage imageNamed:@"loan_img_nav1"];
-        //        view1
-        [_centerView1 addSubview:view1];
-        
-        view2 = [[HomeCustomView alloc] init];
-        //        view2.linePosition = CustomLinePositionBottom;
-        view2.delegate = self;
-        view2.tag = 1011;
-        view2.imagePosition = CustomImagePositionCenter;
-        view2.titleLabel.text = @"我要贷款";
-        view2.titleLabel.textColor = UIColorFromRGB16(0x406ABB);
-        view2.detailLabel.text = @"我要马上发布";
-        view2.smallImageView.image = [UIImage imageNamed:@"loan_img_nav2"];
-        [_centerView1 addSubview:view2];
-        view3 = [[HomeCustomView alloc] init];
-        view3.delegate = self;
-        view3.tag = 1012;
-        //        view3.linePosition = CustomLinePositionTop;
-        view3.imagePosition = CustomImagePositionRightEdge0;
-        view3.titleLabel.text = @"推荐机构";
-        view3.titleLabel.textColor = UIColorFromRGB16(0X0CA6AE);
-        view3.detailLabel.text = @"小微加油推荐哦";
-        view3.smallImageView.image = [UIImage imageNamed:@"loan_img_nav3"];
-        [_centerView1 addSubview:view3];
-        [view1 mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(_centerView1);
-            make.top.equalTo(_centerView1);
-            make.bottom.equalTo(_centerView1);
-            make.width.mas_equalTo(ScreenWidth/2);
-        }];
-        [view2 mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.equalTo(_centerView1);
-            make.top.equalTo(_centerView1);
-            make.width.mas_equalTo(ScreenWidth/2);
-            make.height.mas_equalTo(140*kScaleH);
-        }];
-        [view3 mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.equalTo(_centerView1);
-            make.bottom.equalTo(_centerView1);
-            make.width.mas_equalTo(ScreenWidth/2);
-            make.height.mas_equalTo(140*kScaleH);
-        }];
-        
-    }
-    return _centerView1;
-}
+//- (UIView *)centerView1{
+//    if (!_centerView1) {
+//        _centerView1 = [[UIView alloc] init];
+//        _centerView1.backgroundColor = [UIColor whiteColor];
+//
+//        //        NSArray *array = @[@[@"政策红利",@"各种扶持政策",@"FD6101",@"home_img_policy"],@[@"信用信息公示",@"登录后查看",@""],@[@"",@"",@""]];
+//        view1 = [[HomeCustomView alloc] init];
+//        view1.delegate = self;
+//        view1.tag = 1010;
+//        //        view1.linePosition = CustomLinePositionRight;
+//        view1.imagePosition = CustomImagePositionFirst;
+//        view1.titleLabel.text = @"我要贷款信息";
+//        view1.titleLabel.textColor = UIColorFromRGB16(0xFD6101);
+//        view1.detailLabel.text = @"总有一款适合你的产品";
+//        view1.smallImageView.image = [UIImage imageNamed:@"loan_img_nav1"];
+//        //        view1
+//        [_centerView1 addSubview:view1];
+//
+//        view2 = [[HomeCustomView alloc] init];
+//        //        view2.linePosition = CustomLinePositionBottom;
+//        view2.delegate = self;
+//        view2.tag = 1011;
+//        view2.imagePosition = CustomImagePositionCenter;
+//        view2.titleLabel.text = @"我要贷款";
+//        view2.titleLabel.textColor = UIColorFromRGB16(0x406ABB);
+//        view2.detailLabel.text = @"我要马上发布";
+//        view2.smallImageView.image = [UIImage imageNamed:@"loan_img_nav2"];
+//        [_centerView1 addSubview:view2];
+//        view3 = [[HomeCustomView alloc] init];
+//        view3.delegate = self;
+//        view3.tag = 1012;
+//        //        view3.linePosition = CustomLinePositionTop;
+//        view3.imagePosition = CustomImagePositionRightEdge0;
+//        view3.titleLabel.text = @"推荐机构";
+//        view3.titleLabel.textColor = UIColorFromRGB16(0X0CA6AE);
+//        view3.detailLabel.text = @"小微加油推荐哦";
+//        view3.smallImageView.image = [UIImage imageNamed:@"loan_img_nav3"];
+//        [_centerView1 addSubview:view3];
+//        [view1 mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.left.equalTo(_centerView1);
+//            make.top.equalTo(_centerView1);
+//            make.bottom.equalTo(_centerView1);
+//            make.width.mas_equalTo(ScreenWidth/2);
+//        }];
+//        [view2 mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.right.equalTo(_centerView1);
+//            make.top.equalTo(_centerView1);
+//            make.width.mas_equalTo(ScreenWidth/2);
+//            make.height.mas_equalTo(140*kScaleH);
+//        }];
+//        [view3 mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.right.equalTo(_centerView1);
+//            make.bottom.equalTo(_centerView1);
+//            make.width.mas_equalTo(ScreenWidth/2);
+//            make.height.mas_equalTo(140*kScaleH);
+//        }];
+//
+//    }
+//    return _centerView1;
+//}
 - (NSMutableArray *)dataSource{
     if (!_dataSource) {
         _dataSource = [NSMutableArray array];

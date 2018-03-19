@@ -77,5 +77,28 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
-
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self getAddServiceLink];
+}
+#pragma mark -   增加文章浏览量
+- (void)getAddServiceLink {
+    RequestManager *manager = [[RequestManager alloc] init];
+    manager.isShowLoading = NO;
+    //    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    [params setValuesForKeysWithDictionary:@{@"aId":@(self.model.ID),//服务表ID
+                                             @"defAdd":@"1"//增量数，传1就加1浏览量
+                                             }];
+    
+    [manager POSTRequestUrlStr:kSetArticlePageView parms:params success:^(id responseData) {
+        NSLog(@"获取数据  %@",responseData);
+        //        if ([responseData[0] isEqualToString:@"success"]) {
+        //
+        //        }
+        
+    } fail:^(NSError *error) {
+        
+    }];
+}
 @end

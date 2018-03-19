@@ -148,6 +148,7 @@
         [self.navigationController pushViewController:discountVc animated:YES];
     }else{
         XWDownFileViewController *downVc = [[XWDownFileViewController alloc] init];
+        downVc.model = self.model;
         [self.navigationController pushViewController:downVc animated:YES];
     }
 }

@@ -30,7 +30,7 @@
 //PublishEvaluate(发布评价)
 #define kPublishEvaluate @"/PublishEvaluate"
 //LinkEvaluate(点赞评价)
-#define kLinkEvaluate @"/GetLinkEvaluate"
+#define kLinkEvaluate @"/LinkEvaluate"
 //PublishReply(发布评价回复)
 #define kPublishReply @"/PublishReply"
 //GetOrgServiceList(获取机构服务列表)
@@ -53,6 +53,8 @@
 #define kGetCompanyInfo @"/GetCompanyType"
 //SetServiceLink(增加机构服务点赞数量)
 #define kSetServiceLink @"/SetServiceLink"
+//增加文章浏览量
+#define kSetArticlePageView @"/SetArticlePageView"
 //GetDmdInfo(获取需求信息)
 #define kGetDmdInfo @"/GetDmdInfo"
 //注册企业服务商
@@ -69,6 +71,8 @@
 #define kGetUserInfo @"/GetUserInfo"
 //修改用户信息
 #define kUpdateUserInfo @"/SaveUserInfo"
+//验证是否可以点赞
+#define kValidateLike @"/ValidateLike"
 //登录
 #define kLogin @"/Login"
 //忘记密码

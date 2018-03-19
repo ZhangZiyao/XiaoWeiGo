@@ -129,6 +129,7 @@
         }
     }];
 }
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (index == 1) {
         CommandModel *model = self.dataSource[indexPath.section];

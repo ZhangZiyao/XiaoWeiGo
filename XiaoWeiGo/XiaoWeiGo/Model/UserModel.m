@@ -142,6 +142,7 @@ static NSString *const UMSG     = @"msg";
 }
 + (void)getUserData{
     NSDictionary *params = @{@"uId":[USER_DEFAULT objectForKey:USERIDKEY]};
+    
     //        WS(weakSelf);
     RequestManager *request = [[RequestManager alloc] init];
     [request POSTRequestUrlStr:kGetUserInfo parms:params success:^(id responseData) {
@@ -149,6 +150,7 @@ static NSString *const UMSG     = @"msg";
         NSLog(@" responseData  %@ ",[responseData class]);
         if (responseData) {
             UserModel *user = [UserModel mj_objectWithKeyValues:responseData[0]];
+            user.uId = [USER_DEFAULT objectForKey:USERIDKEY];
 //            [RWCache setUser:user];
             APPDELEGATE.user = user;
             EMError *error = [[EMClient sharedClient] loginWithUsername:[params objectForKey:@"name"] password:[params objectForKey:@"name"]];

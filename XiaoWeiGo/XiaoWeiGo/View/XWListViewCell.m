@@ -62,7 +62,7 @@
 - (NSArray *)categoryName{
     if ([NSString ifOutOfDateTime:[NSString ymdhDateToDateString:[NSDate date]] andEndDate:kCheckDate]) {
         
-        NSArray *array = @[@"我有需求",@"创业创新",@"知识产权",@"共享会计",@"法律服务",@"优惠政策",@"ISO认证",@"展会服务",@"工商注册",@"其他服务"];
+        NSArray *array = @[@"政策红利",@"创业创新",@"知识产权",@"共享会计",@"法律服务",@"优惠政策",@"ISO认证",@"展会服务",@"工商注册",@"其他服务"];
         return array;
     }else{
         NSArray *array = @[@"我要贷款",@"创业创新",@"知识产权",@"共享会计",@"法律服务",@"优惠政策",@"ISO认证",@"展会服务",@"工商注册",@"其他服务"];
@@ -101,12 +101,26 @@
                 make.left.equalTo(self.contentView).offset(30*kScaleW);
                 make.top.equalTo(self.contentView).offset(20*kScaleW);
                 make.right.equalTo(self.contentView).offset(-20*kScaleW);
+                make.height.mas_equalTo(40*kScaleH);
             }];
-            
+            [self.detailLabel0 mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(self.titleLabel);
+                make.top.equalTo(self.titleLabel.mas_bottom).offset(10*kScaleW);
+                make.height.mas_equalTo(30*kScaleH);
+                make.right.equalTo(self.contentView).offset(-20*kScaleW);
+            }];
             [self.detailLabel1 mas_remakeConstraints:^(MASConstraintMaker *make) {
                 make.left.equalTo(self.titleLabel);
-                make.bottom.equalTo(self.contentView).offset(-20*kScaleW);
+                make.height.mas_equalTo(30*kScaleH);
+                make.bottom.equalTo(self.contentView).offset(-10*kScaleW);
                 make.right.equalTo(self.contentView).offset(-20*kScaleW);
+            }];
+            
+            [self.line mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(self.contentView).offset(30*kScaleW);
+                make.right.equalTo(self.contentView).offset(-30*kScaleW);
+                make.bottom.equalTo(self.contentView);
+                make.height.mas_equalTo(0.5);
             }];
         }
             break;
@@ -132,8 +146,8 @@
 }
 - (void)setCType:(int)cType{
     _cType = cType;
-    NSArray *imageArr = @[@"loan_img_avatar",@"innovation_img_avatar",@"property_img_avatar",@"shared_img_avatar",@"legal_img_avatar",@"discount_img_avatar",@"certification_img_avatar",@"exhibition_img_avatar",@"registered_img_avatar",@"other_img_avatar"];
-    self.leftImageView.image = [UIImage imageNamed:imageArr[_cType-1]];
+//    NSArray *imageArr = @[@"loan_img_avatar",@"innovation_img_avatar",@"property_img_avatar",@"shared_img_avatar",@"legal_img_avatar",@"discount_img_avatar",@"certification_img_avatar",@"exhibition_img_avatar",@"registered_img_avatar",@"other_img_avatar"];
+    self.leftImageView.image = (self.cType==20)?[UIImage imageNamed:@"suggest_placeholder"] :[UIImage imageNamed:[NSString getImageNameWithCategory:_cType-1]];
 }
 - (void)createCell{
     [self.contentView addSubview:self.titleLabel];
@@ -190,18 +204,21 @@
                 make.left.equalTo(self.contentView).offset(30*kScaleW);
                 make.top.equalTo(self.contentView).offset(20*kScaleW);
                 make.right.equalTo(self.contentView).offset(-20*kScaleW);
-            }];
-            
-            [self.detailLabel1 mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(self.titleLabel);
-                make.bottom.equalTo(self.contentView).offset(-20*kScaleW);
-                make.right.equalTo(self.contentView).offset(-20*kScaleW);
+                make.height.mas_equalTo(40*kScaleH);
             }];
             [self.detailLabel0 mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.equalTo(self.titleLabel);
-                make.bottom.equalTo(self.detailLabel1.mas_top).offset(-5*kScaleH);
+                make.top.equalTo(self.titleLabel.mas_bottom);
+                make.height.mas_equalTo(30*kScaleH);
                 make.right.equalTo(self.contentView).offset(-20*kScaleW);
             }];
+            [self.detailLabel1 mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(self.titleLabel);
+                make.height.mas_equalTo(30*kScaleH);
+                make.bottom.equalTo(self.contentView).offset(-10*kScaleW);
+                make.right.equalTo(self.contentView).offset(-20*kScaleW);
+            }];
+            
             [self.line mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.equalTo(self.contentView).offset(30*kScaleW);
                 make.right.equalTo(self.contentView).offset(-30*kScaleW);
@@ -212,23 +229,25 @@
             break;
         case HHShowOtherCellType:
         {
-            self.leftImageView.hidden = YES;
             [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.equalTo(self.contentView).offset(30*kScaleW);
                 make.top.equalTo(self.contentView).offset(20*kScaleW);
                 make.right.equalTo(self.contentView).offset(-20*kScaleW);
-            }];
-            
-            [self.detailLabel1 mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(self.contentView).offset(20*kScaleW);
-                make.bottom.equalTo(self.contentView).offset(20*kScaleW);
-                make.right.equalTo(self.contentView).offset(-20*kScaleW);
+                make.height.mas_equalTo(40*kScaleH);
             }];
             [self.detailLabel0 mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(self.contentView).offset(20*kScaleW);
-                make.bottom.equalTo(self.detailLabel1.mas_top).offset(-5*kScaleH);
+                make.left.equalTo(self.titleLabel);
+                make.top.equalTo(self.titleLabel.mas_bottom);
+                make.height.mas_equalTo(30*kScaleH);
                 make.right.equalTo(self.contentView).offset(-20*kScaleW);
             }];
+            [self.detailLabel1 mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(self.titleLabel);
+                make.height.mas_equalTo(30*kScaleH);
+                make.bottom.equalTo(self.contentView).offset(-10*kScaleW);
+                make.right.equalTo(self.contentView).offset(-20*kScaleW);
+            }];
+            
             [self.line mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.equalTo(self.contentView).offset(30*kScaleW);
                 make.right.equalTo(self.contentView).offset(-30*kScaleW);

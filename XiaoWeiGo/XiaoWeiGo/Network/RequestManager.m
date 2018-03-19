@@ -238,6 +238,42 @@ typedef NS_ENUM(NSInteger, RWResponsetCode){
 //        return;
 //    }
 }
+/**
+ 下载文件
+ 
+ @param docPath 文件路径
+ @param fileName 文件名
+ */
+-(void)downloadDocxWithDocPath:(NSString *)docPath fileName:(NSString *)fileName {
+//    [MBProgressHUD showMessage:@"正在下载文件" toView:[se]];
+    NSString *urlString = [NSString stringWithFormat:@"%@/xc/",[RWEnvironmentManager host]];
+    
+    urlString = [urlString stringByAppendingString:fileName];
+    
+    NSURL *url = [NSURL URLWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    NSURLSessionDownloadTask *task = [manager downloadTaskWithRequest:request progress:^(NSProgress * _Nonnull downloadProgress) {
+        NSLog(@"%lld   %lld",downloadProgress.completedUnitCount,downloadProgress.totalUnitCount);
+        
+    } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
+        NSString *path = [docPath stringByAppendingPathComponent:fileName];
+        NSLog(@"文件路径＝＝＝%@",path);
+        return [NSURL fileURLWithPath:path];//这里返回的是文件下载到哪里的路径 要注意的是必须是携带协议file://
+    } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
+//        [MBProgressHUD hideHUDForView:self.view];
+//        [MBProgressHUD showSuccess:@"下载完成,正在打开" toView:self.view];
+        //        if (error) {
+        //
+        //        }else {
+        NSString *name = [filePath path];
+        NSLog(@"下载完成文件路径＝＝＝%@",name);
+//        [self openDocxWithPath:name];
+        //        }
+    }];
+    [task resume];//开始下载 要不然不会进行下载的
+}
+
 - (void)dealFailError:(NSError *)error
 {
     NSLog(@"fail ==== %@",error);

@@ -178,7 +178,6 @@
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     [params setValuesForKeysWithDictionary:@{@"id":@(self.model.ID)
                                              }];
-    
     [manager POSTRequestUrlStr:kGetDmdInfo parms:params success:^(id responseData) {
         NSLog(@"获取需求详情数据  %@",responseData);
         dModel = [CommandModel mj_objectWithKeyValues:responseData[0]];

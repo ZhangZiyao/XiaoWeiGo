@@ -57,7 +57,11 @@
         self.publishBtn.hidden = YES;
     }else{
         self.tableView.tableFooterView.hidden = YES;
-        self.publishBtn.hidden = NO;
+        if ([UserModel isLogin]) {
+            self.publishBtn.hidden = NO;
+        }else{
+            self.publishBtn.hidden = YES;
+        }
     }
     [self.tableView reloadData];
 }
@@ -99,7 +103,11 @@
     
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(UIEdgeInsetsMake(275*kScaleH, 0, -200*kScaleH, 0));
+//        make.edges.mas_equalTo(UIEdgeInsetsMake(275*kScaleH, 0, -200*kScaleH, 0));
+        make.top.equalTo(self.view).offset(275*kScaleH);
+        make.left.equalTo(self.view);
+        make.right.equalTo(self.view);
+        make.bottom.equalTo(self.view).offset(-90*kScaleH);
     }];
     
     UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 100*kScaleH)];
@@ -340,7 +348,7 @@
     [self showXHInputViewWithStyle:InputViewStyleLarge];//显示样式二
 }
 -(void)showXHInputViewWithStyle:(InputViewStyle)style{
-    
+    WS(weakSelf);
     [XHInputView showWithStyle:style configurationBlock:^(XHInputView *inputView) {
         /** 请在此block中设置inputView属性 */
         
@@ -357,20 +365,27 @@
         /** 更多属性设置,详见XHInputView.h文件 */
         
     } sendBlock:^BOOL(NSString *text) {
-        if(text.length){
-            NSLog(@"输入的信息为:%@",text);
+        if(text.length > 0){
+            NSLog(@"输入的信息为:%@  %@  %@",text,@(weakSelf.model.ID),APPDELEGATE.user.uId);
+            if (IsStrEmpty(text)) {
+                return YES;
+            }
             if (isReply) {
-                [CommonRequest publishEvaluate:text withParams:@{@"uId":APPDELEGATE.user.uId,@"sId":@(self.model.ID),@"eContent":text} block:^(BOOL success) {
+                [CommonRequest publishReply:text withParams:@{@"uId":APPDELEGATE.user.uId,@"eId":@(currentModel.ID),@"rContent":text} block:^(BOOL success) {
                     if (success) {
                         [MBProgressHUD alertInfo:@"发布成功"];
+                        [weakSelf getCommentDetail];
                     }else{
                         [MBProgressHUD alertInfo:@"发布失败"];
                     }
                 }];
+                
             }else{
-                [CommonRequest publishReply:text withParams:@{@"uId":APPDELEGATE.user.uId,@"eId":@(currentModel.ID),@"rContent":text} block:^(BOOL success) {
+                [CommonRequest publishEvaluate:text withParams:@{@"uId":APPDELEGATE.user.uId,@"sId":@(weakSelf.model.ID),@"eContent":text} block:^(BOOL success) {
                     if (success) {
                         [MBProgressHUD alertInfo:@"发布成功"];
+                        //                        SendNotify(@"PUBLISHSUCCESS", nil);
+                        [weakSelf getCommentDetail];
                     }else{
                         [MBProgressHUD alertInfo:@"发布失败"];
                     }
@@ -440,6 +455,31 @@
             [weakSelf.tableView reloadData];
         }];
     }
+}
+//验证是否可以点赞
+- (void)validateLike{
+    if (![UserModel isLogin]) {
+        //        [MBProgressHUD alertInfo:@"请先登录"];
+        [self showLogin];
+        return;
+    }
+    NSDictionary *params = @{@"uId":[USER_DEFAULT objectForKey:USERIDKEY],
+                             @"sId":@(self.model.ID)};
+    RequestManager *request = [[RequestManager alloc] init];
+    [request POSTRequestUrlStr:kValidateLike parms:params success:^(id responseData) {
+        NSString *message = responseData[0];
+        if ([message containsString:@"success"]) {
+            //
+            
+        }else if ([message containsString:@"notfound"]) {
+            //验证不能点赞
+            self.cmodel.isLiked = YES;
+        }else{
+            
+        }
+    } fail:^(NSError *error) {
+        
+    }];
 }
 #pragma mark - 获取机构详情
 - (void)getOrgDetail {
@@ -521,11 +561,36 @@
                 //可能是数组
                 model.replyArray = [XWCommentInfoModel mj_objectArrayWithKeyValuesArray:responseData];
             }
-            
+            [self.tableView reloadData];
         } fail:^(NSError *error) {
             
         }];
     }
+}
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self validateLike];
+    [self getAddServiceLink];
+}
+#pragma mark -   增加服务浏览量
+- (void)getAddServiceLink {
+    RequestManager *manager = [[RequestManager alloc] init];
+    manager.isShowLoading = NO;
+    //    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    [params setValuesForKeysWithDictionary:@{@"sId":@(self.model.ID),//服务表ID
+                                             @"defAdd":@"1"//增量数，传1就加1浏览量
+                                             }];
+    
+    [manager POSTRequestUrlStr:kSetServicePageView parms:params success:^(id responseData) {
+        NSLog(@"获取数据  %@",responseData);
+//        if ([responseData[0] isEqualToString:@"success"]) {
+//
+//        }
+        
+    } fail:^(NSError *error) {
+        
+    }];
 }
 - (void)navLeftItemClick{
     [self.navigationController popViewControllerAnimated:YES];

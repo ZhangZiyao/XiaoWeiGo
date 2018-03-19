@@ -250,22 +250,22 @@
 //        view2.linePosition = CustomLinePositionBottom;
         view2.delegate = self;
         view2.tag = 1011;
-        view2.imagePosition = CustomImagePositionCenter;
-        view2.titleLabel.text = @"信用信息公示";
-        view2.titleLabel.textColor = UIColorFromRGB16(0x406ABB);
-        view2.detailLabel.text = @"登录后查看";
-        view2.smallImageView.image = [UIImage imageNamed:@"home_img_credit"];
+        view2.imagePosition = CustomImagePositionTopEdge0;
+        view2.titleLabel.text = @"小微企业名录";
+        view2.titleLabel.textColor = UIColorFromRGB16(0xf4ba27);
+        view2.detailLabel.text = @"奉化名录";
+        view2.smallImageView.image = [UIImage imageNamed:@"home_img_book"];
         [_centerView1 addSubview:view2];
-        HomeCustomView *view3 = [[HomeCustomView alloc] init];
-        view3.delegate = self;
-        view3.tag = 1012;
-//        view3.linePosition = CustomLinePositionTop;
-        view3.imagePosition = CustomImagePositionCenter;
-        view3.titleLabel.text = @"小微企业名录";
-        view3.titleLabel.textColor = UIColorFromRGB16(0X0CA6AE);
-        view3.detailLabel.text = @"奉化名录";
-        view3.smallImageView.image = [UIImage imageNamed:@"home_img_list"];
-        [_centerView1 addSubview:view3];
+//        HomeCustomView *view3 = [[HomeCustomView alloc] init];
+//        view3.delegate = self;
+//        view3.tag = 1012;
+////        view3.linePosition = CustomLinePositionTop;
+//        view3.imagePosition = CustomImagePositionCenter;
+//        view3.titleLabel.text = @"小微企业名录";
+//        view3.titleLabel.textColor = UIColorFromRGB16(0X0CA6AE);
+//        view3.detailLabel.text = @"奉化名录";
+//        view3.smallImageView.image = [UIImage imageNamed:@"home_img_list"];
+//        [_centerView1 addSubview:view3];
         [view1 mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(_centerView1);
             make.top.equalTo(_centerView1);
@@ -276,14 +276,14 @@
             make.right.equalTo(_centerView1);
             make.top.equalTo(_centerView1);
             make.width.mas_equalTo(ScreenWidth/2);
-            make.height.mas_equalTo(100*kScaleH);
-        }];
-        [view3 mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.equalTo(_centerView1);
             make.bottom.equalTo(_centerView1);
-            make.width.mas_equalTo(ScreenWidth/2);
-            make.height.mas_equalTo(100*kScaleH);
         }];
+//        [view3 mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.right.equalTo(_centerView1);
+//            make.bottom.equalTo(_centerView1);
+//            make.width.mas_equalTo(ScreenWidth/2);
+//            make.height.mas_equalTo(100*kScaleH);
+//        }];
         
     }
     return _centerView1;
@@ -338,16 +338,26 @@
             break;
         case 1011:
         {
-            //信用信息公示
+            //小微企业名录
             if ([UserModel isLogin]) {
-                pageVc = [[XWCreditViewController alloc] init];
+                pageVc = [[XWBookViewController alloc] init];
             }else{
-//                [MBProgressHUD alertInfo:@"请先登录～"];
-//                XWLoginViewController *loginVc = [[XWLoginViewController alloc] init];
-//                RWNavigationController *nav = [[RWNavigationController alloc] initWithRootViewController:loginVc];
-//                [self presentViewController:nav animated:YES completion:nil];
+                //                [MBProgressHUD alertInfo:@"请先登录～"];
+                //                XWLoginViewController *loginVc = [[XWLoginViewController alloc] init];
+                //                RWNavigationController *nav = [[RWNavigationController alloc] initWithRootViewController:loginVc];
+                //                [self presentViewController:nav animated:YES completion:nil];
                 [self showLogin];
             }
+            //信用信息公示
+//            if ([UserModel isLogin]) {
+//                pageVc = [[XWCreditViewController alloc] init];
+//            }else{
+////                [MBProgressHUD alertInfo:@"请先登录～"];
+////                XWLoginViewController *loginVc = [[XWLoginViewController alloc] init];
+////                RWNavigationController *nav = [[RWNavigationController alloc] initWithRootViewController:loginVc];
+////                [self presentViewController:nav animated:YES completion:nil];
+//                [self showLogin];
+//            }
         }
             break;
         case 1012:

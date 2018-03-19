@@ -12,7 +12,7 @@
 
 + (NSString *)getImageNameWithCategory:(int)key{
     NSArray *imageArr = @[@"loan_img_avatar",@"innovation_img_avatar",@"property_img_avatar",@"shared_img_avatar",@"legal_img_avatar",@"discount_img_avatar",@"certification_img_avatar",@"exhibition_img_avatar",@"registered_img_avatar",@"other_img_avatar"];
-    return imageArr[key-1]; 
+    return key==0?imageArr[0]:imageArr[key-1];
 }
 + (NSString *)getCategoryNameWithCategory:(int)key{
     if (key == 0) {

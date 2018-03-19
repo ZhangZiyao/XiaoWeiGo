@@ -10,4 +10,6 @@
 
 @interface XWReadDocViewController : XWBaseViewController
 
+@property (nonatomic, copy) NSString *urlString;
+
 @end

@@ -9,10 +9,13 @@
 #import "XWDownFileViewController.h"
 #import "XWAttachmentModel.h"
 #import "XWReadDocViewController.h"
+#import "XWServiceModel.h"
+#import "RWEnvironmentManager.h"
 
 @interface XWDownFileViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     XWAttachmentModel *model;
+    NSString *urlString;
 }
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
@@ -64,8 +67,13 @@
         //        }else{
         //            [MBProgressHUD alertInfo:@"获取附件地址失败,请稍后重试"];
         //        }
-        XWReadDocViewController *readVc = [[XWReadDocViewController alloc] init];
-        [self.navigationController pushViewController:readVc animated:YES];
+        if (!IsStrEmpty(urlString)) {
+            XWReadDocViewController *readVc = [[XWReadDocViewController alloc] init];
+            readVc.urlString = urlString;
+            [self.navigationController pushViewController:readVc animated:YES];
+        }else{
+            [MBProgressHUD alertInfo:@"没有获取到附件，请稍后再试"];
+        }
         
     }
 }
@@ -109,7 +117,7 @@
     RequestManager *request = [[RequestManager alloc] init];
     request.isShowLoading = NO;
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    [params setValuesForKeysWithDictionary:@{@"sId":@"2"//机构表ID
+    [params setValuesForKeysWithDictionary:@{@"sId":@(self.model.ID)//机构表ID
                                              }];
     
     [request POSTRequestUrlStr:kGetAttachmentList parms:params success:^(id responseData) {
@@ -117,6 +125,7 @@
         if (responseData) {
             [MBProgressHUD alertInfo:@"获取附件成功"];
             model = [XWAttachmentModel mj_objectWithKeyValues:responseData[0]];
+            urlString = [NSString stringWithFormat:@"%@/xc/%@",[RWEnvironmentManager host],model.attUrl];
         }else{
             [MBProgressHUD alertInfo:@"获取附件失败"];
         }

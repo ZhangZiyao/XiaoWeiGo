@@ -2489,13 +2489,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/XiaoWeiGo/framework/UMSocial/SocialLibraries/AlipayShare",
-					"$(PROJECT_DIR)/XiaoWeiGo/framework/UMSocial/SocialLibraries/Email",
-					"$(PROJECT_DIR)/XiaoWeiGo/framework/UMSocial/SocialLibraries/QQ",
-					"$(PROJECT_DIR)/XiaoWeiGo/framework/UMSocial/SocialLibraries/Sina",
-					"$(PROJECT_DIR)/XiaoWeiGo/framework/UMSocial/SocialLibraries/SMS",
-					"$(PROJECT_DIR)/XiaoWeiGo/framework/UMSocial/SocialLibraries/WeChat",
-					"$(PROJECT_DIR)/XiaoWeiGo/framework/UMSocial/UMSocialSDKPlugin",
 					"$(PROJECT_DIR)/XiaoWeiGo/framework/thirdlibs",
 					"$(PROJECT_DIR)/XiaoWeiGo/UI/Controller/Contact/Audio/VoiceConvert/opencore-amrnb",
 					"$(PROJECT_DIR)/XiaoWeiGo/UI/Controller/Contact/Audio/VoiceConvert/opencore-amrwb",
@@ -2530,13 +2523,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/XiaoWeiGo/framework/UMSocial/SocialLibraries/AlipayShare",
-					"$(PROJECT_DIR)/XiaoWeiGo/framework/UMSocial/SocialLibraries/Email",
-					"$(PROJECT_DIR)/XiaoWeiGo/framework/UMSocial/SocialLibraries/QQ",
-					"$(PROJECT_DIR)/XiaoWeiGo/framework/UMSocial/SocialLibraries/Sina",
-					"$(PROJECT_DIR)/XiaoWeiGo/framework/UMSocial/SocialLibraries/SMS",
-					"$(PROJECT_DIR)/XiaoWeiGo/framework/UMSocial/SocialLibraries/WeChat",
-					"$(PROJECT_DIR)/XiaoWeiGo/framework/UMSocial/UMSocialSDKPlugin",
 					"$(PROJECT_DIR)/XiaoWeiGo/framework/thirdlibs",
 					"$(PROJECT_DIR)/XiaoWeiGo/UI/Controller/Contact/Audio/VoiceConvert/opencore-amrnb",
 					"$(PROJECT_DIR)/XiaoWeiGo/UI/Controller/Contact/Audio/VoiceConvert/opencore-amrwb",
