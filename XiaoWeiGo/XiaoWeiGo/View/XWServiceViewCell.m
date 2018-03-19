@@ -213,6 +213,7 @@
         _detail3Label.textColor = UIColorFromRGB16(0X666666);
         _detail3Label.font = [UIFont rw_regularFontSize:15];
         _detail3Label.textAlignment = NSTextAlignmentLeft;
+        _detail3Label.numberOfLines = 0;
     }
     return _detail3Label;
 }

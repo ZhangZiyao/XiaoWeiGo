@@ -29,6 +29,6 @@
 
 #define STOREAPPID @"1355434831"
 
-#define kCheckDate @"2018-3-16 00:00"
+#define kCheckDate @"2018-3-22 18:00"
 
 #endif /* XWDefine_h */

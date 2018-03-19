@@ -33,8 +33,6 @@
 #define kLinkEvaluate @"/LinkEvaluate"
 //PublishReply(发布评价回复)
 #define kPublishReply @"/PublishReply"
-//GetOrgServiceList(获取机构服务列表)
-#define kGetOrgServiceList @"/GetOrgServiceList"
 //SetArticlePageView(增加文章浏览量)
 #define kSetArticlePageView @"/SetArticlePageView"
 //SetServicePageView(增加机构服务浏览量)
@@ -50,7 +48,9 @@
 //AddServiceCollect(添加服务到收藏表)
 #define kAddServiceCollect @"/AddServiceCollect"
 //GetCompanyInfo(获取小薇企业列表)
-#define kGetCompanyInfo @"/GetCompanyType"
+#define kGetCompanyInfo @"/GetCompanyInfo"
+//获取小薇企业行业类别
+#define kGetCompanyType @"/GetCompanyType"
 //SetServiceLink(增加机构服务点赞数量)
 #define kSetServiceLink @"/SetServiceLink"
 //增加文章浏览量

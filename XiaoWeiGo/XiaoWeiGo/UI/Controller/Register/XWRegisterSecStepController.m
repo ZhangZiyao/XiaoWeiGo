@@ -244,7 +244,7 @@
     row.action.formSelector = @selector(selectAction:);
     row.value = IsStrEmpty(self.registerModel.question)?@"请设置密码提示问题":self.registerModel.question;
     [section addFormRow:row];
-    row = [XLFormRowDescriptor formRowDescriptorWithTag:@"ANSWER" rowType:XLFormRowDescriptorTypePhone title:@"＊"];
+    row = [XLFormRowDescriptor formRowDescriptorWithTag:@"ANSWER" rowType:XLFormRowDescriptorTypeText title:@"＊"];
     row.cellClass = [XWTextFieldCell class];
     row.textFieldMaxNumberOfCharacters = @13;
     [row.cellConfigAtConfigure setObject:@"请输入密保提示答案" forKey:@"textField.placeholder"];
@@ -331,7 +331,7 @@
         //一般用户
         return 450*kScaleH;
     }else{
-        if (section==4){
+        if ((self.type == 4&&section==3) || (self.type == 5&&section==4)) {
             return 250*kScaleH;
         }else{
             return 0.01f;
@@ -341,7 +341,7 @@
 }
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
     UIView *footer = [[UIView alloc] init];
-    if (section == 4) {
+    if ((self.type == 4&&section==3) || (self.type == 5&&section==4)) {
         footer = self.footerView;
     }
     return footer;

@@ -79,7 +79,7 @@
 - (void)getCompanyTypeList{
     RequestManager *manager = [[RequestManager alloc] init];
     manager.isShowLoading = NO;
-    [manager POSTRequestUrlStr:kGetCompanyInfo parms:nil success:^(id responseData) {
+    [manager POSTRequestUrlStr:kGetCompanyType parms:nil success:^(id responseData) {
         
         NSLog(@"  %@",responseData);
         //        NSString *message = responseData[0];
