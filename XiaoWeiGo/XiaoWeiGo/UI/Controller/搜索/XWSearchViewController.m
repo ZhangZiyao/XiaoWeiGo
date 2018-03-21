@@ -15,6 +15,8 @@
 #import "XWServiceModel.h"
 #import "CommandModel.h"
 #import "XWListViewCell.h"
+#import "ServiceDetailViewController.h"
+#import "XWDemandDetailViewController.h"
 
 @interface XWSearchViewController ()<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource>
 {
@@ -121,17 +123,32 @@
     return self.dataSource.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 100*kScaleH;
+    if (self.type == 10) {
+        return 100*kScaleH;
+    }else{
+        return 150*kScaleH;
+    }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 0.01f;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NewsModel *model = self.dataSource[indexPath.row];
-    XWNewsDetailViewController *detailVc = [[XWNewsDetailViewController alloc] init];
-    detailVc.model = model;
-    [self.navigationController pushViewController:detailVc animated:YES];
+    if (self.type == 10) {
+        NewsModel *model = self.dataSource[indexPath.row];
+        XWNewsDetailViewController *detailVc = [[XWNewsDetailViewController alloc] init];
+        detailVc.model = model;
+        [self.navigationController pushViewController:detailVc animated:YES];
+    }else if (self.type == 20){
+        ServiceDetailViewController *sDetailVc = [[ServiceDetailViewController alloc] init];
+        sDetailVc.category = self.category;
+        sDetailVc.model = self.dataSource[indexPath.row];
+        [self.navigationController pushViewController:sDetailVc animated:YES];
+    }else{
+        XWDemandDetailViewController *sDetailVc = [[XWDemandDetailViewController alloc] init];
+        sDetailVc.model = self.dataSource[indexPath.row];
+        [self.navigationController pushViewController:sDetailVc animated:YES];
+    }
     
 }
 #pragma mark - Delegates

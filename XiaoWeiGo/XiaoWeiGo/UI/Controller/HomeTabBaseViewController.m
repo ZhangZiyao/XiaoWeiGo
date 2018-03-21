@@ -193,7 +193,7 @@
 //    }];
 //}
 - (void)layoutSubviews{
-    _headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 690*kScaleH+16.0f)];
+    _headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 690*kScaleH+8.0f)];
     _headerView.backgroundColor = bgColor;
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 320*kScaleH)];
 //    imageView.image = [UIImage imageNamed:@"legal_img_banner"];

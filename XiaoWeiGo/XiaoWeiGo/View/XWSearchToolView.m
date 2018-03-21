@@ -38,28 +38,28 @@
     bgView.layer.cornerRadius = (self.frame.size.height-40*kScaleH)/2.0f;
     bgView.layer.masksToBounds = YES;
     bgView.layer.borderWidth = 0.5;
-    bgView.layer.borderColor = LineColor.CGColor;
+    bgView.layer.borderColor = UIColorFromRGB16(0xe2e2e2).CGColor;
     [self addSubview:bgView];
     
-    UIImageView *line0 = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 0.5)];
-    line0.backgroundColor = LineColor;
-    [self addSubview:line0];
-    UIImageView *line1 = [[UIImageView alloc] initWithFrame:CGRectMake(0, self.frame.size.height-0.5, ScreenWidth, 0.5)];
-    line1.backgroundColor = LineColor;
-    [self addSubview:line1];
+//    UIImageView *line0 = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 0.5)];
+//    line0.backgroundColor = LineColor;
+//    [self addSubview:line0];
+//    UIImageView *line1 = [[UIImageView alloc] initWithFrame:CGRectMake(0, self.frame.size.height-0.5, ScreenWidth, 0.5)];
+//    line1.backgroundColor = LineColor;
+//    [self addSubview:line1];
     
-    [line0 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self);
-        make.left.equalTo(self);
-        make.right.equalTo(self);
-        make.height.mas_equalTo(0.5);
-    }];
-    [line1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self);
-        make.left.equalTo(self);
-        make.right.equalTo(self);
-        make.height.mas_equalTo(0.5);
-    }];
+//    [line0 mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(self);
+//        make.left.equalTo(self);
+//        make.right.equalTo(self);
+//        make.height.mas_equalTo(0.5);
+//    }];
+//    [line1 mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.bottom.equalTo(self);
+//        make.left.equalTo(self);
+//        make.right.equalTo(self);
+//        make.height.mas_equalTo(0.5);
+//    }];
     
     UIImageView *searchImageView = [[UIImageView alloc] init];
     searchImageView.image = [UIImage imageNamed:@"home_icon_search"];
