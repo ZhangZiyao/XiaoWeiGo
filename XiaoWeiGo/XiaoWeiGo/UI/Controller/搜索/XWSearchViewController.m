@@ -12,7 +12,9 @@
 #import "UIView+Utils.h"
 #import "XWTextViewCell.h"
 #import "XWNewsDetailViewController.h"
-
+#import "XWServiceModel.h"
+#import "CommandModel.h"
+#import "XWListViewCell.h"
 
 @interface XWSearchViewController ()<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource>
 {
@@ -73,7 +75,7 @@
     NSLog(@"self.searchBar.text %@",self.searchBar.text);
     if (!IsStrEmpty(self.searchBar.text)) {
         if (![self.searchBar.text isEqualToString:oldSearchText]) {
-            [self searchNewsListRequest];
+            [self getDataListRequest];
         }
     }else{
         self.dataSource = [NSMutableArray array];
@@ -81,15 +83,38 @@
     }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    NewsModel *model = self.dataSource[indexPath.row];
-    XWTextViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"newssModel"];
-    if (!cell) {
-        cell = [[XWTextViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"newssModel"];
+    if (self.type == 10) {
+        NewsModel *model = self.dataSource[indexPath.row];
+        XWTextViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"newssModel"];
+        if (!cell) {
+            cell = [[XWTextViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"newssModel"];
+        }
+        //    cell.model = self.dataSource[indexPath.row];
+        [cell resetData:model type:HHShowNewsSubTitleCellType];
+        
+        return cell;
+    }else{
+        if (self.type == 20) {
+            XWListViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"homeTabd"];
+            if (!cell) {
+                cell = [[XWListViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"homeTabd"];
+            }
+            cell.type = HHShowPictureCellType;
+            cell.cType = self.category==0?1:self.category;
+            cell.serModel = self.dataSource[indexPath.row];
+            return cell;
+        }else{
+            XWListViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"homeTabc"];
+            if (!cell) {
+                cell = [[XWListViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"homeTabc"];
+            }
+            cell.type = HHShowNoPictureCellType;
+            cell.cType = self.category==0?1:self.category;
+            //        cell.dmodel = self.dataSource[indexPath.row];
+            [cell resetDataWith:self.dataSource[indexPath.row] category:self.category];
+            return cell;
+        }
     }
-//    cell.model = self.dataSource[indexPath.row];
-    [cell resetData:model type:HHShowNewsSubTitleCellType];
-    
-    return cell;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -284,5 +309,78 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
-
+#pragma mark - 获取数据列表
+- (void)getDataListRequest {
+    NSString *text = IsStrEmpty(self.searchBar.text)?@"":self.searchBar.text;
+    
+    RequestManager *manager = [[RequestManager alloc] init];
+    manager.isShowLoading = NO;
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    NSString *urlString;
+    if (self.type == 20) {
+        urlString = kGetOrgServiceList;
+        [params setValuesForKeysWithDictionary:@{@"oId":@"0",
+                                                 @"category":@(self.category),
+                                                 @"indexPage":@(self.indexPage),
+                                                 @"endPage":@(self.indexPage+10),
+                                                 @"text":text
+                                                 //                                             @"orderType":@"issueTime desc"
+                                                 }];
+    }else if(self.type == 20){
+        urlString = kGetDmdList;
+        [params setValuesForKeysWithDictionary:@{@"uId":@0,
+                                                 @"auditing":@(-1),//审核状态(-1:所有的,0:待审核,1:审核通过,2:退回)
+                                                 @"indexPage":@(self.indexPage),
+                                                 @"endPage":@(self.indexPage+10),
+                                                 @"category":@(self.category),
+                                                 @"text":text
+                                                 }];
+    }else{
+        [params setValuesForKeysWithDictionary:@{@"region":@"0",
+                                                 @"category":@"0",
+                                                 @"indexPage":@(_indexPage),
+                                                 @"endPage":@(_indexPage+10),
+                                                 @"orderType":@"issueTime desc",
+                                                 @"text":text
+                                                 }];
+    }
+    [manager POSTRequestUrlStr:urlString parms:params success:^(id responseData) {
+        NSLog(@"获取数据  %@",responseData);
+        [self endRefresh];
+        NSMutableArray *dataArray = [NSMutableArray array];
+        if ([responseData isKindOfClass:[NSArray class]]) {
+            NSArray *array = [NSArray arrayWithArray:responseData];
+            if (array.count > 0) {
+                if (self.type == 20) {
+                    dataArray = [XWServiceModel mj_objectArrayWithKeyValuesArray:array];
+                }else if (self.type == 20) {
+                    dataArray = [CommandModel mj_objectArrayWithKeyValuesArray:array];
+                }else{
+                    dataArray = [NewsModel mj_objectArrayWithKeyValuesArray:array];
+                }
+            }
+        }
+        if (_indexPage == 0) {
+            self.dataSource = [NSMutableArray arrayWithArray:dataArray];
+        }else{
+            [self.dataSource addObjectsFromArray:dataArray];
+        }
+        
+        if (self.dataSource.count == 0) {
+            self.tableView.tableFooterView.hidden = YES;
+            self.tableView.mj_footer.hidden = YES;
+        }else{
+            if (dataArray.count < 10) {
+                self.tableView.tableFooterView.hidden = NO;
+                self.tableView.mj_footer.hidden = YES;
+            }else{
+                self.tableView.tableFooterView.hidden = YES;
+                self.tableView.mj_footer.hidden = NO;
+            }
+        }
+        [self.tableView reloadData];
+    } fail:^(NSError *error) {
+        [self endRefresh];
+    }];
+}
 @end

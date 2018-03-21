@@ -114,6 +114,7 @@
 		1752677920440052006BB0D9 /* icon_direction.png in Resources */ = {isa = PBXBuildFile; fileRef = 1752677120440052006BB0D9 /* icon_direction.png */; };
 		1752677A20440052006BB0D9 /* icon_rail.png in Resources */ = {isa = PBXBuildFile; fileRef = 1752677220440052006BB0D9 /* icon_rail.png */; };
 		1752677B20440052006BB0D9 /* icon_bus.png in Resources */ = {isa = PBXBuildFile; fileRef = 1752677320440052006BB0D9 /* icon_bus.png */; };
+		176FBAA52061F12700A772EA /* XWSearchToolView.m in Sources */ = {isa = PBXBuildFile; fileRef = 176FBAA42061F12700A772EA /* XWSearchToolView.m */; };
 		177111642057E73800198860 /* PrivateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 177111632057E73800198860 /* PrivateManager.m */; };
 		177111672057E74600198860 /* RWSoundManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 177111652057E74600198860 /* RWSoundManager.m */; };
 		177111692057E7EE00198860 /* saomiao.wav in Resources */ = {isa = PBXBuildFile; fileRef = 177111682057E7EE00198860 /* saomiao.wav */; };
@@ -464,6 +465,8 @@
 		1752677120440052006BB0D9 /* icon_direction.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_direction.png; sourceTree = "<group>"; };
 		1752677220440052006BB0D9 /* icon_rail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_rail.png; sourceTree = "<group>"; };
 		1752677320440052006BB0D9 /* icon_bus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_bus.png; sourceTree = "<group>"; };
+		176FBAA32061F12700A772EA /* XWSearchToolView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XWSearchToolView.h; sourceTree = "<group>"; };
+		176FBAA42061F12700A772EA /* XWSearchToolView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XWSearchToolView.m; sourceTree = "<group>"; };
 		177111622057E73700198860 /* PrivateManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrivateManager.h; sourceTree = "<group>"; };
 		177111632057E73800198860 /* PrivateManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrivateManager.m; sourceTree = "<group>"; };
 		177111652057E74600198860 /* RWSoundManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RWSoundManager.m; sourceTree = "<group>"; };
@@ -1430,6 +1433,8 @@
 				173C4E2D2030627A00FE5DDB /* XWBaseHeaderView.m */,
 				173C4E6A2030806A00FE5DDB /* XWOrgInfoViewCell.h */,
 				173C4E6B2030806A00FE5DDB /* XWOrgInfoViewCell.m */,
+				176FBAA32061F12700A772EA /* XWSearchToolView.h */,
+				176FBAA42061F12700A772EA /* XWSearchToolView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2162,6 +2167,7 @@
 				171F7E31202F2B40006A42FC /* XWChargeViewCell.m in Sources */,
 				1788E0B4203C08ED00933CD5 /* DMDropDownMenu.m in Sources */,
 				17D70B9E2027319300122A11 /* XWDiscountViewController.m in Sources */,
+				176FBAA52061F12700A772EA /* XWSearchToolView.m in Sources */,
 				174B78DF202C703E002FDB23 /* XWTextViewCell.m in Sources */,
 				171F7E05202EA234006A42FC /* XWCompanyViewCell.m in Sources */,
 				177F183E2051762C00D252EC /* XWRegisterFirStepController.m in Sources */,

@@ -10,4 +10,8 @@
 
 @interface XWSearchViewController : XWBaseViewController
 
+@property (nonatomic, assign) int category;//
+
+@property (nonatomic, assign) int type;//是不是查询新闻
+
 @end

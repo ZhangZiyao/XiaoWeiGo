@@ -16,6 +16,8 @@
 #import "ServiceDetailViewController.h"
 #import "XWLoginViewController.h"
 #import "XWDemandDetailViewController.h"
+#import "XWSearchToolView.h"
+#import "XWSearchViewController.h"
 
 @interface HomeTabBaseViewController ()<HomeCustomViewDelegate>
 {
@@ -38,6 +40,7 @@
 @property (nonatomic, strong) UIView *centerView;
 //@property (nonatomic, strong) UIView *centerView1;
 @property (nonatomic, assign) HHShowTableCellType cellType;
+@property (nonatomic, strong) XWSearchToolView *searchToolView;
 @end
 
 @implementation HomeTabBaseViewController
@@ -190,12 +193,29 @@
 //    }];
 //}
 - (void)layoutSubviews{
-    _headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 600*kScaleH+16.0f)];
+    _headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 690*kScaleH+16.0f)];
     _headerView.backgroundColor = bgColor;
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 320*kScaleH)];
 //    imageView.image = [UIImage imageNamed:@"legal_img_banner"];
     [_headerView addSubview:imageView];
     _topImageView = imageView;
+    WS(weakSelf);
+    _searchToolView = [[XWSearchToolView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 90*kScaleH)];
+    _searchToolView.leftItemClickBlock = ^{
+        NSLog(@"点击了搜索");
+//        [weakSelf.searchToolView show];
+        XWSearchViewController *selectionVc = [XWSearchViewController new];
+        selectionVc.type = 20;
+        selectionVc.category = weakSelf.categoryType;
+        [weakSelf.navigationController pushViewController:selectionVc animated:YES];
+    };
+    [_headerView addSubview:_searchToolView];
+    [_searchToolView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(imageView.mas_bottom);
+        make.left.equalTo(_headerView);
+        make.right.equalTo(_headerView);
+        make.height.mas_equalTo(90*kScaleH);
+    }];
     
     [_headerView addSubview:self.centerView];
     [self.centerView mas_makeConstraints:^(MASConstraintMaker *make) {

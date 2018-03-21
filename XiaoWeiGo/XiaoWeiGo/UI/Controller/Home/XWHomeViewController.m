@@ -418,6 +418,7 @@
 #pragma mark - Delegates
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar{
     XWSearchViewController *searchVc = [[XWSearchViewController alloc] init];
+    searchVc.type = 10;
     [self.navigationController pushViewController:searchVc animated:YES];
     
     return [_searchBar resignFirstResponder];
