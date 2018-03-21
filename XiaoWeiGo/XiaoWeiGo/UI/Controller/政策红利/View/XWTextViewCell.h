@@ -12,7 +12,7 @@
 typedef NS_ENUM(NSInteger,HHShowNewsTableCellType) {
     HHShowNewsSubTitleCellType = 0, //cell带图片
     HHShowNewsTimeCellType = 1, //cell  没有图片
-    HHShowOtherCellType = 2 //其他
+    HHShowNewsOtherCellType = 2 //其他
 };
 @interface XWTextViewCell : UITableViewCell
 @property (nonatomic, strong) UIImageView *leftLine;

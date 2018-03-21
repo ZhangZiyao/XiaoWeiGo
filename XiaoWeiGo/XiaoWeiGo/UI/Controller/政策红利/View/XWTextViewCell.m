@@ -38,7 +38,7 @@
             self.detailLabel.text = IsStrEmpty(model.subTitle)?model.issueTime:model.subTitle;
         }
             break;
-        case HHShowOtherCellType:
+        case HHShowNewsOtherCellType:
         {
             self.titleLabel.text = model.aTitle;
             self.detailLabel.text = model.issueTime;
