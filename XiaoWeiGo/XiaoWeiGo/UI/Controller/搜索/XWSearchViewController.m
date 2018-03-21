@@ -140,11 +140,19 @@
         detailVc.model = model;
         [self.navigationController pushViewController:detailVc animated:YES];
     }else if (self.type == 20){
+        if (![UserModel isLogin]) {
+            [self showLogin];
+            return;
+        }
         ServiceDetailViewController *sDetailVc = [[ServiceDetailViewController alloc] init];
         sDetailVc.category = self.category;
         sDetailVc.model = self.dataSource[indexPath.row];
         [self.navigationController pushViewController:sDetailVc animated:YES];
     }else{
+        if (![UserModel isLogin]) {
+            [self showLogin];
+            return;
+        }
         XWDemandDetailViewController *sDetailVc = [[XWDemandDetailViewController alloc] init];
         sDetailVc.model = self.dataSource[indexPath.row];
         [self.navigationController pushViewController:sDetailVc animated:YES];

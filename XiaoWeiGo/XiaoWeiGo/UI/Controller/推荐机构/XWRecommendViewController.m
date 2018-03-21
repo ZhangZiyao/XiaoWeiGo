@@ -58,6 +58,10 @@
     return 8.0f;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (![UserModel isLogin]) {
+        [self showLogin];
+        return;
+    }
     ServiceDetailViewController *sDetailVc = [[ServiceDetailViewController alloc] init];
     sDetailVc.category = self.catagory;
     sDetailVc.model = self.dataSource[indexPath.row];
