@@ -62,10 +62,10 @@
 - (NSArray *)categoryName{
     if ([NSString ifOutOfDateTime:[NSString ymdhDateToDateString:[NSDate date]] andEndDate:kCheckDate]) {
         
-        NSArray *array = @[@"政策红利",@"创业创新",@"知识产权",@"共享会计",@"法律服务",@"优惠政策",@"ISO认证",@"展会服务",@"工商注册",@"其他服务"];
+        NSArray *array = @[@"政策红利",@"创业创新",@"知识产权",@"共享会计",@"法律服务",@"优惠政策",@"ISO认证",@"展会服务",@"登记注册",@"其他服务"];
         return array;
     }else{
-        NSArray *array = @[@"我要贷款",@"创业创新",@"知识产权",@"共享会计",@"法律服务",@"优惠政策",@"ISO认证",@"展会服务",@"工商注册",@"其他服务"];
+        NSArray *array = @[@"银企对接",@"创业创新",@"知识产权",@"共享会计",@"法律服务",@"优惠政策",@"ISO认证",@"展会服务",@"登记注册",@"其他服务"];
         return array;
     }
 }
@@ -296,7 +296,7 @@
         _detailLabel0 = [[UILabel alloc] init];
         _detailLabel0.textColor = [UIColor textGrayColor];
         _detailLabel0.font = [UIFont rw_regularFontSize:10];
-        _detailLabel0.text = @"工商注册：工商登记等政务代理";
+        _detailLabel0.text = @"登记注册：工商登记等政务代理";
     }
     return _detailLabel0;
 }

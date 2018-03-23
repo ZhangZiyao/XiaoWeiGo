@@ -11,6 +11,7 @@
 #import "XWOrgModel.h"
 #import "XWOrgViewCell.h"
 #import "ServiceDetailViewController.h"
+#import "XWSearchViewController.h"
 
 @interface XWFirstTabViewController ()<UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, assign) int indexPage;
@@ -29,7 +30,20 @@
     [self getDataListRequestWith:self.categoryId];
 }
 - (void)layoutSubviews{
-    XWBaseHeaderView *headerView = [XWBaseHeaderView createHeaderViewWithTitle:[NSString getCategoryNameWithCategory:self.categoryId]];
+//    XWBaseHeaderView *headerView = [XWBaseHeaderView createHeaderViewWithTitle:[NSString getCategoryNameWithCategory:self.categoryId]];
+    
+    XWBaseHeaderView *headerView = [[XWBaseHeaderView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 90*kScaleH)];
+    headerView.title = [NSString getCategoryNameWithCategory:self.categoryId];
+    headerView.showSearchBtn = YES;
+    [headerView setupView];
+    WS(weakSelf);
+    headerView.rightItemClickBlock = ^{
+      //搜索
+        XWSearchViewController *selectionVc = [XWSearchViewController new];
+        selectionVc.type = 20;
+        selectionVc.category = weakSelf.categoryId;
+        [weakSelf.navigationController pushViewController:selectionVc animated:YES];
+    };
 //    [self.view addSubview:headerView];
     self.tableView.tableHeaderView = headerView;
     [self.view addSubview:self.tableView];

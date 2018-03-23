@@ -477,7 +477,7 @@
 //        view1.tag = 1010;
 //        //        view1.linePosition = CustomLinePositionRight;
 //        view1.imagePosition = CustomImagePositionFirst;
-//        view1.titleLabel.text = @"我要贷款信息";
+//        view1.titleLabel.text = @"银企对接信息";
 //        view1.titleLabel.textColor = UIColorFromRGB16(0xFD6101);
 //        view1.detailLabel.text = @"总有一款适合你的产品";
 //        view1.smallImageView.image = [UIImage imageNamed:@"loan_img_nav1"];
@@ -489,7 +489,7 @@
 //        view2.delegate = self;
 //        view2.tag = 1011;
 //        view2.imagePosition = CustomImagePositionCenter;
-//        view2.titleLabel.text = @"我要贷款";
+//        view2.titleLabel.text = @"银企对接";
 //        view2.titleLabel.textColor = UIColorFromRGB16(0x406ABB);
 //        view2.detailLabel.text = @"我要马上发布";
 //        view2.smallImageView.image = [UIImage imageNamed:@"loan_img_nav2"];

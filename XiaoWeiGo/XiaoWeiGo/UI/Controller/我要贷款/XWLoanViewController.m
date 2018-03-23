@@ -17,11 +17,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"我要贷款";
+    self.title = @"银企对接";
     [self showBackItem];
     
     self.categoryType = 1;
-    NSDictionary *dict = @{@"title":@"我要贷款",@"topImage":@"loan_img_banner",@"images":@[@"loan_img_nav1",@"loan_img_nav2",@"loan_img_nav3"]};
+    NSDictionary *dict = @{@"title":@"银企对接",@"topImage":@"loan_img_banner",@"images":@[@"loan_img_nav1",@"loan_img_nav2",@"loan_img_nav3"]};
     [self loadHeadView:dict];
     
     [self loadTableViewWithData:@"1" type:0];

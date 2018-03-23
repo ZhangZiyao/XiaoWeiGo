@@ -268,7 +268,7 @@
     XLFormSectionDescriptor *section = [XLFormSectionDescriptor formSectionWithTitle:@"服务类别"];
     XLFormRowDescriptor * row;
     
-    NSArray *array = @[@"我要贷款",@"创业创新",@"知识产权",@"共享会计",@"法律服务",@"优惠政策",@"ISO认证",@"展会服务",@"工商注册",@"其他服务"];
+    NSArray *array = @[@"银企对接",@"创业创新",@"知识产权",@"共享会计",@"法律服务",@"优惠政策",@"ISO认证",@"展会服务",@"登记注册",@"其他服务"];
     for (int i = 0; i < array.count; i ++) {
         row = [XLFormRowDescriptor formRowDescriptorWithTag:[NSString stringWithFormat:@"tag%d",i] rowType:XLFormRowDescriptorTypeText title:array[i]];
         row.cellClass = [XWButtonViewCell class];

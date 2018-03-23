@@ -115,7 +115,7 @@
         _detailLabel = [[UILabel alloc] init];
         _detailLabel.textColor = [UIColor textGrayColor];
         _detailLabel.font = [UIFont rw_regularFontSize:10];
-        _detailLabel.text = @"工商注册：工商登记等政务代理";
+        _detailLabel.text = @"登记注册：工商登记等政务代理";
     }
     return _detailLabel;
 }

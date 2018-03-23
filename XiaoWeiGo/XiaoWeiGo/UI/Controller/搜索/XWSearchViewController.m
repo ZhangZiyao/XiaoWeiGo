@@ -342,7 +342,7 @@
     manager.isShowLoading = NO;
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     NSString *urlString;
-    if (self.type == 20) {
+    if (self.type == 20) {//服务
         urlString = kGetOrgServiceList;
         [params setValuesForKeysWithDictionary:@{@"oId":@"0",
                                                  @"category":@(self.category),
@@ -351,7 +351,7 @@
                                                  @"text":text
                                                  //                                             @"orderType":@"issueTime desc"
                                                  }];
-    }else if(self.type == 20){
+    }else if(self.type == 30){//需求
         urlString = kGetDmdList;
         [params setValuesForKeysWithDictionary:@{@"uId":@0,
                                                  @"auditing":@(-1),//审核状态(-1:所有的,0:待审核,1:审核通过,2:退回)
@@ -360,7 +360,7 @@
                                                  @"category":@(self.category),
                                                  @"text":text
                                                  }];
-    }else{
+    }else if(self.type == 10){//新闻
         [params setValuesForKeysWithDictionary:@{@"region":@"0",
                                                  @"category":@"0",
                                                  @"indexPage":@(_indexPage),
@@ -368,6 +368,15 @@
                                                  @"orderType":@"issueTime desc",
                                                  @"text":text
                                                  }];
+        urlString = kGetNewsInfoList;
+    }else if (self.type == 40){//收藏
+        [params setValuesForKeysWithDictionary:@{@"uId":[USER_DEFAULT objectForKey:USERIDKEY]
+                                                 }];
+        urlString = kGetServiceCollect;
+    }
+    if(IsStrEmpty(urlString) || !params){
+        [MBProgressHUD alertInfo:@"查询异常，请稍后重试"];
+        return;
     }
     [manager POSTRequestUrlStr:urlString parms:params success:^(id responseData) {
         NSLog(@"获取数据  %@",responseData);

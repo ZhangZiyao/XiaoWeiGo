@@ -16,9 +16,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"工商注册";
+    self.title = @"登记注册";
     [self showBackItem];
-    NSDictionary *dict = @{@"title":@"工商注册",@"topImage":@"registered_img_banner",@"images":@[@"registered_icon_nav9",@"registered_icon_nav8",@"registered_icon_nav7"]};
+    NSDictionary *dict = @{@"title":@"登记注册",@"topImage":@"registered_img_banner",@"images":@[@"registered_icon_nav9",@"registered_icon_nav8",@"registered_icon_nav7"]};
     [self loadHeadView:dict];
     [self loadTableViewWithData:@"9" type:0];
 }

@@ -11,6 +11,7 @@
 #import "XWCollectViewCell.h"
 #import "XWBaseHeaderView.h"
 #import "ServiceDetailViewController.h"
+#import "XWSearchViewController.h"
 
 @interface MyFavoriteViewController ()<UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong) NSMutableArray *dataSource;
@@ -33,7 +34,19 @@
 //    headerImageView.image = [UIImage imageNamed:@"favorite_top"];
 //    [self.view addSubview:headerImageView];
     
-    XWBaseHeaderView *headerView = [XWBaseHeaderView createHeaderViewWithTitle:@"服务机构"];
+//    XWBaseHeaderView *headerView = [XWBaseHeaderView createHeaderViewWithTitle:@"服务机构"];
+    XWBaseHeaderView *headerView = [[XWBaseHeaderView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 90*kScaleH)];
+    headerView.title = @"服务机构";
+    headerView.showSearchBtn = YES;
+    [headerView setupView];
+    WS(weakSelf);
+    headerView.rightItemClickBlock = ^{
+        //搜索
+        XWSearchViewController *selectionVc = [XWSearchViewController new];
+        selectionVc.type = 40;
+        [weakSelf.navigationController pushViewController:selectionVc animated:YES];
+    };
+    
     //    [self.view addSubview:headerView];
     self.tableView.tableHeaderView = headerView;
     [self.view addSubview:self.tableView];
