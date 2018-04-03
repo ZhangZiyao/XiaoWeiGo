@@ -14,6 +14,7 @@ pod 'GTMBase64'
 pod 'FMDB'
 pod 'ZBarSDK'
 #pod 'MLeaksFinder'
+pod 'YYText'
 pod 'HyphenateLite'
 #pod 'EaseUI', :git => 'https://github.com/easemob/easeui-ios-hyphenate-cocoapods.git'
 #pod 'BaiduMapKit' #百度地图SDK

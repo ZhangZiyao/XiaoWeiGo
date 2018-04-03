@@ -9,7 +9,7 @@
 #import "XWTextFieldViewCell.h"
 @interface XWTextFieldViewCell ()
 
-@property (nonatomic, strong) UITextField *valueTextField;
+@property (nonatomic, strong) RWTextField *valueTextField;
 @property (nonatomic, strong) UILabel *line;
 
 @end
@@ -72,9 +72,9 @@
     }
     return _line;
 }
-- (UITextField *)valueTextField{
+- (RWTextField *)valueTextField{
     if (!_valueTextField) {
-        _valueTextField = [[UITextField alloc] init];
+        _valueTextField = [[RWTextField alloc] init];
         _valueTextField.textColor = [UIColor blackColor];
         _valueTextField.font = [UIFont rw_regularFontSize:15.0];
         _valueTextField.textAlignment = NSTextAlignmentLeft;

@@ -133,6 +133,12 @@
 		1788E0B4203C08ED00933CD5 /* DMDropDownMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 1788E0B3203C08ED00933CD5 /* DMDropDownMenu.m */; };
 		1788E0B7203C20EF00933CD5 /* XWSafetyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1788E0B6203C20EF00933CD5 /* XWSafetyViewController.m */; };
 		17915F38205A9829004E40CB /* XHInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 17915F36205A9828004E40CB /* XHInputView.m */; };
+		17ABE629207393580037C941 /* BaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 17ABE61A207393580037C941 /* BaseView.m */; };
+		17ABE62A207393580037C941 /* BRStringPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 17ABE61E207393580037C941 /* BRStringPickerView.m */; };
+		17ABE62B207393580037C941 /* NSObject+YYModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 17ABE622207393580037C941 /* NSObject+YYModel.m */; };
+		17ABE62C207393580037C941 /* YYClassInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 17ABE624207393580037C941 /* YYClassInfo.m */; };
+		17ABE62F20739EDB0037C941 /* XBTextLoopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 17ABE62E20739EDB0037C941 /* XBTextLoopView.m */; };
+		17ABE6322073A2700037C941 /* XWAnnounceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 17ABE6312073A2700037C941 /* XWAnnounceViewController.m */; };
 		17B21A50205BB59B006881B5 /* XWQuestionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 17B21A4F205BB59B006881B5 /* XWQuestionViewCell.m */; };
 		17B21A5B205BB963006881B5 /* MKActionSheet.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 17B21A52205BB963006881B5 /* MKActionSheet.bundle */; };
 		17B21A5C205BB963006881B5 /* MKActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 17B21A54205BB963006881B5 /* MKActionSheet.m */; };
@@ -250,6 +256,9 @@
 		17D70BB32027320200122A11 /* XWAccountantController.m in Sources */ = {isa = PBXBuildFile; fileRef = 17D70BB22027320200122A11 /* XWAccountantController.m */; };
 		17D70BB62027321600122A11 /* XWLawServiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 17D70BB52027321600122A11 /* XWLawServiceViewController.m */; };
 		17D70BB92027322F00122A11 /* XWDemandViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 17D70BB82027322F00122A11 /* XWDemandViewController.m */; };
+		17F671B22072640F001EC26E /* CCZAngelWalker.m in Sources */ = {isa = PBXBuildFile; fileRef = 17F671AD2072640F001EC26E /* CCZAngelWalker.m */; };
+		17F671B32072640F001EC26E /* CCZTrotingAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = 17F671AF2072640F001EC26E /* CCZTrotingAttribute.m */; };
+		17F671B42072640F001EC26E /* CCZTrotingLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 17F671B12072640F001EC26E /* CCZTrotingLabel.m */; };
 		9819CEBB203168E200BC351B /* XWAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9819CEBA203168E200BC351B /* XWAboutViewController.m */; };
 		983272DF203411C60027AA20 /* XWCommentViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 983272DE203411C60027AA20 /* XWCommentViewCell.m */; };
 		983272E2203414650027AA20 /* XWCommentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 983272E1203414650027AA20 /* XWCommentModel.m */; };
@@ -502,6 +511,20 @@
 		1788E0B6203C20EF00933CD5 /* XWSafetyViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XWSafetyViewController.m; sourceTree = "<group>"; };
 		17915F36205A9828004E40CB /* XHInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHInputView.m; sourceTree = "<group>"; };
 		17915F37205A9828004E40CB /* XHInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHInputView.h; sourceTree = "<group>"; };
+		17ABE619207393580037C941 /* BaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseView.h; sourceTree = "<group>"; };
+		17ABE61A207393580037C941 /* BaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseView.m; sourceTree = "<group>"; };
+		17ABE61B207393580037C941 /* BRPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRPickerView.h; sourceTree = "<group>"; };
+		17ABE61D207393580037C941 /* BRStringPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRStringPickerView.h; sourceTree = "<group>"; };
+		17ABE61E207393580037C941 /* BRStringPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRStringPickerView.m; sourceTree = "<group>"; };
+		17ABE621207393580037C941 /* NSObject+YYModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+YYModel.h"; sourceTree = "<group>"; };
+		17ABE622207393580037C941 /* NSObject+YYModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+YYModel.m"; sourceTree = "<group>"; };
+		17ABE623207393580037C941 /* YYClassInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYClassInfo.h; sourceTree = "<group>"; };
+		17ABE624207393580037C941 /* YYClassInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYClassInfo.m; sourceTree = "<group>"; };
+		17ABE625207393580037C941 /* YYModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYModel.h; sourceTree = "<group>"; };
+		17ABE62D20739EDB0037C941 /* XBTextLoopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBTextLoopView.h; sourceTree = "<group>"; };
+		17ABE62E20739EDB0037C941 /* XBTextLoopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBTextLoopView.m; sourceTree = "<group>"; };
+		17ABE6302073A2700037C941 /* XWAnnounceViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XWAnnounceViewController.h; sourceTree = "<group>"; };
+		17ABE6312073A2700037C941 /* XWAnnounceViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XWAnnounceViewController.m; sourceTree = "<group>"; };
 		17B21A4E205BB59B006881B5 /* XWQuestionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XWQuestionViewCell.h; sourceTree = "<group>"; };
 		17B21A4F205BB59B006881B5 /* XWQuestionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XWQuestionViewCell.m; sourceTree = "<group>"; };
 		17B21A52205BB963006881B5 /* MKActionSheet.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MKActionSheet.bundle; sourceTree = "<group>"; };
@@ -583,7 +606,7 @@
 		17D70AB720253C3F00122A11 /* UIFont+RWFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+RWFont.h"; sourceTree = "<group>"; };
 		17D70AB920253C4700122A11 /* MBProgressHUD+InfoShow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+InfoShow.m"; sourceTree = "<group>"; };
 		17D70ABA20253C4700122A11 /* MBProgressHUD+InfoShow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+InfoShow.h"; sourceTree = "<group>"; };
-		17D70ABC20253C9000122A11 /* PodFile */ = {isa = PBXFileReference; lastKnownFileType = text; path = PodFile; sourceTree = "<group>"; };
+		17D70ABC20253C9000122A11 /* PodFile */ = {isa = PBXFileReference; lastKnownFileType = text; path = PodFile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		17D70ABF20253D1300122A11 /* CircleScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleScrollView.h; sourceTree = "<group>"; };
 		17D70AC020253D1300122A11 /* CircleScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleScrollView.m; sourceTree = "<group>"; };
 		17D70AC220253D3B00122A11 /* NSString+AttributedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+AttributedString.h"; sourceTree = "<group>"; };
@@ -729,6 +752,12 @@
 		17D70BB52027321600122A11 /* XWLawServiceViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XWLawServiceViewController.m; sourceTree = "<group>"; };
 		17D70BB72027322F00122A11 /* XWDemandViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XWDemandViewController.h; sourceTree = "<group>"; };
 		17D70BB82027322F00122A11 /* XWDemandViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XWDemandViewController.m; sourceTree = "<group>"; };
+		17F671AC2072640F001EC26E /* CCZAngelWalker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCZAngelWalker.h; sourceTree = "<group>"; };
+		17F671AD2072640F001EC26E /* CCZAngelWalker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCZAngelWalker.m; sourceTree = "<group>"; };
+		17F671AE2072640F001EC26E /* CCZTrotingAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCZTrotingAttribute.h; sourceTree = "<group>"; };
+		17F671AF2072640F001EC26E /* CCZTrotingAttribute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCZTrotingAttribute.m; sourceTree = "<group>"; };
+		17F671B02072640F001EC26E /* CCZTrotingLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCZTrotingLabel.h; sourceTree = "<group>"; };
+		17F671B12072640F001EC26E /* CCZTrotingLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCZTrotingLabel.m; sourceTree = "<group>"; };
 		3F9A7CB6E00B8E7953D56252 /* libPods-XiaoWeiGo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XiaoWeiGo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		73578718DBB4AFFDBF03FDA0 /* Pods-XiaoWeiGo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XiaoWeiGo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XiaoWeiGo/Pods-XiaoWeiGo.debug.xcconfig"; sourceTree = "<group>"; };
 		9819CEB9203168E200BC351B /* XWAboutViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XWAboutViewController.h; sourceTree = "<group>"; };
@@ -1055,6 +1084,55 @@
 			path = DMDropDownMenu;
 			sourceTree = "<group>";
 		};
+		17ABE611207393580037C941 /* BRPickerView */ = {
+			isa = PBXGroup;
+			children = (
+				17ABE618207393580037C941 /* Base */,
+				17ABE61B207393580037C941 /* BRPickerView.h */,
+				17ABE61C207393580037C941 /* StringPickerView */,
+				17ABE61F207393580037C941 /* Vendor */,
+			);
+			path = BRPickerView;
+			sourceTree = "<group>";
+		};
+		17ABE618207393580037C941 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				17ABE619207393580037C941 /* BaseView.h */,
+				17ABE61A207393580037C941 /* BaseView.m */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		17ABE61C207393580037C941 /* StringPickerView */ = {
+			isa = PBXGroup;
+			children = (
+				17ABE61D207393580037C941 /* BRStringPickerView.h */,
+				17ABE61E207393580037C941 /* BRStringPickerView.m */,
+			);
+			path = StringPickerView;
+			sourceTree = "<group>";
+		};
+		17ABE61F207393580037C941 /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				17ABE620207393580037C941 /* YYModel */,
+			);
+			path = Vendor;
+			sourceTree = "<group>";
+		};
+		17ABE620207393580037C941 /* YYModel */ = {
+			isa = PBXGroup;
+			children = (
+				17ABE621207393580037C941 /* NSObject+YYModel.h */,
+				17ABE622207393580037C941 /* NSObject+YYModel.m */,
+				17ABE623207393580037C941 /* YYClassInfo.h */,
+				17ABE624207393580037C941 /* YYClassInfo.m */,
+				17ABE625207393580037C941 /* YYModel.h */,
+			);
+			path = YYModel;
+			sourceTree = "<group>";
+		};
 		17B21A51205BB963006881B5 /* MKActionSheet */ = {
 			isa = PBXGroup;
 			children = (
@@ -1195,6 +1273,10 @@
 		17D70A90202538EC00122A11 /* Vender */ = {
 			isa = PBXGroup;
 			children = (
+				17ABE62D20739EDB0037C941 /* XBTextLoopView.h */,
+				17ABE62E20739EDB0037C941 /* XBTextLoopView.m */,
+				17ABE611207393580037C941 /* BRPickerView */,
+				17F671AB2072640F001EC26E /* AngelWalker */,
 				17B21A51205BB963006881B5 /* MKActionSheet */,
 				17915F37205A9828004E40CB /* XHInputView.h */,
 				17915F36205A9828004E40CB /* XHInputView.m */,
@@ -1279,6 +1361,8 @@
 				17D70ADC202560DD00122A11 /* Model */,
 				17D70AA22025394000122A11 /* XWHomeViewController.h */,
 				17D70AA32025394000122A11 /* XWHomeViewController.m */,
+				17ABE6302073A2700037C941 /* XWAnnounceViewController.h */,
+				17ABE6312073A2700037C941 /* XWAnnounceViewController.m */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -1844,6 +1928,20 @@
 			path = "展会服务";
 			sourceTree = "<group>";
 		};
+		17F671AB2072640F001EC26E /* AngelWalker */ = {
+			isa = PBXGroup;
+			children = (
+				17F671AC2072640F001EC26E /* CCZAngelWalker.h */,
+				17F671AD2072640F001EC26E /* CCZAngelWalker.m */,
+				17F671AE2072640F001EC26E /* CCZTrotingAttribute.h */,
+				17F671AF2072640F001EC26E /* CCZTrotingAttribute.m */,
+				17F671B02072640F001EC26E /* CCZTrotingLabel.h */,
+				17F671B12072640F001EC26E /* CCZTrotingLabel.m */,
+			);
+			name = AngelWalker;
+			path = "../../../../Downloads/CCZAngelWalker-master/CCZAngelWalker/AngelWalker";
+			sourceTree = "<group>";
+		};
 		9819CEB8203168D100BC351B /* About */ = {
 			isa = PBXGroup;
 			children = (
@@ -2146,6 +2244,7 @@
 				174B7900202CA895002FDB23 /* RWValidateButton.m in Sources */,
 				171F7E1B202F1A06006A42FC /* XWEvaluateModel.m in Sources */,
 				174B7904202CA8B9002FDB23 /* TYTimer.m in Sources */,
+				17F671B42072640F001EC26E /* CCZTrotingLabel.m in Sources */,
 				172CD7F7202DD219003A804B /* XWCommandCell.m in Sources */,
 				173C4E13202FE6CF00FE5DDB /* XWApplyLoanViewController.m in Sources */,
 				17D70AE3202568A100122A11 /* UIView+Utils.m in Sources */,
@@ -2157,7 +2256,9 @@
 				174B78E5202C8DA4002FDB23 /* XWMoreNewsViewController.m in Sources */,
 				17D70B7A20271CE200122A11 /* CommonConfig.m in Sources */,
 				17D70B48202710EA00122A11 /* XLFormBaseCell.m in Sources */,
+				17ABE629207393580037C941 /* BaseView.m in Sources */,
 				172D01DF20312FA2003AB402 /* XWBonusCenterView.m in Sources */,
+				17ABE62C207393580037C941 /* YYClassInfo.m in Sources */,
 				17D70AD720254C4500122A11 /* CALayer+FSUI.m in Sources */,
 				17D70AE0202560FB00122A11 /* NewsModel.m in Sources */,
 				174B78FA202C9246002FDB23 /* XWButtonViewCell.m in Sources */,
@@ -2165,6 +2266,7 @@
 				17D70B8020272B7800122A11 /* RequestModel.m in Sources */,
 				172CD807202DE2A6003A804B /* UIView+Extension.m in Sources */,
 				171F7E31202F2B40006A42FC /* XWChargeViewCell.m in Sources */,
+				17ABE62B207393580037C941 /* NSObject+YYModel.m in Sources */,
 				1788E0B4203C08ED00933CD5 /* DMDropDownMenu.m in Sources */,
 				17D70B9E2027319300122A11 /* XWDiscountViewController.m in Sources */,
 				176FBAA52061F12700A772EA /* XWSearchToolView.m in Sources */,
@@ -2223,6 +2325,7 @@
 				173C4E222030150C00FE5DDB /* XWHotServicesViewController.m in Sources */,
 				17D70B6A202710EA00122A11 /* XLFormValidator.m in Sources */,
 				17D70B63202710EA00122A11 /* UIView+XLFormAdditions.m in Sources */,
+				17ABE6322073A2700037C941 /* XWAnnounceViewController.m in Sources */,
 				17D70B57202710EA00122A11 /* XLFormTextViewCell.m in Sources */,
 				171F7E2B202F2898006A42FC /* XWServiceDetailViewController.m in Sources */,
 				17D70AAD2025395D00122A11 /* UINavigationController+FDFullscreenPopGesture.m in Sources */,
@@ -2237,6 +2340,7 @@
 				1782E106203D91C70058F008 /* CopyAbleLabel.m in Sources */,
 				17D70B67202710EA00122A11 /* XLFormTextView.m in Sources */,
 				17D70AEE2026FE4500122A11 /* RWFactionUI.m in Sources */,
+				17F671B22072640F001EC26E /* CCZAngelWalker.m in Sources */,
 				172D01D920311A24003AB402 /* XWQQViewController.m in Sources */,
 				17D70AA42025394000122A11 /* XWHomeViewController.m in Sources */,
 				17D70B5C202710EA00122A11 /* XLFormRowDescriptor.m in Sources */,
@@ -2278,6 +2382,7 @@
 				1782DFF4203D5B4C0058F008 /* XWAnswerViewCell.m in Sources */,
 				17D70BA1202731AB00122A11 /* XWLoanViewController.m in Sources */,
 				17D70B5E202710EA00122A11 /* NSArray+XLFormAdditions.m in Sources */,
+				17ABE62A207393580037C941 /* BRStringPickerView.m in Sources */,
 				174B7913202CBC22002FDB23 /* MyDemandViewController.m in Sources */,
 				17915F38205A9829004E40CB /* XHInputView.m in Sources */,
 				17B21A62205BCD59006881B5 /* XWCompanyTypeListController.m in Sources */,
@@ -2286,6 +2391,7 @@
 				17D70B61202710EA00122A11 /* NSPredicate+XLFormAdditions.m in Sources */,
 				174B7907202CB141002FDB23 /* HomeTabBaseViewController.m in Sources */,
 				174B78D5202C6483002FDB23 /* NSString+Verify.m in Sources */,
+				17F671B32072640F001EC26E /* CCZTrotingAttribute.m in Sources */,
 				174B78E2202C749B002FDB23 /* BonusHeaderView.m in Sources */,
 				17D70B7720271BDC00122A11 /* RegisterModel.m in Sources */,
 				17D70B5F202710EA00122A11 /* NSExpression+XLFormAdditions.m in Sources */,
@@ -2305,6 +2411,7 @@
 				172CD81B202E00FD003A804B /* CompanyModel.m in Sources */,
 				17D70BB0202731E600122A11 /* XWOtherSeviceController.m in Sources */,
 				172CD806202DE2A6003A804B /* NSDate+Extension.m in Sources */,
+				17ABE62F20739EDB0037C941 /* XBTextLoopView.m in Sources */,
 				17D70B8320272B8800122A11 /* FBEncryptorDES.m in Sources */,
 				17D70B4D202710EA00122A11 /* XLFormImageCell.m in Sources */,
 				17D70ADB202560D800122A11 /* NewsViewCell.m in Sources */,

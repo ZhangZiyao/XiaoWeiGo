@@ -44,11 +44,17 @@
 #import "DemandReleaseViewController.h"
 #import "XWNewsDetailViewController.h"
 #import "XWDemandDetailViewController.h"
+#import "XWAnnounceViewController.h"
+//#import "CCZAngelWalker.h"
+//#import "CCZTrotingLabel.h"
+#import "XBTextLoopView.h"
 
 @interface XWHomeViewController ()<CircleScrollViewDelegate,UIScrollViewDelegate,HomeTabViewDelegate,UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource,HomeCustomViewDelegate>
 {
     NSInteger tagIndex;
 }
+//@property (nonatomic, strong) CCZTrotingLabel *label;
+
 @property (nonatomic, assign) int pageIndex;
 
 @property (nonatomic, strong) CircleScrollView *circleView;
@@ -71,6 +77,8 @@
 
 @property (nonatomic, strong) NSMutableArray *demandDataSource;
 
+@property (nonatomic, strong) XBTextLoopView *loopView;
+
 @end
 
 @implementation XWHomeViewController
@@ -80,9 +88,15 @@
         [UserModel getUserData];
     }
 }
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    //// 请务必写上这句话，防止因为控制器切换而不能正常工作
+//    [self.label walk];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"“小微加油”奉化小微企业服务共享平台";
+    self.title = @"奉化小微加油";
     
     tagIndex = 1;
     _pageIndex = 0;
@@ -109,6 +123,7 @@
         make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, 0, 0));
     }];
     
+    
     [self.scrollView addSubview:self.circleView];
     [self.circleView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.scrollView);
@@ -117,11 +132,45 @@
         make.height.mas_equalTo(336*kScaleH);
         make.width.mas_equalTo(ScreenWidth);
     }];
+//    self.label = [[CCZTrotingLabel alloc] initWithFrame:CGRectMake(20, 100, 300, 40)];
+////    self.label.backgroundImage = [UIImage imageNamed:@"rem_effect"];
+//    [self.label addText:@"通知公告：小微加油V2.0正式上线啦～～～"];
+////    self.label.pause = 1;
+//    self.label.type = CCZWalkerTypeDescend;
+//    self.label.rate = RateFast;
+//    [self.view addSubview:self.label];
     
+    _loopView = [XBTextLoopView textLoopViewWith:@[@"小微加油V2.0正式上线啦～～～"] loopInterval:3.0 initWithFrame:CGRectMake(0, 0, ScreenWidth, 40) selectBlock:^(NSString *selectString, NSInteger index) {
+//        NSLog(@"%@===index%ld", selectString, index);
+        XWAnnounceViewController *announceVc = [[XWAnnounceViewController alloc] init];
+        [self.navigationController pushViewController:announceVc animated:YES];
+    }];
+    
+    [self.scrollView addSubview:_loopView];
+    UIImageView *imageI = [[UIImageView alloc] init];
+    imageI.image = [UIImage imageNamed:@"ico_notice"];
+    [self.scrollView addSubview:imageI];
+    UILabel *label = [RWFactionUI createLabelWith:CGRectMake(0, 0, 200, 40) text:@"通知公告：" textColor:UIColorFromRGB16(0x666666) textFont:[UIFont rw_regularFontSize:15.0] textAlignment:NSTextAlignmentLeft];
+    [self.scrollView addSubview:label];
+    [self.loopView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.scrollView);
+        make.top.equalTo(self.circleView.mas_bottom).offset(5*kScaleH);
+        make.right.equalTo(self.scrollView);
+        make.height.mas_equalTo(40);
+    }];
+    [imageI mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.scrollView).offset(5);
+        make.centerY.equalTo(self.loopView);
+        make.size.mas_equalTo(CGSizeMake(15, 15));
+    }];
+    [label mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(imageI.mas_right).offset(5);
+        make.centerY.equalTo(self.loopView);
+    }];
     [self.scrollView addSubview:self.searchBar];
     [self.searchBar mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.scrollView).offset(20*kScaleW);
-        make.top.equalTo(self.circleView.mas_bottom).offset(5*kScaleH);
+        make.left.equalTo(self.scrollView).offset(20);
+        make.top.equalTo(self.loopView.mas_bottom).offset(5*kScaleH);
         make.right.equalTo(self.scrollView).offset(-20*kScaleW);
         make.height.mas_equalTo(44);
         make.width.mas_equalTo(ScreenWidth-40*kScaleW);

@@ -26,6 +26,7 @@
 + (BOOL)valiMobileNum:(NSString *)mobileNum;
 //验证网址
 + (BOOL)valiUrl:(NSString *)url;
++ (BOOL)valiIdCardNo:(NSString *)str;
 //验证客服电话
 + (BOOL)valiServiceMobileNum:(NSString *)mobileNum;
 //6位纯数字

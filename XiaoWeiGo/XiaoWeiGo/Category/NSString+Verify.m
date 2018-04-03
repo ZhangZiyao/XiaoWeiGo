@@ -114,6 +114,19 @@
     NSPredicate *regextestmobile = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", MOBILE];
     return [regextestmobile evaluateWithObject:mobileNum];
 }
+//验证身份证号后8位
++ (BOOL)valiIdCardNo:(NSString *)str{
+    NSString * MOBILE = @"(^\\d{8}$)|(^\\d{7}(\\d|X|x)$)";
+    NSPredicate *regextestmobile = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", MOBILE];
+    if ([regextestmobile evaluateWithObject:str] == YES)
+    {
+        return YES;
+    }
+    else
+    {
+        return NO;
+    }
+}
 //是不是正确卡号 是不是16位纯数字
 +(BOOL)isSixPureNumber:(NSString *)str{
     NSString *pat = @"^\\d{6}$";

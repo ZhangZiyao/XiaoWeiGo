@@ -22,8 +22,9 @@
 @property (nonatomic, copy) NSString *telephone;//固定号码
 @property (nonatomic, copy) NSString *sTypeArr;//服务类别
 @property (nonatomic, assign) int uType;//用户类型(1:企业服务商,2:小薇企业)
-
+@property (nonatomic, copy) NSString *idCardNo;//身份证后8位
 @property (nonatomic, copy) NSString *sType;//行业类别ID
+@property (nonatomic, copy) NSString *sTypeName;//行业类别名称
 @property (nonatomic, copy) NSString *comCode;//企业注册号
 @property (nonatomic, copy) NSString *operation;//经营范围
 @property (nonatomic, copy) NSString *reservedtelephone;//预留电话
@@ -34,5 +35,6 @@
 //@property (nonatomic, assign)BOOL auditing;
 @property (nonatomic, assign)int companyId;
 @property (nonatomic, copy) NSString *companyTypeName;
+@property (nonatomic, assign) int phoneStatus;
 
 @end

@@ -15,6 +15,7 @@
 #import "XWQuestionViewCell.h"
 #import "MKActionSheet.h"
 #import "XWCompanyTypeListController.h"
+#import "BRPickerView.h"
 
 @interface XWRegisterSecStepController ()
 
@@ -38,12 +39,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _registerModel = [[RegisterModel alloc] init];
+    _registerModel.phoneStatus = 0;
     self.title = @"注册";
     [self showBackItem];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
+    //    _registerModel.orgType = @"有限责任公司";//
     _registerModel.orgCode = [self.dict objectForKey:@"code"];
-    _registerModel.orgType = @"有限责任公司";//
     _registerModel.regOrg = [self.dict objectForKey:@"rcode"];
     _registerModel.orgName = [self.dict objectForKey:@"name"];
     _registerModel.operation = [self.dict objectForKey:@"fanwei"];
@@ -116,14 +117,7 @@
     XLFormSectionDescriptor *section = [XLFormSectionDescriptor formSection];
     XLFormRowDescriptor * row;
     WS(weakSelf);
-    // 基本信息 Section
-    section = [XLFormSectionDescriptor formSection];
     
-    row = [XLFormRowDescriptor formRowDescriptorWithTag:@"COMPANYTYPE" rowType:XLFormRowDescriptorTypeSelectorActionSheet title:@"＊"];
-    row.cellClass = [XWQuestionViewCell class];
-    row.action.formSelector = @selector(selectAction:);
-    row.value = IsStrEmpty(self.registerModel.question)?@"请选择行业类别":self.registerModel.question;
-    [section addFormRow:row];
     
     // 账号 1-50
     row = [XLFormRowDescriptor formRowDescriptorWithTag:XWRegisterAccountTF rowType:XLFormRowDescriptorTypeAccount title:@"＊"];
@@ -215,6 +209,21 @@
         }
     };
     [section addFormRow:row];
+    // 身份证号后8位 2-100
+    row = [XLFormRowDescriptor formRowDescriptorWithTag:XWRegisterMobileTF rowType:XLFormRowDescriptorTypeName title:@"＊"];
+    row.cellClass = [XWTextFieldCell class];
+    row.textFieldMaxNumberOfCharacters = @8;
+    [row.cellConfigAtConfigure setObject:@"请输入身份证号后8位" forKey:@"textField.placeholder"];
+    [row.cellConfigAtConfigure setObject:@(NSTextAlignmentRight) forKey:@"textField.textAlignment"];
+    row.required = YES;
+    row.onChangeBlock = ^(id  _Nullable oldValue, id  _Nullable newValue, XLFormRowDescriptor * _Nonnull rowDescriptor) {
+        if (newValue) {
+            weakSelf.registerModel.idCardNo = [NSString stringWithFormat:@"%@",newValue];
+        }else{
+            weakSelf.registerModel.idCardNo = nil;
+        }
+    };
+    [section addFormRow:row];
     // 固定电话 2-100
     row = [XLFormRowDescriptor formRowDescriptorWithTag:XWRegisterPhoneTF rowType:XLFormRowDescriptorTypeAccount title:@"  "];
     row.cellClass = [XWTextFieldCell class];
@@ -232,6 +241,43 @@
     [section addFormRow:row];
     
     [self.form addFormSection:section];
+    [self addSection22];
+}
+- (void)addSection22{
+    XLFormSectionDescriptor *section = [XLFormSectionDescriptor formSection];
+    XLFormRowDescriptor * row;
+    // 基本信息 Section
+//    section = [XLFormSectionDescriptor formSection];
+//
+//    row = [XLFormRowDescriptor formRowDescriptorWithTag:@"COMPANYTYPE" rowType:XLFormRowDescriptorTypeSelectorActionSheet title:@"＊"];
+//    row.cellClass = [XWQuestionViewCell class];
+//    row.action.formSelector = @selector(selectAction:);
+//    row.value = IsStrEmpty(self.registerModel.question)?@"请选择行业类别":self.registerModel.question;
+//    [section addFormRow:row];
+    if (self.type != 5) {//企业服务商
+        row = [XLFormRowDescriptor formRowDescriptorWithTag:@"COMPANYTYPE" rowType:XLFormRowDescriptorTypeSelectorActionSheet title:@"＊"];
+        row.cellClass = [XWQuestionViewCell class];
+        row.action.formSelector = @selector(selectAction:);
+        row.title = StringPush(@"  行业类别：", IsStrEmpty(self.registerModel.companyTypeName)?@"无":self.registerModel.companyTypeName, @"");
+        [section addFormRow:row];
+    }else{
+//        section.title = @"行业类别";
+    }
+    row = [XLFormRowDescriptor formRowDescriptorWithTag:@"ORGTYPE" rowType:XLFormRowDescriptorTypeSelectorActionSheet title:@""];
+    row.cellClass = [XWQuestionViewCell class];
+    row.action.formSelector = @selector(selectAction:);
+    row.title = StringPush(@"  公司性质：", IsStrEmpty(self.registerModel.orgType)?@"无":self.registerModel.orgType, @"");
+    [section addFormRow:row];
+    
+    row = [XLFormRowDescriptor formRowDescriptorWithTag:@"SECRET" rowType:XLFormRowDescriptorTypeText title:@""];
+    row.cellClass = [XWQuestionViewCell class];
+    row.action.formSelector = @selector(selectAction:);
+    row.lineHidden = YES;
+//    row.value = self.registerModel.phoneStatus==1?@"手机状态：公开":StringPush(@"手机状态：", self.registerModel.orgType, @"");
+    row.title = StringPush(@"  手机状态：", self.registerModel.phoneStatus==1?@"公开":@"不公开", @"");
+    [section addFormRow:row];
+    [self.form addFormSection:section];
+    
     [self addSection3];
 }
 - (void)addSection3{
@@ -303,10 +349,25 @@
         listVc.selectCompanyBlock = ^(int cId, NSString *cType) {
             weakSelf.registerModel.companyId = cId;
             weakSelf.registerModel.companyTypeName = cType;
-            rowDescriptor.value = cType;
+//            rowDescriptor.title = cType;
+            rowDescriptor.title = StringPush(@"  行业类别：", cType, @"");
             [weakSelf.tableView reloadData];
         };
         [self.navigationController pushViewController:listVc animated:YES];
+    }else if ([rowDescriptor.tag isEqualToString:@"ORGTYPE"]){
+        
+        [BRStringPickerView showStringPickerWithTitle:@"" dataSource:@[@"国有企业", @"集体企业", @"联营企业", @"股份合作制企业", @"私营企业", @"个体户",@"合伙企业",@"有限责任公司",@"股份有限公司"] defaultSelValue:@"国有企业" isAutoSelect:NO resultBlock:^(id selectValue) {
+            rowDescriptor.title = StringPush(@"  公司性质：", selectValue, @"");
+            weakSelf.registerModel.orgType = selectValue;
+            [weakSelf.tableView reloadData];
+        }];
+        
+    }else if ([rowDescriptor.tag isEqualToString:@"SECRET"]){
+        [BRStringPickerView showStringPickerWithTitle:nil dataSource:@[@"公开", @"不公开"] defaultSelValue:@"公开" isAutoSelect:NO resultBlock:^(id selectValue) {
+            rowDescriptor.title = StringPush(@"  手机状态：", selectValue, @"");
+            weakSelf.registerModel.phoneStatus = [selectValue isEqualToString:@"公开"]?1:0;
+            [weakSelf.tableView reloadData];
+        }];
     }
 }
 
@@ -319,7 +380,7 @@
     return 100*kScaleH;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    if (section == 4) {
+    if (section == 5) {
         return 70*kScaleH;
         
     }else{
@@ -331,7 +392,7 @@
         //一般用户
         return 450*kScaleH;
     }else{
-        if ((self.type == 4&&section==3) || (self.type == 5&&section==4)) {
+        if ((self.type == 4&&section==4) || (self.type == 5&&section==5)) {
             return 250*kScaleH;
         }else{
             return 0.01f;
@@ -341,7 +402,7 @@
 }
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
     UIView *footer = [[UIView alloc] init];
-    if ((self.type == 4&&section==3) || (self.type == 5&&section==4)) {
+    if ((self.type == 4&&section==4) || (self.type == 5&&section==5)) {
         footer = self.footerView;
     }
     return footer;
@@ -388,7 +449,7 @@
 - (void)checkCompany{
     RequestManager *manager = [[RequestManager alloc] init];
     manager.isShowLoading = NO;
-    [manager POSTRequestUrlStr:kCheckCompnay parms:@{@"orgCode":_registerModel.orgCode,@"reservedtelephone":_registerModel.reservedtelephone} success:^(id responseData) {
+    [manager POSTRequestUrlStr:kCheckCompnay parms:@{@"orgCode":_registerModel.orgCode,@"reservedtelephone":_registerModel.reservedtelephone,@"idCard":_registerModel.idCardNo} success:^(id responseData) {
         
         NSString *message = responseData[0];
         if ([message containsString:@"success"]) {
@@ -429,7 +490,9 @@
                                                  @"reservedtelephone":_registerModel.reservedtelephone,//预留电话
                                                  @"question":_registerModel.question,//密保提问
                                                  @"answer":_registerModel.answer,//密保回答
-                                                 @"auditing":@"yes",//是否审核通过(yes为审核通过,这个值 的获取需要以调用CheckCompany接口的返回情况而定)
+                                                 @"auditing":_registerModel.auditing,//是否审核通过(yes为审核通过,这个值 的获取需要以调用CheckCompany接口的返回情况而定)
+                                                 @"isOpen":@(_registerModel.phoneStatus),
+                                                 @"idCard":_registerModel.idCardNo,
                                                  @"uType":@(2)//用户类型(1:企业服务商,2:小薇企业)
                                                  }];
     }else{
@@ -451,7 +514,9 @@
                                                  @"reservedtelephone":_registerModel.reservedtelephone,//预留电话
                                                  @"question":_registerModel.question,//密保提问
                                                  @"answer":_registerModel.answer,//密保回答
-                                                 @"auditing":@"yes",//是否审核通过(yes为审核通过,这个值 的获取需要以调用CheckCompany接口的返回情况而定)
+                                                 @"auditing":_registerModel.auditing,//是否审核通过(yes为审核通过,这个值 的获取需要以调用CheckCompany接口的返回情况而定)
+                                                 @"isOpen":@(_registerModel.phoneStatus),
+                                                 @"idCard":_registerModel.idCardNo,
                                                  @"uType":@(1)//用户类型(1:企业服务商,2:小薇企业)
                                                  }];
         if (_typeArray.count > 0) {
@@ -469,10 +534,7 @@
 }
 #pragma mark - 数据验证
 - (BOOL)verification{
-    if (IsStrEmpty(_registerModel.companyTypeName)) {
-        [MBProgressHUD alertInfo:@"请选择行业类别"];
-        return NO;
-    }
+    
     if (IsStrEmpty(_registerModel.name)) {
         [MBProgressHUD alertInfo:@"请输入账号"];
         return NO;
@@ -504,6 +566,14 @@
             [MBProgressHUD alertInfo:@"手机号格式不正确"];
             return NO;
         }
+        if (IsStrEmpty(_registerModel.idCardNo)) {
+            [MBProgressHUD alertInfo:@"请输入身份证号后8位"];
+            return NO;
+        }
+        if (![NSString valiIdCardNo:_registerModel.idCardNo]) {
+            [MBProgressHUD alertInfo:@"身份证号后8位格式不正确"];
+            return NO;
+        }
         if (IsStrEmpty(_registerModel.question)) {
             [MBProgressHUD alertInfo:@"请选择安全提示问题"];
             return NO;
@@ -518,10 +588,7 @@
             [MBProgressHUD alertInfo:@"请输入公司名称"];
             return NO;
         }
-        if (IsStrEmpty(_registerModel.orgType)) {
-            [MBProgressHUD alertInfo:@"请输入公司性质"];
-            return NO;
-        }
+        
         if (IsStrEmpty(_registerModel.orgCode)) {
             [MBProgressHUD alertInfo:@"请输入组织机构代码证号"];
             return NO;
@@ -555,7 +622,16 @@
                 return NO;
             }
         }
-        
+        if (self.type == 4) {
+            if (IsStrEmpty(_registerModel.companyTypeName)) {
+                [MBProgressHUD alertInfo:@"请选择行业类别"];
+                return NO;
+            }
+        }
+        if (IsStrEmpty(_registerModel.orgType)) {
+            [MBProgressHUD alertInfo:@"请选择公司性质"];
+            return NO;
+        }
         if (IsStrEmpty(_registerModel.question)) {
             [MBProgressHUD alertInfo:@"请选择安全提示问题"];
             return NO;
@@ -569,7 +645,7 @@
             for (int i = 0; i < 10; i++) {
                 NSString *tag = [NSString stringWithFormat:@"tag%d",i];
                 XLFormRowDescriptor *feeRow = [self.form formRowWithTag:tag];
-                if (feeRow.value) {
+                if ([feeRow.value boolValue]) {
                     [arrayP addObject:[NSString stringWithFormat:@"%i",i+1]];
                 }
             }
