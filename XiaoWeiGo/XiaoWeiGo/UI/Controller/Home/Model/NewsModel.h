@@ -29,6 +29,7 @@
  *  时间
  */
 @property (nonatomic, copy) NSString *issueTime;
+@property (nonatomic, copy) NSString *aTime;
 /**
  *  文章内容
  */
@@ -41,5 +42,9 @@
  *  文章地域分类
  */
 @property (nonatomic, assign) int region;
+
+@property (nonatomic, assign) int type;
+
+@property (nonatomic, copy) NSString *tName;
 
 @end

@@ -12,6 +12,7 @@
 #import "CommonRequest.h"
 #import "CommandModel.h"
 #import "XWServiceViewCell.h"
+#import "DemandViewCell.h"
 
 @interface XWDemandDetailViewController ()<UITableViewDataSource, UITableViewDelegate>
 {
@@ -37,7 +38,7 @@
         make.right.equalTo(self.view);
         make.bottom.equalTo(self.view).offset(-90*kScaleH);
     }];
-    [self addBottomView];
+//    [self addBottomView];
     
 }
 - (void)addBottomView{
@@ -131,12 +132,41 @@
     }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    XWServiceViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"sssqsCell"];
+    DemandViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"sssqsCell"];
     if (!cell) {
-        cell = [[XWServiceViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"sssqsCell"];
+        cell = [[DemandViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"sssqsCell"];
     }
-    if (dModel) {
-        cell.dmodel = dModel;
+//    if (dModel) {
+//        cell.dmodel = dModel;
+//    }
+    switch (indexPath.row) {
+        case 0:
+        {
+            cell.titleLabel.text = @"需求标题:";
+            cell.detailLabel.text = dModel.dTitle;
+        }
+            break;
+        case 1:
+        {
+            cell.titleLabel.text = @"需求分类:";
+            cell.detailLabel.text = [NSString getCategoryNameWithCategory:dModel.category];
+        }
+            break;
+        case 2:
+        {
+            cell.titleLabel.text = @"需求内容:";
+            cell.detailLabel.text = dModel.dContent;
+        }
+            break;
+        case 3:
+        {
+            cell.titleLabel.text = @"截止时间:";
+            cell.detailLabel.text = dModel.endTime;
+        }
+            break;
+            
+        default:
+            break;
     }
     
     //    [cell resetCellWithData:@"" andType:index];
@@ -146,10 +176,16 @@
     return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 1;
+    return 4;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 520*kScaleH;
+    
+    if (indexPath.row == 2) {
+        CGFloat cellHeight = [dModel.dContent sizeWithLabelWidth:ScreenWidth-220*kScaleW font:[UIFont rw_regularFontSize:15.0]].height+20;
+        return cellHeight;
+    }else{
+        return 100*kScaleH;
+    }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 8.0f;

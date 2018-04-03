@@ -139,6 +139,8 @@
 		17ABE62C207393580037C941 /* YYClassInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 17ABE624207393580037C941 /* YYClassInfo.m */; };
 		17ABE62F20739EDB0037C941 /* XBTextLoopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 17ABE62E20739EDB0037C941 /* XBTextLoopView.m */; };
 		17ABE6322073A2700037C941 /* XWAnnounceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 17ABE6312073A2700037C941 /* XWAnnounceViewController.m */; };
+		17ABE63D2073D08A0037C941 /* XWSearchViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 17ABE63C2073D08A0037C941 /* XWSearchViewCell.m */; };
+		17ABE6402073D94D0037C941 /* DemandViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 17ABE63F2073D94D0037C941 /* DemandViewCell.m */; };
 		17B21A50205BB59B006881B5 /* XWQuestionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 17B21A4F205BB59B006881B5 /* XWQuestionViewCell.m */; };
 		17B21A5B205BB963006881B5 /* MKActionSheet.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 17B21A52205BB963006881B5 /* MKActionSheet.bundle */; };
 		17B21A5C205BB963006881B5 /* MKActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 17B21A54205BB963006881B5 /* MKActionSheet.m */; };
@@ -525,6 +527,10 @@
 		17ABE62E20739EDB0037C941 /* XBTextLoopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBTextLoopView.m; sourceTree = "<group>"; };
 		17ABE6302073A2700037C941 /* XWAnnounceViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XWAnnounceViewController.h; sourceTree = "<group>"; };
 		17ABE6312073A2700037C941 /* XWAnnounceViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XWAnnounceViewController.m; sourceTree = "<group>"; };
+		17ABE63B2073D08A0037C941 /* XWSearchViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XWSearchViewCell.h; sourceTree = "<group>"; };
+		17ABE63C2073D08A0037C941 /* XWSearchViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XWSearchViewCell.m; sourceTree = "<group>"; };
+		17ABE63E2073D94D0037C941 /* DemandViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemandViewCell.h; sourceTree = "<group>"; };
+		17ABE63F2073D94D0037C941 /* DemandViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemandViewCell.m; sourceTree = "<group>"; };
 		17B21A4E205BB59B006881B5 /* XWQuestionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XWQuestionViewCell.h; sourceTree = "<group>"; };
 		17B21A4F205BB59B006881B5 /* XWQuestionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XWQuestionViewCell.m; sourceTree = "<group>"; };
 		17B21A52205BB963006881B5 /* MKActionSheet.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MKActionSheet.bundle; sourceTree = "<group>"; };
@@ -1784,6 +1790,8 @@
 			children = (
 				17D70BA8202731CF00122A11 /* XWSearchViewController.h */,
 				17D70BA9202731CF00122A11 /* XWSearchViewController.m */,
+				17ABE63B2073D08A0037C941 /* XWSearchViewCell.h */,
+				17ABE63C2073D08A0037C941 /* XWSearchViewCell.m */,
 			);
 			path = "搜索";
 			sourceTree = "<group>";
@@ -1812,6 +1820,8 @@
 			children = (
 				17D70BB72027322F00122A11 /* XWDemandViewController.h */,
 				17D70BB82027322F00122A11 /* XWDemandViewController.m */,
+				17ABE63E2073D94D0037C941 /* DemandViewCell.h */,
+				17ABE63F2073D94D0037C941 /* DemandViewCell.m */,
 			);
 			path = "企业发布需求";
 			sourceTree = "<group>";
@@ -2296,6 +2306,7 @@
 				17D70AD820254C4500122A11 /* FSCustomButton.m in Sources */,
 				17D70AC120253D1300122A11 /* CircleScrollView.m in Sources */,
 				173C4E0D202FD15E00FE5DDB /* XWAttachmentModel.m in Sources */,
+				17ABE6402073D94D0037C941 /* DemandViewCell.m in Sources */,
 				174B78EE202C8E00002FDB23 /* XWISOViewController.m in Sources */,
 				17D70B50202710EA00122A11 /* XLFormPickerCell.m in Sources */,
 				17D70AEA2026E88000122A11 /* XWLoginViewController.m in Sources */,
@@ -2372,6 +2383,7 @@
 				177111642057E73800198860 /* PrivateManager.m in Sources */,
 				17D70B6B202710EA00122A11 /* XLForm.m in Sources */,
 				174B792D202CD0D7002FDB23 /* ServiceDetailViewController.m in Sources */,
+				17ABE63D2073D08A0037C941 /* XWSearchViewCell.m in Sources */,
 				17D70AE620256EEA00122A11 /* HomeCustomView.m in Sources */,
 				17D70B69202710EA00122A11 /* XLFormValidationStatus.m in Sources */,
 				171F7E25202F2823006A42FC /* XWDemandDetailViewController.m in Sources */,
