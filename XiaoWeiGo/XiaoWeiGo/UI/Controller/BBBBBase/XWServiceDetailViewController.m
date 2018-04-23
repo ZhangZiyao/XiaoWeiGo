@@ -19,7 +19,6 @@
 #import "XWServiceViewCell.h"
 #import "XWApplyLoanViewController.h"
 #import "XWMapViewController.h"
-//#import "LLUtils.h"
 
 @interface XWServiceDetailViewController ()<UITableViewDataSource, UITableViewDelegate>
 {
@@ -47,7 +46,7 @@
 //    }
 //}
 - (void)segmentedControlTapped:(YUSegmentedControl *)sender {
-    NSLog(@" %ld",sender.selectedSegmentIndex);
+//    NSLog(@" %ld",sender.selectedSegmentIndex);
     index = sender.selectedSegmentIndex+1;
 }
 - (void)layoutSubviews{
@@ -145,6 +144,7 @@
 - (void)btnClick:(UIButton *)sender{
     if (sender.tag == 0) {
         XWDisDetailViewController *discountVc = [[XWDisDetailViewController alloc] init];
+        discountVc.model = self.model;
         [self.navigationController pushViewController:discountVc animated:YES];
     }else{
         XWDownFileViewController *downVc = [[XWDownFileViewController alloc] init];
@@ -228,8 +228,19 @@
     }else{
         //联系
         if (APPDELEGATE.user.loginType == 1 || APPDELEGATE.user.loginType == 2) {
-//            [MBProgressHUD alertInfo:@"功能正在开发，敬请期待～"];
+            [MBProgressHUD alertInfo:@"功能正在开发，敬请期待～"];
 //            XWContactViewController *contactVc = [[LLUtils mainStoryboard] instantiateViewControllerWithIdentifier:@"ChatViewController"];
+//            [self.navigationController pushViewController:contactVc animated:YES];
+//            XWContactViewController *contactVc = [[LLUtils mainStoryboard] instantiateViewControllerWithIdentifier:@"ChatViewController"];
+//            LLConversationModel *conversationModel = [[LLChatManager sharedManager]
+//                                                      getConversationWithConversationChatter:@"测试"
+//                                                      conversationType:kLLConversationTypeChat];
+//
+//            [[LLMessageCacheManager sharedManager] prepareCacheWhenConversationBegin:conversationModel];
+//
+//            contactVc.conversationModel = conversationModel;
+//            [contactVc fetchMessageList];
+//            [contactVc refreshChatControllerForReuse];
 //            [self.navigationController pushViewController:contactVc animated:YES];
 
         }else{

@@ -12,7 +12,8 @@
 #import "CommonRequest.h"
 #import "XWServiceModel.h"
 #import "XWBaseHeaderView.h"
-#import "CommandModel.h"
+//#import "CommandModel.h"
+#import "XWServiceModel.h"
 #import "XWCommandCell.h"
 #import "XWDemandDetailViewController.h"
 
@@ -132,13 +133,22 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (index == 1) {
-        CommandModel *model = self.dataSource[indexPath.section];
-        static NSString *cellid = @"hottService";
-        XWCommandCell *cell =[tableView dequeueReusableCellWithIdentifier:cellid];
+//        CommandModel *model = self.dataSource[indexPath.section];
+//        static NSString *cellid = @"hottService";
+//        XWCommandCell *cell =[tableView dequeueReusableCellWithIdentifier:cellid];
+//        if (!cell) {
+//            cell = [[XWCommandCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
+//        }
+//        cell.model = model;
+//        return cell;
+        XWServiceModel *model = self.dataSource[indexPath.section];
+        XWListViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"homeTabd"];
         if (!cell) {
-            cell = [[XWCommandCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
+            cell = [[XWListViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"homeTabd"];
         }
-        cell.model = model;
+//        cell.type = _cellType;
+        cell.cType = model.category;
+        cell.serModel = model;
         return cell;
     }else{
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"sssqsCell"];
@@ -165,20 +175,20 @@
     manager.isShowLoading = YES;
     //    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    [params setValuesForKeysWithDictionary:@{@"uId":@0,
-                                             @"auditing":@(-1),//审核状态(-1:所有的,0:待审核,1:审核通过,2:退回)
+    [params setValuesForKeysWithDictionary:@{@"oId":@(self.model.ID),
+//                                             @"auditing":@(-1),//审核状态(-1:所有的,0:待审核,1:审核通过,2:退回)
                                              @"indexPage":@(0),
                                              @"endPage":@(10),
                                              @"category":@(self.model.category)
                                              }];
     
-    [manager POSTRequestUrlStr:kGetDmdList parms:params success:^(id responseData) {
+    [manager POSTRequestUrlStr:kGetOrgServiceList parms:params success:^(id responseData) {
         NSLog(@"获取机构详情数据  %@",responseData);
         NSMutableArray *dataArray = [NSMutableArray array];
         if ([responseData isKindOfClass:[NSArray class]]) {
             NSArray *array = [NSArray arrayWithArray:responseData];
             if (array.count > 0) {
-                dataArray = [CommandModel mj_objectArrayWithKeyValuesArray:array];
+                dataArray = [XWServiceModel mj_objectArrayWithKeyValuesArray:array];
             }
         }
         if (dataArray.count < 10) {

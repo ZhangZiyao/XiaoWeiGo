@@ -7,8 +7,11 @@
 //
 
 #import "XWBaseViewController.h"
+@class XWAttachmentModel;
 
 @interface XWReadDocViewController : XWBaseViewController
+
+@property (nonatomic, strong) XWAttachmentModel *model;
 
 @property (nonatomic, copy) NSString *urlString;
 

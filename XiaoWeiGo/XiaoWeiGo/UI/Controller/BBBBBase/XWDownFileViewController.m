@@ -14,8 +14,8 @@
 
 @interface XWDownFileViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
-    XWAttachmentModel *model;
-    NSString *urlString;
+//    XWAttachmentModel *model;
+//    NSString *urlString;
 }
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
@@ -38,27 +38,37 @@
     }];
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return self.dataSource.count;
+    return 2;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 1;
+    if (section == 0) {
+        return 1;
+    }else{
+        return self.dataSource.count;
+    }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"downCell"];
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"downCell"];
         cell.textLabel.textColor = [UIColor textBlackColor];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
-    cell.imageView.image = [UIImage imageNamed:self.dataSource[indexPath.section][0]];
-    cell.textLabel.text = self.dataSource[indexPath.section][1];
-    
+    if (indexPath.section == 0) {
+//        @[@"def_icon_download",@"附件下载"]
+        cell.imageView.image = [UIImage imageNamed:@"def_icon_download"];
+        cell.textLabel.text = @"附件下载";
+    }else{
+        XWAttachmentModel *model = self.dataSource[indexPath.row];
+        cell.imageView.image = [UIImage imageNamed:@"loan_icon_word"];
+        cell.textLabel.text = model.attName;
+    }
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.section == 0) {
-        [MBProgressHUD alertInfo:@"功能正在开发中，敬请期待"];
     }else {
         //        if (model) {
         //            if (IsStrEmpty(model.attUrl)) {
@@ -67,9 +77,12 @@
         //        }else{
         //            [MBProgressHUD alertInfo:@"获取附件地址失败,请稍后重试"];
         //        }
-        if (!IsStrEmpty(urlString)) {
+        XWAttachmentModel *model = self.dataSource[indexPath.row];
+        if (!IsStrEmpty(model.attUrl)) {
             XWReadDocViewController *readVc = [[XWReadDocViewController alloc] init];
+            NSString *urlString = [NSString stringWithFormat:@"%@/xc/%@",[RWEnvironmentManager host],model.attUrl];
             readVc.urlString = urlString;
+            readVc.model = model;
             [self.navigationController pushViewController:readVc animated:YES];
         }else{
             [MBProgressHUD alertInfo:@"没有获取到附件，请稍后再试"];
@@ -85,9 +98,7 @@
     return 10*kScaleH;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
     return 100*kScaleH;
-    
 }
 - (UITableView *)tableView{
     if (!_tableView) {
@@ -102,9 +113,10 @@
     }
     return _tableView;
 }
+
 - (NSMutableArray *)dataSource{
     if (!_dataSource) {
-        _dataSource = [NSMutableArray arrayWithArray:@[@[@"def_icon_download",@"附件下载"],@[@"loan_icon_word",@"具体携带材料清单.doc"]]];
+        _dataSource = [NSMutableArray array];
     }
     return _dataSource;
 }
@@ -123,9 +135,9 @@
     [request POSTRequestUrlStr:kGetAttachmentList parms:params success:^(id responseData) {
         NSLog(@"获取数据  %@",responseData);
         if (responseData) {
-            [MBProgressHUD alertInfo:@"获取附件成功"];
-            model = [XWAttachmentModel mj_objectWithKeyValues:responseData[0]];
-            urlString = [NSString stringWithFormat:@"%@/xc/%@",[RWEnvironmentManager host],model.attUrl];
+//            [MBProgressHUD alertInfo:@"获取附件成功"];
+            self.dataSource = [XWAttachmentModel mj_objectArrayWithKeyValuesArray:responseData];
+            [self.tableView reloadData];
         }else{
             [MBProgressHUD alertInfo:@"获取附件失败"];
         }

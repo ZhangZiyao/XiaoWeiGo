@@ -23,6 +23,10 @@
 #import "XWCommentFooterView.h"
 #import "XWCommentInfoModel.h"
 #import "XHInputView.h"
+#import "XWContactViewController.h"
+//#import "LLUtils.h"
+//#import "LLChatManager.h"
+//#import "LLMessageCacheManager.h"
 
 @interface ServiceDetailViewController ()<UITableViewDataSource, UITableViewDelegate,XWOrgInfoCellDelegate,XHInputViewDelagete>
 {
@@ -119,7 +123,7 @@
 //        make.right.equalTo(self.view);
 //        make.height.mas_equalTo(100*kScaleH);
 //    }];
-    NSArray *bottomImageArr = @[@"registered_icon_ma1",@"registered_icon_ma2"];
+    NSArray *bottomImageArr = @[@"registered_icon_ma1",@"registered_icon_ma2",@"registered_icon_ma5"];
     CGFloat btnWidth = 72*kScaleW;
     for (int i = 0; i < bottomImageArr.count; i ++) {
         UIButton *btn = [[UIButton alloc] init];
@@ -128,11 +132,7 @@
         btn.tag = i;
         [btn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(bottomView);
-            if (i == 0) {
-                make.centerX.equalTo(bottomView).offset(-btnWidth);
-            }else{
-                make.centerX.equalTo(bottomView).offset(btnWidth);
-            }
+            make.centerX.equalTo(bottomView).offset((i-1)*btnWidth*2);
             make.size.mas_equalTo(CGSizeMake(btnWidth, btnWidth));
         }];
         [btn addTarget:self action:@selector(bottomBtnClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -153,7 +153,12 @@
     XWBaseViewController *page;
     switch (sender.tag) {
         case 0:
-            page = [XWQRCodeViewController new];
+//            page = [XWQQViewController new];
+        {
+            XWQQViewController *infoVc = [XWQQViewController new];
+            infoVc.model = self.cmodel;
+            [self.navigationController pushViewController:infoVc animated:YES];
+        }
             break;
         case 1:
         {
@@ -163,7 +168,24 @@
         }
             break;
         case 2:
-            page = [XWQQViewController new];
+            {
+                if (APPDELEGATE.user.loginType == 1 || APPDELEGATE.user.loginType == 2) {
+                    [MBProgressHUD alertInfo:@"功能正在开发，敬请期待～"];
+                }else{
+                    [MBProgressHUD alertInfo:@"您没有此权限哦～"];
+                }
+//                XWContactViewController *contactVc = [[LLUtils mainStoryboard] instantiateViewControllerWithIdentifier:@"ChatViewController"];
+//                LLConversationModel *conversationModel = [[LLChatManager sharedManager]
+//                                                          getConversationWithConversationChatter:@"测试"
+//                                                          conversationType:kLLConversationTypeChat];
+//
+//                [[LLMessageCacheManager sharedManager] prepareCacheWhenConversationBegin:conversationModel];
+//
+//                contactVc.conversationModel = conversationModel;
+//                [contactVc fetchMessageList];
+//                [contactVc refreshChatControllerForReuse];
+//                [self.navigationController pushViewController:contactVc animated:YES];
+            }
             break;
         case 3:
             page = [XWWeChatViewController new];
@@ -420,7 +442,7 @@
     //[IQKeyboardManager sharedManager].enable = YES;
 }
 #pragma mark - 收藏
-- (void)didClickCollectButton{
+- (void)didClickCollectButton:(UIButton *)sender{
     
     if (![UserModel isLogin]) {
 //        [MBProgressHUD alertInfo:@"请先登录"];
@@ -430,13 +452,15 @@
     if (self.model) {
         [CommonRequest collectDataWithParams:@{@"sId":@(self.model.ID),@"uId":[USER_DEFAULT objectForKey:USERIDKEY]} block:^(BOOL success) {
             if (success) {
-                
+                sender.selected = YES;
+            }else{
+//                sender.selected = YES;
             }
         }];
     }
 }
 #pragma mark - 机构点赞
-- (void)didClickLikeButton{
+- (void)didClickLikeButton:(UIButton *)sender{
     if (![UserModel isLogin]) {
 //        [MBProgressHUD alertInfo:@"请先登录"];
         [self showLogin];
@@ -444,12 +468,14 @@
     }
     if (self.model) {
         if (self.cmodel.isLiked) {
+            sender.selected = YES;
             [MBProgressHUD alertInfo:@"已经赞过了哦～"];
             return;
         }
         WS(weakSelf);
         [CommonRequest setServiceLikeWithParams:@{@"sId":@(self.model.ID),@"uId":[USER_DEFAULT objectForKey:USERIDKEY]}  block:^(BOOL success) {
             //刷新数据，like+1
+            sender.selected = YES;
             weakSelf.cmodel.isLiked = YES;
             weakSelf.cmodel.like += 1;
             [weakSelf.tableView reloadData];

@@ -7,7 +7,10 @@
 //
 
 #import "XWBaseViewController.h"
+@class XWServiceModel;
 
 @interface XWDisDetailViewController : XWBaseViewController
+
+@property (nonatomic, strong) XWServiceModel *model;
 
 @end

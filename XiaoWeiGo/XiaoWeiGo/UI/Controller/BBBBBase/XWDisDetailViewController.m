@@ -7,6 +7,7 @@
 //
 
 #import "XWDisDetailViewController.h"
+#import "XWServiceModel.h"
 
 @interface XWDisDetailViewController ()
 
@@ -35,7 +36,7 @@
     label.font = [UIFont rw_regularFontSize:17.0];
     label.textColor = [UIColor textBlackColor];
     label.numberOfLines = 0;
-    NSString *string = @"“小微加油”是奉化区市场监督管理局为小微企业解决融资难、创新难等限制发展突出问题的服务平台。该项目旨在帮助企业足不出户，实现信息资源、社会资源的有效对接，帮助小微企业成长。”小微加油“2.0将在原有服务APP的基础上，增加服务项目、扩大服务范围。在“小微加油”2.0我们将引入企业电子名片二维码、用户刷脸登陆、资源信息实时推送等互联网+技术，给辖区内小微企业提供更有成效的发展协助。";
+    NSString *string = [NSString ifNull:self.model.xdiscount];
     NSMutableParagraphStyle *paraStyle01 = [[NSMutableParagraphStyle alloc] init];
     paraStyle01.alignment = NSTextAlignmentLeft;  //对齐
     paraStyle01.headIndent = 0.0f;//行首缩进

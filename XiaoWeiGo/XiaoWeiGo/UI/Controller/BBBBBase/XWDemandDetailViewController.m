@@ -13,6 +13,9 @@
 #import "CommandModel.h"
 #import "XWServiceViewCell.h"
 #import "DemandViewCell.h"
+//#import "LLUtils.h"
+//#import "LLChatManager.h"
+//#import "LLMessageCacheManager.h"
 
 @interface XWDemandDetailViewController ()<UITableViewDataSource, UITableViewDelegate>
 {
@@ -123,8 +126,17 @@
         //联系
         if (APPDELEGATE.user.loginType == 1 || APPDELEGATE.user.loginType == 2) {
             [MBProgressHUD alertInfo:@"功能正在开发，敬请期待～"];
-            //            XWContactViewController *contactVc = [[XWContactViewController alloc] init];
-            //            [self.navigationController pushViewController:contactVc animated:YES];
+//            XWContactViewController *contactVc = [[LLUtils mainStoryboard] instantiateViewControllerWithIdentifier:@"ChatViewController"];
+//            LLConversationModel *conversationModel = [[LLChatManager sharedManager]
+//                                                      getConversationWithConversationChatter:@"测试"
+//                                                      conversationType:kLLConversationTypeChat];
+//
+//            [[LLMessageCacheManager sharedManager] prepareCacheWhenConversationBegin:conversationModel];
+//
+//            contactVc.conversationModel = conversationModel;
+//            [contactVc fetchMessageList];
+//            [contactVc refreshChatControllerForReuse];
+//            [self.navigationController pushViewController:contactVc animated:YES];
             
         }else{
             [MBProgressHUD alertInfo:@"您没有此权限哦～"];

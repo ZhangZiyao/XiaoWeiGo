@@ -19,7 +19,6 @@
     [super viewDidLoad];
     self.view.backgroundColor = bgColor;
     
-    
     //设置导航标题文字颜色
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont rw_mediumFontSize:16],NSForegroundColorAttributeName:[UIColor whiteColor]}];
     
@@ -28,6 +27,7 @@
         self.edgesForExtendedLayout= UIRectEdgeNone;
     }
     //设置导航栏背景色
+//    [self.navigationController.navigationBar setBackgroundColor:navColor];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:navColor size:CGSizeMake(ScreenWidth, 64)] forBarMetrics:UIBarMetricsDefault];
     self.automaticallyAdjustsScrollViewInsets = NO;
     [[UITextField appearance] setTintColor:UIColorFromRGB16(0x999999)];
