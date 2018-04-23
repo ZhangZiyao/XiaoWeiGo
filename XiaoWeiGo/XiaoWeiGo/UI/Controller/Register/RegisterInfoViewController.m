@@ -51,7 +51,7 @@
     // 基本信息 Section
     section = [XLFormSectionDescriptor formSection];
     // 账号 1-50
-    row = [XLFormRowDescriptor formRowDescriptorWithTag:XWRegisterAccountTF rowType:XLFormRowDescriptorTypeAccount title:@"＊"];
+    row = [XLFormRowDescriptor formRowDescriptorWithTag:XWRegisterAccountTF rowType:XLFormRowDescriptorTypeText title:@"＊"];
     row.cellClass = [XWTextFieldCell class];
     row.textFieldMaxNumberOfCharacters = @20;
     [row.cellConfigAtConfigure setObject:@"请输入账号" forKey:@"textField.placeholder"];
@@ -116,7 +116,7 @@
     row.cellClass = [XWTextFieldCell class];
     row.textFieldMaxNumberOfCharacters = @13;
     row.lineHidden = YES;
-    [row.cellConfigAtConfigure setObject:@"请输入手机" forKey:@"textField.placeholder"];
+    [row.cellConfigAtConfigure setObject:@"请输入联系人手机" forKey:@"textField.placeholder"];
     [row.cellConfigAtConfigure setObject:@(NSTextAlignmentRight) forKey:@"textField.textAlignment"];
     row.required = YES;
     row.onChangeBlock = ^(id  _Nullable oldValue, id  _Nullable newValue, XLFormRowDescriptor * _Nonnull rowDescriptor) {

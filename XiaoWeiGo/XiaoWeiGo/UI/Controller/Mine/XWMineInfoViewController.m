@@ -8,10 +8,12 @@
 
 #import "XWMineInfoViewController.h"
 #import "XWEditUserInfoViewController.h"
+#import "BRPickerView.h"
 
 @interface XWMineInfoViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
+
 @end
 
 @implementation XWMineInfoViewController
@@ -24,8 +26,13 @@
     RegisterNotify(XWUserInfoChangeNotification, @selector(refreshUserInfo));
 }
 - (void)refreshUserInfo{
-    [UserModel getUserData];
-    [self.tableView reloadData];
+    WS(weakSelf);
+    [UserModel getUserDataBlock:^(BOOL success) {
+        if (success) {
+           [weakSelf.tableView reloadData];
+        }
+    }];
+    
 }
 - (void)layoutSubviews{
     
@@ -47,12 +54,13 @@
         {
             if (indexPath.row == 0) {
                 //头像
-            }else if (indexPath.row == 1){
-                cell.detailTextLabel.text = IsStrEmpty(APPDELEGATE.user.NickName)?@"":APPDELEGATE.user.NickName;
-            }else if (indexPath.row == 2){
-                cell.detailTextLabel.text = IsStrEmpty(APPDELEGATE.user.name)?@"":APPDELEGATE.user.name;
-            }else if (indexPath.row == 3){
+//            }else if (indexPath.row == 1){
 //                cell.detailTextLabel.text = IsStrEmpty(APPDELEGATE.user.NickName)?@"":APPDELEGATE.user.NickName;
+            }else if (indexPath.row == 1){
+                cell.detailTextLabel.text = IsStrEmpty(APPDELEGATE.user.name)?@"":APPDELEGATE.user.name;
+            }else if (indexPath.row == 2){
+//                cell.detailTextLabel.text = IsStrEmpty(APPDELEGATE.user.NickName)?@"":APPDELEGATE.user.NickName;
+                
             }
         }
             break;
@@ -64,9 +72,9 @@
                 cell.detailTextLabel.text = IsStrEmpty(APPDELEGATE.user.worktel)?@"":APPDELEGATE.user.worktel;
             }else if (indexPath.row == 2){
                 cell.detailTextLabel.text = IsStrEmpty(APPDELEGATE.user.tel)?@"":APPDELEGATE.user.tel;
+//            }else if (indexPath.row == 3){
+//                cell.detailTextLabel.text = IsStrEmpty(APPDELEGATE.user.weNumber)?@"":APPDELEGATE.user.weNumber;
             }else if (indexPath.row == 3){
-                cell.detailTextLabel.text = IsStrEmpty(APPDELEGATE.user.weNumber)?@"":APPDELEGATE.user.weNumber;
-            }else if (indexPath.row == 4){
                 cell.detailTextLabel.text = IsStrEmpty(APPDELEGATE.user.email)?@"":APPDELEGATE.user.email;
             }
         }
@@ -95,19 +103,78 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSArray *strArray = @[@[@"avatar",@"NickName",@"name",@"sexy"],@[@"address",@"workTel",@"tel"],@[@"",@"",@"",@"",@"",@"",@""]];
-    XWEditUserInfoViewController *editvc = [[XWEditUserInfoViewController alloc] init];
-    editvc.title = @"修改信息";
-    if ((indexPath.section == 0 &&indexPath.row == 2)||(indexPath.section==1&&indexPath.row !=3)) {
-        editvc.keyType = strArray[indexPath.section][indexPath.row];
+    NSArray *strArray = @[@[@"avatar",@"name"],@[@"address",@"worktel",@"tel",@"email"],@[@"",@"",@"",@"",@"",@"",@""]];
+    switch (indexPath.section) {
+        case 0:
+        {
+//            if (indexPath.row == 1) {
+//                XWEditUserInfoViewController *editvc = [[XWEditUserInfoViewController alloc] init];
+//                editvc.title = @"修改昵称";
+//                editvc.keyType = strArray[indexPath.section][indexPath.row];
+//                [self.navigationController pushViewController:editvc animated:YES];
+//            }else
+                if (indexPath.row == 1){
+                XWEditUserInfoViewController *editvc = [[XWEditUserInfoViewController alloc] init];
+                editvc.title = @"修改姓名";
+                editvc.keyType = strArray[indexPath.section][indexPath.row];
+                [self.navigationController pushViewController:editvc animated:YES];
+//            }else if (indexPath.row == 2){
+//                //性别
+//                WS(weakSelf);
+//                [BRStringPickerView showStringPickerWithTitle:nil dataSource:@[@"男", @"女"] defaultSelValue:@"男" isAutoSelect:NO resultBlock:^(id selectValue) {
+//                    //                    rowDescriptor.title = StringPush(@"  手机状态：", selectValue, @"");
+//                    //                    weakSelf.registerModel.phoneStatus = [selectValue isEqualToString:@"公开"]?1:0;
+//                    [weakSelf.tableView reloadData];
+//                }];
+            }
+        }
+            break;
+        case 1:
+        {
+            if (indexPath.row == 0) {
+                XWEditUserInfoViewController *editvc = [[XWEditUserInfoViewController alloc] init];
+                editvc.title = @"修改地址";
+                editvc.keyType = strArray[indexPath.section][indexPath.row];
+                [self.navigationController pushViewController:editvc animated:YES];
+            }else if (indexPath.row == 1) {
+                XWEditUserInfoViewController *editvc = [[XWEditUserInfoViewController alloc] init];
+                editvc.title = @"修改联系电话";
+                editvc.keyType = strArray[indexPath.section][indexPath.row];
+                [self.navigationController pushViewController:editvc animated:YES];
+            }else if (indexPath.row == 2){
+                XWEditUserInfoViewController *editvc = [[XWEditUserInfoViewController alloc] init];
+                editvc.title = @"修改手机";
+                editvc.keyType = strArray[indexPath.section][indexPath.row];
+                [self.navigationController pushViewController:editvc animated:YES];
+            }else if (indexPath.row == 3){
+                //QQ/微信
+                XWEditUserInfoViewController *editvc = [[XWEditUserInfoViewController alloc] init];
+                editvc.title = @"修改QQ/微信";
+                editvc.keyType = strArray[indexPath.section][indexPath.row];
+                [self.navigationController pushViewController:editvc animated:YES];
+            }else if(indexPath.row == 4){
+                XWEditUserInfoViewController *editvc = [[XWEditUserInfoViewController alloc] init];
+                editvc.title = @"修改QQ/微信";
+                editvc.keyType = strArray[indexPath.section][indexPath.row];
+                [self.navigationController pushViewController:editvc animated:YES];
+            }
+        }
+            break;
+        case 2:
+        {
+            
+        }
+            break;
+            
+        default:
+            break;
     }
-    [self.navigationController pushViewController:editvc animated:YES];
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return [self.dataSource[section] count];
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    if (APPDELEGATE.user.loginType == 3 || APPDELEGATE.user.loginType == 1) {
+    if (APPDELEGATE.user.loginType == 2 || APPDELEGATE.user.loginType == 1) {
         return 3;
     }else{
         return 2;
@@ -141,7 +208,7 @@
 }
 - (NSMutableArray *)dataSource{
     if (!_dataSource) {
-        _dataSource = [NSMutableArray arrayWithArray:@[@[@"头像",@"昵称",@"真实姓名",@"性别"],@[@"联系地址",@"联系电话",@"手机",@"QQ/微信",@"邮箱"],@[@"企业类型",@"资金数额",@"统一社会信用代码/注册号",@"注册日期",@"登记机关",@"行业代码"]]];
+        _dataSource = [NSMutableArray arrayWithArray:@[@[@"头像",@"真实姓名"],@[@"联系地址",@"联系电话",@"手机",@"邮箱"],@[@"企业类型",@"资金数额",@"统一社会信用代码/注册号",@"注册日期",@"登记机关",@"行业代码"]]];
     }
     return _dataSource;
 }

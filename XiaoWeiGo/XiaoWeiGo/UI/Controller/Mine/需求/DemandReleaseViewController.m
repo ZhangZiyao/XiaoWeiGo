@@ -10,6 +10,7 @@
 #import "EditTextViewController.h"
 #import "WSDatePickerView.h"
 #import "CommandModel.h"
+#import "BRPickerView.h"
 
 #define kTitle @"kTitle"
 #define kService @"kService"
@@ -18,7 +19,10 @@
 #define kSaveDemand @"kSaveDemand"
 
 @interface DemandReleaseViewController ()<UITableViewDelegate,UITableViewDataSource,WSDatePickerDelegate>
-
+{
+    int selectIndex;
+    NSString *seleceName;
+}
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) WSDatePickerView *datePicker;
@@ -37,6 +41,10 @@
     self.title = @"发布需求";
     [self showBackItem];
     _demand = [[CommandModel alloc] init];
+    
+    _demand.serviceName = @"银企对接";
+    seleceName = @"银企对接";
+    selectIndex = 1;
 //    if ([USER_DEFAULT objectForKey:kSaveDemand]) {
 //        _demand = [CommandModel modelOfDictionary:[USER_DEFAULT objectForKey:kSaveDemand]];
 //        [self.tableView reloadData];
@@ -69,8 +77,8 @@
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, 0, 0));
     }];
-    NSArray *array = @[@[@"保存",@"demand_icon_save"],@[@"发布",@"demand_icon_release1"]];
-    for (int i = 0; i < 2; i++) {
+    NSArray *array = @[@[@"发布",@"demand_icon_release1"]];
+    for (int i = 0; i < array.count; i++) {
         
         UIButton *saveBtn = [[UIButton alloc] init];
         saveBtn.tag = i;
@@ -86,76 +94,136 @@
             make.left.equalTo(self.view).offset((ScreenWidth/2+0.5)*i);
             make.bottom.equalTo(self.view);
             make.height.mas_equalTo(90*kScaleH);
-            make.width.mas_equalTo(ScreenWidth/2);
+            make.width.mas_equalTo(ScreenWidth);
         }];
         CALayer *topLayer = [CALayer layer];
         topLayer.backgroundColor = [UIColor OCRMainColor].CGColor;
-        topLayer.frame = CGRectMake(0, 0, ScreenWidth/2, 0.5);
+        topLayer.frame = CGRectMake(0, 0, ScreenWidth, 0.5);
         [saveBtn.layer addSublayer:topLayer];
-        if (i == 0) {
-            CALayer *rightLayer = [CALayer layer];
-            rightLayer.backgroundColor = [UIColor OCRMainColor].CGColor;
-            rightLayer.frame = CGRectMake(ScreenWidth/2, 0, 0.5, 90*kScaleH);
-            [saveBtn.layer addSublayer:rightLayer];
-        }
+//        if (i == 0) {
+//            CALayer *rightLayer = [CALayer layer];
+//            rightLayer.backgroundColor = [UIColor OCRMainColor].CGColor;
+//            rightLayer.frame = CGRectMake(ScreenWidth/2, 0, 0.5, 90*kScaleH);
+//            [saveBtn.layer addSublayer:rightLayer];
+//        }
         saveBtn.layer.masksToBounds = YES;
     }
 }
 #pragma mark -
 - (void)bottomBtnClick:(UIButton *)sender{
-    if (sender.tag == 0) {
-        if (self.mutableDict.allValues.count > 0 ) {
-            [USER_DEFAULT setObject:self.mutableDict forKey:kSaveDemand];
-        }
+//    if (sender.tag == 0) {
+//        if (self.mutableDict.allValues.count > 0 ) {
+//            [USER_DEFAULT setObject:self.mutableDict forKey:kSaveDemand];
+//        }
+//    }else{
+    
+//    }
+    
+    if (self.model) {
+        [self republish];
     }else{
-        if (IsStrEmpty(_demand.dTitle)) {
-            [MBProgressHUD alertInfo:@"请填写需求标题"];
-            return;
-        }
-        if (IsStrEmpty(_demand.serviceName)) {
-            [MBProgressHUD alertInfo:@"请填写需求领域"];
-            return;
-        }
-        if (IsStrEmpty(_demand.dContent)) {
-            [MBProgressHUD alertInfo:@"请填写需求内容"];
-            return;
-        }
-        if (IsStrEmpty(_demand.endTime)) {
-            [MBProgressHUD alertInfo:@"请选择截止时间"];
-            return;
-        }
-        
-        RequestManager *manager = [[RequestManager alloc] init];
-        manager.isShowLoading = NO;
-        //    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        NSMutableDictionary *params = [NSMutableDictionary dictionary];
-        [params setValuesForKeysWithDictionary:@{@"uId":[USER_DEFAULT objectForKey:USERIDKEY],
-                                                 @"title":_demand.dTitle,
-                                                 @"content":_demand.dContent,
-                                                 @"starTime":[NSString nowDateString],//datetime
-                                                 @"endTime":_demand.endTime,
-                                                 @"category":@"2"
-                                                 }];
-        
-        [manager POSTRequestUrlStr:kPublishDemand parms:params success:^(id responseData) {
-            NSLog(@"发布需求  %@",responseData);
-            NSString *message = responseData[0];
-            if ([message isEqualToString:@"success"]) {
-                [MBProgressHUD alertInfo:@"发布需求成功"];
-                [self.navigationController popViewControllerAnimated:YES];
-                [USER_DEFAULT removeObjectForKey:kSaveDemand];
-            }else if ([message isEqualToString:@"danger"]){
-                [MBProgressHUD alertInfo:@"提交的内容中有注入字符串,失败"];
-            }else{
-                [MBProgressHUD alertInfo:message];
-            }
-            
-        } fail:^(NSError *error) {
-            
-        }];
+        [self publishNewD];
     }
+    
+    
 }
-
+- (void)publishNewD{
+    if (IsStrEmpty(_demand.dTitle)) {
+        [MBProgressHUD alertInfo:@"请填写需求标题"];
+        return;
+    }
+    if (IsStrEmpty(_demand.serviceName)) {
+        [MBProgressHUD alertInfo:@"请填写需求领域"];
+        return;
+    }
+    if (IsStrEmpty(_demand.dContent)) {
+        [MBProgressHUD alertInfo:@"请填写需求内容"];
+        return;
+    }
+    if (IsStrEmpty(_demand.endTime)) {
+        [MBProgressHUD alertInfo:@"请选择截止时间"];
+        return;
+    }
+    
+    RequestManager *manager = [[RequestManager alloc] init];
+    manager.isShowLoading = NO;
+    //    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    [params setValuesForKeysWithDictionary:@{@"uId":[USER_DEFAULT objectForKey:USERIDKEY],
+                                             @"title":_demand.dTitle,
+                                             @"content":_demand.dContent,
+                                             @"starTime":[NSString nowDateString],//datetime
+                                             @"endTime":_demand.endTime,
+                                             @"category":@(selectIndex)
+                                             }];
+    
+    [manager POSTRequestUrlStr:kPublishDemand parms:params success:^(id responseData) {
+        NSLog(@"发布需求  %@",responseData);
+        
+        NSString *message = responseData[0];
+        if ([message isEqualToString:@"success"]) {
+            [MBProgressHUD alertInfo:@"发布需求成功"];
+            [self.navigationController popViewControllerAnimated:YES];
+            [USER_DEFAULT removeObjectForKey:kSaveDemand];
+            SendNotify(@"reloadDD", nil);
+        }else if ([message isEqualToString:@"danger"]){
+            [MBProgressHUD alertInfo:@"提交的内容中有注入字符串,失败"];
+        }else{
+            [MBProgressHUD alertInfo:message];
+        }
+        
+    } fail:^(NSError *error) {
+        
+    }];
+}
+- (void)republish{
+    if (IsStrEmpty(_demand.dTitle)) {
+        [MBProgressHUD alertInfo:@"请填写需求标题"];
+        return;
+    }
+    if (IsStrEmpty(_demand.serviceName)) {
+        [MBProgressHUD alertInfo:@"请填写需求领域"];
+        return;
+    }
+    if (IsStrEmpty(_demand.dContent)) {
+        [MBProgressHUD alertInfo:@"请填写需求内容"];
+        return;
+    }
+    if (IsStrEmpty(_demand.endTime)) {
+        [MBProgressHUD alertInfo:@"请选择截止时间"];
+        return;
+    }
+    
+    RequestManager *manager = [[RequestManager alloc] init];
+    manager.isShowLoading = NO;
+    //    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    [params setValuesForKeysWithDictionary:@{@"uId":[USER_DEFAULT objectForKey:USERIDKEY],
+                                             @"id":@(self.model.ID),
+                                             @"rePublishOrRecall":@2,
+                                             @"title":_demand.dTitle,
+                                             @"content":_demand.dContent,
+                                             @"starTime":[NSString nowDateString],//datetime
+                                             @"endTime":_demand.endTime,
+                                             @"category":@([NSString getCategoryIDWithCategoryName:_demand.serviceName])
+                                             }];
+    [manager POSTRequestUrlStr:kChangeDemandStatus parms:params success:^(id responseData) {
+        NSLog(@"设置需求状态  %@",responseData);
+        NSString *message = responseData[0];
+        if ([message isEqualToString:@"success"]) {
+            [MBProgressHUD alertInfo:@"发布需求成功"];
+            [self.navigationController popViewControllerAnimated:YES];
+            [USER_DEFAULT removeObjectForKey:kSaveDemand];
+            SendNotify(@"reloadDD", nil);
+        }else if ([message isEqualToString:@"danger"]){
+            [MBProgressHUD alertInfo:@"提交的内容中有注入字符串,失败"];
+        }else{
+            [MBProgressHUD alertInfo:message];
+        }
+    } fail:^(NSError *error) {
+        
+    }];
+}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"demandCell"];
     if (!cell) {
@@ -199,6 +267,16 @@
     
     if (indexPath.row == 3) {
         [self datepickerShow];
+    }else if (indexPath.row == 1) {
+        //选择需求领域
+        WS(weakSelf);
+        NSArray *typeArray = @[@"银企对接",@"创业创新",@"知识产权",@"共享会计",@"法律服务",@"优惠政策",@"ISO认证",@"展会服务",@"登记注册",@"其他服务"];
+        [BRStringPickerView showStringPickerWithTitle:@"" dataSource:typeArray defaultSelValue:seleceName isAutoSelect:NO resultBlock:^(id selectValue) {
+            weakSelf.demand.serviceName = selectValue;
+            selectIndex = (int)[typeArray indexOfObject:selectValue]+1;
+            seleceName = selectValue;
+            [weakSelf.tableView reloadData];
+        }];
     }else{
         EditTextViewController *editvc = [[EditTextViewController alloc] init];
         editvc.type = indexPath.row;

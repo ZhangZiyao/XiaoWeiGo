@@ -11,6 +11,6 @@
 
 @interface XWCompanyDetailViewController : XWBaseViewController
 
-@property (nonatomic, strong) CompanyModel *company;
+@property (nonatomic, strong) CompanyModel *model;
 
 @end

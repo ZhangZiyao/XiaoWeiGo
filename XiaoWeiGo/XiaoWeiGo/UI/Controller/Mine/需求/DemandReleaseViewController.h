@@ -7,7 +7,10 @@
 //
 
 #import "XWBaseViewController.h"
+@class CommandModel;
 
 @interface DemandReleaseViewController : XWBaseViewController
+
+@property (nonatomic, strong) CommandModel *model;
 
 @end

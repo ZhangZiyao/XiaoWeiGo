@@ -55,11 +55,13 @@
 - (void)selectType:(UIButton *)sender{
     //(0:所有搜索的表,1:新闻,2:服务,3:服务商,4:小微企业,5:需求)
 //    NSArray *typeArray = @[@"全部",@"政策", @"服务", @"服务商", @"企业",@"需求"];
+    WS(weakSelf);
     [BRStringPickerView showStringPickerWithTitle:@"" dataSource:typeArray[0] defaultSelValue:selectTypeName isAutoSelect:NO resultBlock:^(id selectValue) {
         [sender setTitle:selectValue forState:UIControlStateNormal];
         selectType = [[typeArray[1] objectAtIndex:[typeArray[0] indexOfObject:selectValue]] intValue];
         selectTypeName = selectValue;
-        [self searchDataRequest];
+        weakSelf.indexPage = 0;
+        [weakSelf searchDataRequest:nil];
     }];
 }
 - (void)layoutSubviews{
@@ -92,7 +94,7 @@
     [searchBtn setBackgroundColor:UIColorFromRGB16(0xedc440)];
     [searchBtn.titleLabel setFont:[UIFont rw_regularFontSize:15.0]];
     [self.view addSubview:searchBtn];
-    [searchBtn addTarget:self action:@selector(searchDataRequest) forControlEvents:UIControlEventTouchUpInside];
+    [searchBtn addTarget:self action:@selector(searchDataRequest:) forControlEvents:UIControlEventTouchUpInside];
     searchBtn.layer.cornerRadius = 5.0;
     searchBtn.layer.masksToBounds = YES;
     
@@ -109,14 +111,17 @@
     }];
 }
 #pragma mark - 发起搜索请求
-- (void)searchDataRequest{
+- (void)searchDataRequest:(UIButton *)sender{
     [self.searchBar resignFirstResponder];
+    if (sender != nil) {
+        _indexPage = 0;
+    }
     NSLog(@"self.searchBar.text %@",self.searchBar.text);
     if (!IsStrEmpty(self.searchBar.text)) {
-        if (![self.searchBar.text isEqualToString:oldSearchText]) {
+//        if (![self.searchBar.text isEqualToString:oldSearchText]) {
 //            [self getDataListRequest];
             [self searchNewsListRequest];
-        }
+//        }
     }else{
         self.dataSource = [NSMutableArray array];
         [self.tableView reloadData];
@@ -171,11 +176,11 @@
     return self.dataSource.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (self.type == 10) {
+//    if (self.type == 10) {
         return 100*kScaleH;
-    }else{
-        return 150*kScaleH;
-    }
+//    }else{
+//        return 150*kScaleH;
+//    }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 8.0f;
@@ -183,9 +188,30 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NewsModel *model = self.dataSource[indexPath.row];
-    XWNewsDetailViewController *detailVc = [[XWNewsDetailViewController alloc] init];
-    detailVc.model = model;
-    [self.navigationController pushViewController:detailVc animated:YES];
+    //(0:所有搜索的表,1:新闻,2:服务,3:服务商,4:小微企业,5:需求)
+    switch (model.type) {
+        case 0:
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+        {
+            XWNewsDetailViewController *detailVc = [[XWNewsDetailViewController alloc] init];
+            detailVc.model = model;
+            [self.navigationController pushViewController:detailVc animated:YES];
+        }
+            break;
+        case 5:
+        {
+            XWDemandDetailViewController *detailVc = [[XWDemandDetailViewController alloc] init];
+            detailVc.model = model;
+            [self.navigationController pushViewController:detailVc animated:YES];
+        }
+            break;
+            
+        default:
+            break;
+    }
 //    if (self.type == 10) {
 //        NewsModel *model = self.dataSource[indexPath.row];
 //        XWNewsDetailViewController *detailVc = [[XWNewsDetailViewController alloc] init];
@@ -226,7 +252,8 @@
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
     [searchBar resignFirstResponder];
     NSLog(@"点击了搜索");
-    [self searchDataRequest];
+    _indexPage = 0;
+    [self searchDataRequest:nil];
 }
 - (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar{
     [searchBar resignFirstResponder];
@@ -287,7 +314,7 @@
         WS(weakSelf);
         MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
                         weakSelf.indexPage = 0;
-            [weakSelf searchDataRequest];
+            [weakSelf searchDataRequest:nil];
         }];
         // 隐藏时间
         header.lastUpdatedTimeLabel.hidden = YES;
@@ -297,16 +324,18 @@
         MJRefreshBackNormalFooter *footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
             //Call this Block When enter the refresh status automatically
             weakSelf.indexPage += 10;
-            [weakSelf searchDataRequest];
+            [weakSelf searchDataRequest:nil];
         }];
         
         footer.arrowView.image = [UIImage imageWithColor:[UIColor clearColor]];
         footer.stateLabel.hidden = YES;
         _tableView.mj_footer = footer;
-        _tableView.tableFooterView = [[NoMoreDataView alloc] init];
-        _tableView.tableFooterView.hidden = YES;
+        _tableView.tableFooterView = nil;
     }
     return _tableView;
+}
+- (UIView *)tableFooter{
+    return [[NoMoreDataView alloc] init];
 }
 - (NSMutableArray *)dataSource{
     if (!_dataSource) {
@@ -356,21 +385,19 @@
         NSMutableArray *dataArray = [NSMutableArray array];
         if ([responseData isKindOfClass:[NSArray class]]) {
             NSArray *array = [NSArray arrayWithArray:responseData];
-            if (array.count > 0) {
-                dataArray = [NewsModel mj_objectArrayWithKeyValuesArray:array];
-            }
+            dataArray = [NewsModel mj_objectArrayWithKeyValuesArray:array];
         }
-        if (dataArray.count < 10) {
-            self.tableView.tableFooterView.hidden = NO;
-            self.tableView.mj_footer.hidden = YES;
-        }else{
-            self.tableView.tableFooterView.hidden = YES;
-            self.tableView.mj_footer.hidden = NO;
-        }
-        if (_indexPage == 0) {
+        if (self.indexPage == 0) {
             self.dataSource = [NSMutableArray arrayWithArray:dataArray];
         }else{
             [self.dataSource addObjectsFromArray:dataArray];
+        }
+        if (dataArray.count < 10) {
+            _tableView.tableFooterView = [self tableFooter];
+            self.tableView.mj_footer.hidden = YES;
+        }else{
+            self.tableView.tableFooterView = nil;
+            self.tableView.mj_footer.hidden = NO;
         }
         
         if (self.dataSource.count == 0) {
@@ -478,14 +505,14 @@
         }
         
         if (self.dataSource.count == 0) {
-            self.tableView.tableFooterView.hidden = YES;
+            self.tableView.tableFooterView = nil;
             self.tableView.mj_footer.hidden = YES;
         }else{
             if (dataArray.count < 10) {
-                self.tableView.tableFooterView.hidden = NO;
+                _tableView.tableFooterView = [[NoMoreDataView alloc] init];
                 self.tableView.mj_footer.hidden = YES;
             }else{
-                self.tableView.tableFooterView.hidden = YES;
+                self.tableView.tableFooterView = nil;
                 self.tableView.mj_footer.hidden = NO;
             }
         }

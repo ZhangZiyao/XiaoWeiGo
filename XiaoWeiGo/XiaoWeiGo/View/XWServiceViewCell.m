@@ -50,21 +50,23 @@
 }
 - (void)setCmodel:(XWServiceModel *)cmodel{
     _cmodel = cmodel;
-    if (cmodel == nil) {
+    if (cmodel == nil || [cmodel isKindOfClass:[NSNull class]]) {
         return;
     }
 //    if (cmodel.category == 1) {
 //        NSAttributedString * attrStr = [[NSAttributedString alloc] initWithData:[cmodel.details dataUsingEncoding:NSUnicodeStringEncoding] options:@{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType} documentAttributes:nil error:nil];
 //        self.detail0Label.attributedText = attrStr;
-    self.webView.hidden = NO;
+    if (cmodel.details) {
+        self.webView.hidden = NO;
+        
+        [self.webView loadHTMLString:cmodel.details baseURL:nil];
+    }
     self.titleLabel.hidden = YES;
     self.detail0Label.hidden = YES;
     self.detail2Label.hidden = YES;
     self.detail3Label.hidden = YES;
     self.detail4Label.hidden = YES;
     self.detail5Label.hidden = YES;
-    
-    [self.webView loadHTMLString:cmodel.details baseURL:nil];
         
 //        self.detail5Label.hidden = NO;
 //        self.detail0Label.text = [NSString stringWithFormat:@"适用对象：%@",@"进入工业园区的初创期中小企业"];

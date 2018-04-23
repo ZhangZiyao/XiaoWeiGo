@@ -16,6 +16,7 @@
 @interface MyDemandViewController ()<UITableViewDataSource, UITableViewDelegate>
 {
     NSInteger status;//审核状态(-1:所有的,0:待审核,1:审核通过,2:退回)
+    CommandModel *selModel;
 }
 @property (nonatomic, assign) int pageIndex;
 @property (nonatomic, strong) NSMutableArray *dataSource;
@@ -34,6 +35,7 @@
     status = 0;
     _pageIndex = 0;
     [self getDataList];
+    RegisterNotify(@"reloadDD", @selector(getDataList));
 }
 - (void)segmentedControlTapped:(YUSegmentedControl *)sender {
     NSLog(@" %ld",sender.selectedSegmentIndex);
@@ -56,7 +58,7 @@
         make.width.mas_equalTo(340*kScaleW);
     }];
     
-    NSArray *dataArr = @[@"待审核",@"审核通过",@"退回"];
+    NSArray *dataArr = @[@"待审核",@"审核通过",@"草稿箱"];
     _segmentedControl = [[YUSegmentedControl alloc] initWithTitles:dataArr];
     _segmentedControl.backgroundColor = [UIColor whiteColor];
     _segmentedControl.showsBottomSeparator = YES;
@@ -79,9 +81,19 @@
     if (!cell) {
         cell = [[XWCommandCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"demand"];
     }
-    cell.model = self.dataSource[indexPath.row];
+    CommandModel *model = self.dataSource[indexPath.row];
+    cell.model = model;
+//    cell.funcBtn.tag = model.
+    cell.funcBtnClickBlock = ^(CommandModel *smodel, int audio) {
+        if (audio == 2) {
+            DemandReleaseViewController *vc = [[DemandReleaseViewController alloc] init];
+            vc.model = smodel;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+    };
     return cell;
 }
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     XWDemandDetailViewController *sDetailVc = [[XWDemandDetailViewController alloc] init];
     sDetailVc.model = self.dataSource[indexPath.row];

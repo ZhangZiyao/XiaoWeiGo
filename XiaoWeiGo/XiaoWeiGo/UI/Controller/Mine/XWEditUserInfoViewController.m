@@ -59,18 +59,18 @@
     //    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     [params setValuesForKeysWithDictionary:@{@"uId":[USER_DEFAULT objectForKey:USERIDKEY],
-                                             @"name":@"",
-                                             @"address":@"",
-                                             @"tel":@"",
-                                             @"email":@"",
-                                             @"worktel":@"",
-                                             @"remark":@"",
-                                             @"loginType":@"",
-                                             @"tradeCode":@"",
-                                             @"regOrg":@"",
-                                             @"regDate":@"",
-                                             @"regCapital":@"",
-                                             @"orgType":@"",
+                                             @"loginType":@(APPDELEGATE.user.loginType),
+                                             @"name":IsStrEmpty(APPDELEGATE.user.name)?@"":APPDELEGATE.user.name,
+                                             @"address":IsStrEmpty(APPDELEGATE.user.address)?@"":APPDELEGATE.user.address,
+                                             @"tel":IsStrEmpty(APPDELEGATE.user.tel)?@"":APPDELEGATE.user.tel,
+                                             @"email":IsStrEmpty(APPDELEGATE.user.email)?@"":APPDELEGATE.user.email,
+                                             @"worktel":IsStrEmpty(APPDELEGATE.user.worktel)?@"":APPDELEGATE.user.worktel,
+                                             @"remark":IsStrEmpty(APPDELEGATE.user.remark)?@"":APPDELEGATE.user.remark,
+                                             @"tradeCode":IsStrEmpty(APPDELEGATE.user.tradeCode)?@"":APPDELEGATE.user.tradeCode,
+                                             @"regOrg":IsStrEmpty(APPDELEGATE.user.regOrg)?@"":APPDELEGATE.user.regOrg,
+                                             @"regDate":IsStrEmpty(APPDELEGATE.user.regDate)?@"":APPDELEGATE.user.regDate,
+                                             @"regCapital":IsStrEmpty(APPDELEGATE.user.regCapital)?@"":APPDELEGATE.user.regCapital,
+                                             @"orgType":IsStrEmpty(APPDELEGATE.user.orgType)?@"":APPDELEGATE.user.orgType,
                                              }];
     [params setObject:self.textField.text forKey:self.keyType];
     [manager POSTRequestUrlStr:kUpdateUserInfo parms:params success:^(id responseData) {

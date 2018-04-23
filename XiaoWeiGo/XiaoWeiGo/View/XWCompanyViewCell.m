@@ -31,10 +31,10 @@
 }
 - (void)setModel:(CompanyModel *)model{
     _model = model;
-    self.titleLabel.text = model.orgName;
-    self.detailLabel.text = model.orgSketch;
-    self.detailLabel1.text = model.telephone;
-    self.detailLabel2.text = [NSString stringWithFormat:@"浏览量 %d",model.visits];
+    self.titleLabel.text = StringPush(@"名称: ", model.orgName, @"");
+    self.detailLabel.text = StringPush(@"联系人: ", model.contacts, @"");
+    self.detailLabel1.text = StringPush(@"联系方式: ", model.tel, @"");
+//    self.detailLabel2.text = [NSString stringWithFormat:@"浏览量 %d",model.visits];
 //    NSArray *imageArr = @[@"loan_img_avatar",@"innovation_img_avatar",@"property_img_avatar",@"shared_img_avatar",@"legal_img_avatar",@"discount_img_avatar",@"certification_img_avatar",@"exhibition_img_avatar",@"registered_img_avatar",@"other_img_avatar"];
     self.smallImageView.image = [UIImage imageNamed:@"book_placeholder"];
 }

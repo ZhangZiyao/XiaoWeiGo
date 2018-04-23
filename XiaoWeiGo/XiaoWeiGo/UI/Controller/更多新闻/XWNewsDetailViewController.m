@@ -10,6 +10,9 @@
 #import "NewsModel.h"
 
 @interface XWNewsDetailViewController ()
+{
+    NewsModel *newsDDModel;
+}
 @property (nonatomic, strong) UILabel *contentLabel;
 @property (nonatomic, strong) UIWebView *webView;
 @end
@@ -21,7 +24,7 @@
     self.title = IsStrEmpty(self.model.aTitle)?@"新闻详情":self.model.aTitle;
     [self showBackItem];
     
-//    [self getNewsDetailInfo];
+    [self getNewsDetailInfo];
 }
 - (void)layoutSubviews{
 //    [self.view addSubview:self.contentLabel];
@@ -66,7 +69,8 @@
     
     [manager POSTRequestUrlStr:kGetNewsInfoDetail parms:params success:^(id responseData) {
         NSLog(@"获取新闻内容  %@",responseData);
-        
+        newsDDModel = [NewsModel mj_objectWithKeyValues:responseData[0]];
+        [_webView loadHTMLString:newsDDModel.aContent baseURL:nil];
     } fail:^(NSError *error) {
         
     }];

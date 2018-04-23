@@ -97,7 +97,7 @@
     row = [XLFormRowDescriptor formRowDescriptorWithTag:@"DIANHUA" rowType:XLFormRowDescriptorTypeAccount title:@"工商登记预留电话"];
     row.cellClass = [XWTextFieldViewCell class];
     row.textFieldMaxNumberOfCharacters = @11;
-    [row.cellConfigAtConfigure setObject:@"请输入电话" forKey:@"textField.placeholder"];
+    [row.cellConfigAtConfigure setObject:@"请输入预留电话（用于校验）" forKey:@"textField.placeholder"];
     row.onChangeBlock = ^(id  _Nullable oldValue, id  _Nullable newValue, XLFormRowDescriptor * _Nonnull rowDescriptor) {
         if (newValue) {
             weakSelf.registerModel.reservedtelephone = [NSString stringWithFormat:@"%@",newValue];
@@ -120,7 +120,7 @@
     
     
     // 账号 1-50
-    row = [XLFormRowDescriptor formRowDescriptorWithTag:XWRegisterAccountTF rowType:XLFormRowDescriptorTypeAccount title:@"＊"];
+    row = [XLFormRowDescriptor formRowDescriptorWithTag:XWRegisterAccountTF rowType:XLFormRowDescriptorTypeText title:@"＊"];
     row.cellClass = [XWTextFieldCell class];
     row.textFieldMaxNumberOfCharacters = @20;
     [row.cellConfigAtConfigure setObject:@"请输入账号" forKey:@"textField.placeholder"];
@@ -198,7 +198,7 @@
     row = [XLFormRowDescriptor formRowDescriptorWithTag:XWRegisterMobileTF rowType:XLFormRowDescriptorTypePhone title:@"＊"];
     row.cellClass = [XWTextFieldCell class];
     row.textFieldMaxNumberOfCharacters = @13;
-    [row.cellConfigAtConfigure setObject:@"请输入手机" forKey:@"textField.placeholder"];
+    [row.cellConfigAtConfigure setObject:@"请输入联系人手机" forKey:@"textField.placeholder"];
     [row.cellConfigAtConfigure setObject:@(NSTextAlignmentRight) forKey:@"textField.textAlignment"];
     row.required = YES;
     row.onChangeBlock = ^(id  _Nullable oldValue, id  _Nullable newValue, XLFormRowDescriptor * _Nonnull rowDescriptor) {
@@ -455,12 +455,14 @@
         if ([message containsString:@"success"]) {
             //成功
             _registerModel.auditing = @"yes";
+            //正式提交注册请求
+            [self commitRegisterInfo];
         }else{
-            //用户名不存在
+            //
             _registerModel.auditing = @"no";
+            [MBProgressHUD alertInfo:@"工商登记预留电话号码有误，请重新输入！"];
         }
-        //正式提交注册请求
-        [self commitRegisterInfo];
+        
         
     } fail:^(NSError *error) {
         
@@ -525,10 +527,13 @@
     }
     [RegisterModel registWithUrl:url params:params block:^(BOOL success) {
         if (success) {
+            
             [self.navigationController popToRootViewControllerAnimated:YES];
             //                XWForgetViewController *forgetPwdVc = [[XWForgetViewController alloc] init];
             //                forgetPwdVc.type = 1;
             //                [self.navigationController pushViewController:forgetPwdVc animated:YES];
+        }else{
+//            [MBProgressHUD alertInfo:@"工商登记预留电话号码有误，请联系管理员！"];
         }
     }];
 }

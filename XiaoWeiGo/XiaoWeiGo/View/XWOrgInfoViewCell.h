@@ -12,9 +12,9 @@
 @protocol XWOrgInfoCellDelegate <NSObject>
 
 @optional
--(void)didClickCollectButton;
+-(void)didClickCollectButton:(UIButton *)sender;
 
--(void)didClickLikeButton;
+-(void)didClickLikeButton:(UIButton *)sender;
 
 @end
 

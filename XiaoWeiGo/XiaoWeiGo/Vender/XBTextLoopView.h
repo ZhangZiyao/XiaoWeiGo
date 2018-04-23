@@ -21,6 +21,11 @@ typedef void(^selectTextBlock)(NSString *selectString, NSInteger index);
  @param timeInterval 时间间隔,默认是1.0秒
  @param frame 控件大小
  */
-+ (instancetype)textLoopViewWith:(NSArray *)dataSource loopInterval:(NSTimeInterval)timeInterval initWithFrame:(CGRect)frame selectBlock:(selectTextBlock)selectBlock;
++ (instancetype)textLoopViewWith:(NSArray *)dataSource loopInterval:(NSTimeInterval)timeInterval initWithFrame:(CGRect)frame selectBBlock:(selectTextBlock)selectBBlock;
+
+- (void)pause;
+
+- (void)walk;
+
 
 @end

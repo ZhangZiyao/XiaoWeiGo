@@ -24,14 +24,29 @@
     [super viewDidLoad];
     [self showBackItem];
     self.title = @"通知公告";
-    
+    [self getAnnounceListRequest];
 }
-
+#pragma mark - 获取公告
+- (void)getAnnounceListRequest{
+    RequestManager *manager = [[RequestManager alloc] init];
+    manager.isShowLoading = NO;
+    //    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    NSString *urlString = kGetNoticeZ;
+    [params setValuesForKeysWithDictionary:@{@"ID":@(self.AID)
+                                             }];
+    [manager POSTRequestUrlStr:urlString parms:params success:^(id responseData) {
+        NSLog(@"公告详情  %@",responseData);
+        self.titleLabel.text = [responseData[0] objectForKey:@"nTitle"];
+        self.timeLabel.text = [responseData[0] objectForKey:@"issueTime"];
+        self.contentLabel.text = [responseData[0] objectForKey:@"nContent"];
+        
+    } fail:^(NSError *error) {
+    }];
+}
 - (void)layoutSubviews{
     
-    self.titleLabel.text = @"小微加油V2.0测试版上线";
-    self.timeLabel.text = [NSString ymdNowDateString];
-    self.contentLabel.text = @"小微加油V2.0测试版上线了，请多提宝贵意见";
+    
     
     
     [self.view addSubview:self.titleLabel];

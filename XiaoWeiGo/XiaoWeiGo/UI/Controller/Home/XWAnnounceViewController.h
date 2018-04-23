@@ -11,4 +11,6 @@
 
 @interface XWAnnounceViewController : XWBaseViewController
 
+@property (nonatomic, assign) int AID;
+
 @end

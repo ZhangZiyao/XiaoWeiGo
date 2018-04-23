@@ -10,6 +10,8 @@
 #import "CompanyModel.h"
 #import "XWCompanyViewCell.h"
 #import "XWCompanyDetailViewController.h"
+#import "XWBaseHeaderView.h"
+#import "XWSearchViewController.h"
 
 @interface XWBookViewController ()<UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong) NSMutableArray *dataSource;
@@ -33,7 +35,19 @@
 //    UIImageView *headerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 90*kScaleH)];
 //    headerImageView.image = [UIImage imageNamed:@"favorite_top"];
 //    [self.view addSubview:headerImageView];
-    
+    XWBaseHeaderView *headerView = [[XWBaseHeaderView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 90*kScaleH)];
+    headerView.title = @"小微企业名录";
+    headerView.showSearchBtn = YES;
+    [headerView setupView];
+    WS(weakSelf);
+    headerView.rightItemClickBlock = ^{
+        //搜索
+        XWSearchViewController *selectionVc = [XWSearchViewController new];
+//        selectionVc.type = 20;
+        [weakSelf.navigationController pushViewController:selectionVc animated:YES];
+    };
+    //    [self.view addSubview:headerView];
+    self.tableView.tableHeaderView = headerView;
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, 0, 0));
@@ -51,7 +65,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     CompanyModel *model = self.dataSource[indexPath.row];
     XWCompanyDetailViewController *detailVc = [[XWCompanyDetailViewController alloc] init];
-    detailVc.company = model;
+    detailVc.model = model;
     [self.navigationController pushViewController:detailVc animated:YES];
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{

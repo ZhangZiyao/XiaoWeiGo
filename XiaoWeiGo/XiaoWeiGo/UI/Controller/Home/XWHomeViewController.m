@@ -77,6 +77,8 @@
 
 @property (nonatomic, strong) NSMutableArray *demandDataSource;
 
+@property (nonatomic, strong) NSMutableArray *announceDataSource;
+
 @property (nonatomic, strong) XBTextLoopView *loopView;
 
 @end
@@ -85,7 +87,9 @@
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     if ([UserModel isLogin]) {
-        [UserModel getUserData];
+        [UserModel getUserDataBlock:^(BOOL success) {
+            
+        }];
     }
 }
 - (void)viewWillAppear:(BOOL)animated {
@@ -93,6 +97,11 @@
     
     //// 请务必写上这句话，防止因为控制器切换而不能正常工作
 //    [self.label walk];
+    [self.loopView walk];
+}
+- (void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    [self.loopView pause];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -101,6 +110,7 @@
     tagIndex = 1;
     _pageIndex = 0;
     [self reloadPageData];
+    [self getAnnounceListRequest];
 }
 - (void)reloadPageData{
     [self getNewsListRequest];
@@ -140,10 +150,12 @@
 //    self.label.rate = RateFast;
 //    [self.view addSubview:self.label];
     
-    _loopView = [XBTextLoopView textLoopViewWith:@[@"小微加油V2.0正式上线啦～～～"] loopInterval:3.0 initWithFrame:CGRectMake(0, 0, ScreenWidth, 40) selectBlock:^(NSString *selectString, NSInteger index) {
+    WS(weakSelf);
+    _loopView = [XBTextLoopView textLoopViewWith:@[@"小微加油V2.0正式上线啦～～～"] loopInterval:3.0 initWithFrame:CGRectMake(0, 0, ScreenWidth, 40) selectBBlock:^(NSString *selectString, NSInteger index) {
 //        NSLog(@"%@===index%ld", selectString, index);
         XWAnnounceViewController *announceVc = [[XWAnnounceViewController alloc] init];
-        [self.navigationController pushViewController:announceVc animated:YES];
+        announceVc.AID = [[weakSelf.announceDataSource[index] objectForKey:@"ID"] intValue];
+        [weakSelf.navigationController pushViewController:announceVc animated:YES];
     }];
     
     [self.scrollView addSubview:_loopView];
@@ -216,7 +228,7 @@
         make.height.mas_equalTo(64*kScaleH+90*kScaleH);
     }];
     
-    self.scrollView.contentSize = CGSizeMake(ScreenWidth, ScreenHeight*2);
+    
 }
 #pragma mark -
 - (void)reloadData{
@@ -427,14 +439,11 @@
         {
             //发布需求
             if ([UserModel isLogin]) {
-                if (APPDELEGATE.user.loginType == 3 || APPDELEGATE.user.loginType == 1) {
-                    [MBProgressHUD alertInfo:@"您没有此权限哦～"];
-                   
-                }else if (APPDELEGATE.user.loginType == 2 ) {
-                    
+                if (APPDELEGATE.user.loginType == 3 || APPDELEGATE.user.loginType == 2) {
                     pageVc = [[DemandReleaseViewController alloc] init];
                 }else{
                     [MBProgressHUD alertInfo:@"您没有此权限哦～"];
+                    return;
                 }
             }else{
 //                [MBProgressHUD alertInfo:@"请先登录～"];
@@ -680,7 +689,11 @@
         _scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
         _scrollView.backgroundColor = bgColor;
         _scrollView.delegate = self;
-        
+        _scrollView.alwaysBounceVertical = NO;
+        _scrollView.alwaysBounceHorizontal = NO;
+        _scrollView.showsHorizontalScrollIndicator = NO;
+//        _scrollView.bounces = NO;
+        _scrollView.contentSize = CGSizeMake(0, ScreenHeight*2);
         WS(weakSelf);
         MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
             weakSelf.pageIndex = 0;
@@ -692,6 +705,17 @@
         _scrollView.mj_header = header;
     }
     return _scrollView;
+}
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (scrollView.contentOffset.x < 0) {
+        scrollView.contentOffset = CGPointMake(0, scrollView.contentOffset.y);
+    }
+
+    if (scrollView.contentOffset.x > 0) {
+        scrollView.contentOffset = CGPointMake(0, scrollView.contentOffset.y);
+    }
+    
 }
 - (UITableView *)tableView{
     if (!_tableView) {
@@ -772,6 +796,35 @@
         [self reloadData];
     } fail:^(NSError *error) {
         [self.scrollView.mj_header endRefreshing];
+    }];
+}
+
+#pragma mark - 获取公告
+- (void)getAnnounceListRequest{
+    RequestManager *manager = [[RequestManager alloc] init];
+    manager.isShowLoading = NO;
+    //    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    NSString *urlString = kGetNoticeListZ;
+    [params setValuesForKeysWithDictionary:@{@"indexPage":@(_pageIndex),
+                                             @"endPage":@(_pageIndex+4),
+                                             @"orderType":@"ID desc"
+                                             }];
+    [manager POSTRequestUrlStr:urlString parms:params success:^(id responseData) {
+//        [self.scrollView.mj_header endRefreshing];
+        NSLog(@"首页公告  %@",responseData);
+        if ([responseData isKindOfClass:[NSArray class]]) {
+            NSArray *array = [NSArray arrayWithArray:responseData];
+            if (array.count > 0) {
+                self.announceDataSource = [NSMutableArray arrayWithArray:responseData];
+                [_loopView setDataSource:@[[array[0] objectForKey:@"nTitle"]]];
+            }
+        }else{
+            
+        }
+//        [self reloadData];
+    } fail:^(NSError *error) {
+//        [self.scrollView.mj_header endRefreshing];
     }];
 }
 - (void)didReceiveMemoryWarning {

@@ -37,10 +37,14 @@
     RegisterNotify(XWUserInfoChangeNotification, @selector(refreshUserInfo));
 }
 - (void)refreshUserInfo{
-    [UserModel getUserData];
-    self.nickNameLabel.text = [NSString stringWithFormat:@"昵称：%@",APPDELEGATE.user.loginType==1?@"企业服务商":(APPDELEGATE.user.loginType==2?@"企业服务商":@"一般用户")];
-    self.orgNameLabel.text = [NSString stringWithFormat:@"实名：%@",[NSString ifNull:user.name]];
-    [self.tableView reloadData];
+    WS(weakSelf);
+    [UserModel getUserDataBlock:^(BOOL success) {
+        weakSelf.nickNameLabel.text = [NSString stringWithFormat:@"姓名：%@",[NSString ifNull:user.name]];
+        weakSelf.orgNameLabel.text = [NSString stringWithFormat:@"用户类型：%@",APPDELEGATE.user.loginType==1?@"企业服务商":(APPDELEGATE.user.loginType==2?@"企业服务商":@"一般用户")];
+        //    self.orgNameLabel.text = [NSString stringWithFormat:@"实名：%@",[NSString ifNull:user.name]];
+        [weakSelf.tableView reloadData];
+    }];
+    
 }
 - (void)layoutSubviews{
     
@@ -62,8 +66,8 @@
         iconImage.image = [UIImage imageNamed:@"mine_icon_avatar"];
         [_headerView addSubview:iconImage];
         iconImage.userInteractionEnabled = YES;
-//        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushToMineInfovc)];
-//        [iconImage addGestureRecognizer:tap];
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushToMineInfovc)];
+        [iconImage addGestureRecognizer:tap];
         [iconImage mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(_headerView).offset(60*kScaleW);
             make.top.equalTo(_headerView).offset(100*kScaleW);
@@ -183,8 +187,8 @@
 - (NSMutableArray *)dataSource{
     
     if (!_dataSource) {
-        UserModel *user = APPDELEGATE.user;
-        if (APPDELEGATE.user.loginType == 1 || APPDELEGATE.user.loginType == 2) {
+//        UserModel *user = APPDELEGATE.user;
+        if (APPDELEGATE.user.loginType == 2 || APPDELEGATE.user.loginType == 3) {
             _dataSource = [NSMutableArray arrayWithArray:@[@[@"我发布的需求",@"mine_icon_icon2"],@[@"我的收藏",@"mine_icon_icon3"],@[@"我的设置",@"mine_icon_icon4"]]];
             
         }else{
@@ -209,8 +213,8 @@
         user = [UserModel mj_objectWithKeyValues:responseData[0]];
 //        [RWCache setUser:user];
         
-        self.nickNameLabel.text = [NSString stringWithFormat:@"昵称：%@",APPDELEGATE.user.loginType==3?@"一般用户":(APPDELEGATE.user.loginType==2?@"小微企业":@"企业服务商")];
-        self.orgNameLabel.text = [NSString stringWithFormat:@"实名：%@",[NSString ifNull:user.name]];
+        self.nickNameLabel.text = [NSString stringWithFormat:@"昵称：%@",[NSString ifNull:user.name]];
+        self.orgNameLabel.text = [NSString stringWithFormat:@"用户类型：%@",APPDELEGATE.user.loginType==3?@"一般用户":(APPDELEGATE.user.loginType==2?@"小微企业":@"企业服务商")];
         
         [self.tableView reloadData];
     } fail:^(NSError *error) {

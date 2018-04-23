@@ -16,16 +16,18 @@
 @property (nonatomic, strong) NSTimer *myTimer;
 @property (nonatomic, assign) NSInteger currentRowIndex;
 @property (nonatomic, copy) selectTextBlock selectBlock;
+@property (nonatomic, readwrite) BOOL isWalking;
 
 @end
 
 @implementation XBTextLoopView
 
 #pragma mark - 初始化方法
-+ (instancetype)textLoopViewWith:(NSArray *)dataSource loopInterval:(NSTimeInterval)timeInterval initWithFrame:(CGRect)frame selectBlock:(selectTextBlock)selectBlock {
++ (instancetype)textLoopViewWith:(NSArray *)dataSource loopInterval:(NSTimeInterval)timeInterval initWithFrame:(CGRect)frame selectBBlock:(selectTextBlock)selectBBlock {
     XBTextLoopView *loopView = [[XBTextLoopView alloc] initWithFrame:frame];
     loopView.dataSource = dataSource;
-    loopView.selectBlock = selectBlock;
+    loopView.selectBlock = selectBBlock;
+    loopView.isWalking = NO;
     loopView.interval = timeInterval ? timeInterval : 1.0;
     return loopView;
 }
@@ -81,6 +83,7 @@
     // 定时器
     NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:interval target:self selector:@selector(timer) userInfo:nil repeats:YES];
     _myTimer = timer;
+    self.isWalking = YES;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -99,16 +102,27 @@
 
 - (void)timer {
     self.currentRowIndex++;
-    NSLog(@"%ld", _currentRowIndex);
+    NSLog(@"滚动 %ld", _currentRowIndex);
     [self.tableView setContentOffset:CGPointMake(0, _currentRowIndex * _tableView.rowHeight) animated:YES];
 }
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
+- (void)pause{
+//    if (self.isWalking == NO) {
+//        return;
+//    }
+    
+    [self.myTimer setFireDate:[NSDate distantFuture]];
+    self.isWalking = NO;
 }
-*/
+- (void)walk{
+//    if (self.isWalking == YES) {
+//        return;
+//    }
+    [self.myTimer setFireDate:[NSDate distantPast]];
+    self.isWalking = NO;
+}
+- (void)dealloc{
+    [self.myTimer invalidate];
+    self.myTimer = nil;
+}
 
 @end

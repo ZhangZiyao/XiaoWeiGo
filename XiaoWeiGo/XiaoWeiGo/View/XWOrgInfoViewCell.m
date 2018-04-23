@@ -18,6 +18,7 @@
 @property (nonatomic, strong) UILabel *detail4Label;
 @property (nonatomic, strong) UILabel *line;
 
+@property (nonatomic, strong) UIButton *callBtn;
 @property (nonatomic, strong) UIImageView *likeImageView;
 @property (nonatomic, strong) UILabel *likeNumLabel;
 @end
@@ -39,17 +40,31 @@
         self.likeBtn.hidden = NO;
     }
     self.likeNumLabel.text = [NSString stringWithFormat:@"+%d",cmodel.like];
-    self.detail1Label.text = [NSString stringWithFormat:@"服务收费：%@",cmodel.price];
-    self.detail2Label.text = [NSString stringWithFormat:@"联系人：%@",cmodel.contacts];
-    self.detail3Label.text = [NSString stringWithFormat:@"联系电话：%@",cmodel.tel];
-    self.detail4Label.text = [NSString stringWithFormat:@"电子邮箱：%@",cmodel.email];
-}
-- (void)collectBtnClick{
-    [self.delegate didClickCollectButton];
+    self.detail1Label.text = [NSString stringWithFormat:@"服务收费：%@",[NSString ifNull:cmodel.price]];
+    self.detail2Label.text = [NSString stringWithFormat:@"联系人：%@",[NSString ifNull:cmodel.contacts]];
+    self.detail3Label.text = [NSString stringWithFormat:@"联系电话：%@",[NSString ifNull:cmodel.tel]];
+    self.detail4Label.text = [NSString stringWithFormat:@"电子邮箱：%@",[NSString ifNull:cmodel.email]];
+    
+    if (!IsStrEmpty(_cmodel.tel) && ![_cmodel.tel containsString:@"*"]) {
+        self.callBtn.hidden = NO;
+    }else{
+        self.callBtn.hidden = YES;
+    }
     
 }
-- (void)likeBtnClick{
-    [self.delegate didClickLikeButton];
+- (void)collectBtnClick:(UIButton *)sender{
+    [self.delegate didClickCollectButton:sender];
+    
+}
+- (void)likeBtnClick:(UIButton *)sender{
+    [self.delegate didClickLikeButton:sender];
+    
+}
+- (void)callBtnClick{
+    if (!IsStrEmpty(_cmodel.tel) && ![_cmodel.tel containsString:@"*"]) {
+        NSURL *pURL = [NSURL URLWithString:[NSString stringWithFormat:@"tel://%@",_cmodel.tel]];
+        [[UIApplication sharedApplication] openURL:pURL];
+    }
     
 }
 - (void)createCell{
@@ -64,7 +79,7 @@
     [self.contentView addSubview:self.likeImageView];
     [self.contentView addSubview:self.likeNumLabel];
     [self.contentView addSubview:self.line];
-    
+    [self.contentView addSubview:self.callBtn];
     [self addFrame];
 }
 - (void)addFrame{
@@ -125,16 +140,26 @@
         make.top.equalTo(self.detail3Label.mas_bottom).offset(20*kScaleW);
         make.right.equalTo(self.contentView).offset(-40*kScaleW);
     }];
+    [self.callBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.contentView).offset(-20);
+        make.centerY.equalTo(self.detail3Label);
+        make.size.mas_equalTo(CGSizeMake(20,20));
+    }];
 }
 - (UIButton *)collectBtn{
     if (!_collectBtn) {
         _collectBtn = [[UIButton alloc] init];
         [_collectBtn setTitle:@"收藏" forState:UIControlStateNormal];
         [_collectBtn.titleLabel setFont:[UIFont rw_regularFontSize:14.0]];
-        [_collectBtn setBackgroundColor:UIColorFromRGB16(0xfe7401)];
+        [_collectBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+        [_collectBtn setTitleColor:UIColorFromRGB16(0xfe7401) forState:UIControlStateNormal];
+        [_collectBtn setBackgroundImage:[UIImage imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+        [_collectBtn setBackgroundImage:[UIImage imageWithColor:UIColorFromRGB16(0xfe7401)] forState:UIControlStateSelected];
         _collectBtn.layer.cornerRadius = 5;
         _collectBtn.layer.masksToBounds = YES;
-        [_collectBtn addTarget:self action:@selector(collectBtnClick) forControlEvents:UIControlEventTouchUpInside];
+        _collectBtn.layer.borderColor = UIColorFromRGB16(0xfe7401).CGColor;
+        _collectBtn.layer.borderWidth = 0.5;
+        [_collectBtn addTarget:self action:@selector(collectBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _collectBtn;
 }
@@ -143,12 +168,28 @@
         _likeBtn = [[UIButton alloc] init];
         [_likeBtn setTitle:@"点赞" forState:UIControlStateNormal];
         [_likeBtn.titleLabel setFont:[UIFont rw_regularFontSize:14.0]];
-        [_likeBtn setBackgroundColor:UIColorFromRGB16(0xfe7401)];
+//        [_likeBtn setBackgroundColor:UIColorFromRGB16(0xfe7401)];
+        [_likeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+        [_likeBtn setTitleColor:UIColorFromRGB16(0xfe7401) forState:UIControlStateNormal];
+        [_likeBtn setBackgroundImage:[UIImage imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+        [_likeBtn setBackgroundImage:[UIImage imageWithColor:UIColorFromRGB16(0xfe7401)] forState:UIControlStateSelected];
         _likeBtn.layer.cornerRadius = 5;
         _likeBtn.layer.masksToBounds = YES;
-        [_likeBtn addTarget:self action:@selector(likeBtnClick) forControlEvents:UIControlEventTouchUpInside];
+        _likeBtn.layer.borderColor = UIColorFromRGB16(0xfe7401).CGColor;
+        _likeBtn.layer.borderWidth = 0.5;
+        [_likeBtn addTarget:self action:@selector(likeBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _likeBtn;
+}
+- (UIButton *)callBtn{
+    if (!_callBtn) {
+        _callBtn = [[UIButton alloc] init];
+        [_callBtn setImage:[UIImage imageNamed:@"ico_phone"] forState:UIControlStateNormal];
+        _callBtn.contentMode = UIViewContentModeScaleAspectFit;
+        _callBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
+        [_callBtn addTarget:self action:@selector(callBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _callBtn;
 }
 
 - (UIImageView *)likeImageView{

@@ -12,6 +12,8 @@
 #import "NewsModel.h"
 #import "XWBonusCenterView.h"
 #import "XWNewsDetailViewController.h"
+#import "XWSearchToolView.h"
+#import "XWSearchViewController.h"
 
 @interface XWBonusViewController ()<UITableViewDelegate,UITableViewDataSource,BonusTabViewDelegate,BonusCenterViewDelegate>
 {
@@ -23,6 +25,7 @@
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) XWBonusCenterView *centerView;
+@property (nonatomic, strong) XWSearchToolView *searchToolView;
 @end
 
 @implementation XWBonusViewController
@@ -33,7 +36,7 @@
     [self showBackItem];
     _pageIndex = 0;
     region = 1;
-    category = 1;
+    category = 3;
     [self requestNewsList];
 }
 - (void)layoutSubviews{
@@ -49,18 +52,33 @@
         make.height.mas_equalTo(160*kScaleH);
     }];
 //    [self addCenterView];
+    WS(weakSelf);
+    _searchToolView = [[XWSearchToolView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 90*kScaleH)];
+    _searchToolView.leftItemClickBlock = ^{
+        NSLog(@"点击了搜索");
+        //        [weakSelf.searchToolView show];
+        XWSearchViewController *selectionVc = [XWSearchViewController new];
+        [weakSelf.navigationController pushViewController:selectionVc animated:YES];
+    };
+    [self.view addSubview:_searchToolView];
+    [_searchToolView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view).offset(190*kScaleH);
+        make.left.equalTo(self.view);
+        make.right.equalTo(self.view);
+        make.height.mas_equalTo(90*kScaleH);
+    }];
     [self.view addSubview:self.centerView];
     [self.centerView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view);
         make.right.equalTo(self.view);
-        make.top.equalTo(self.view).offset(190*kScaleH);
+        make.top.equalTo(self.view).offset(280*kScaleH);
         make.height.mas_equalTo(70*kScaleH);
     }];
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view);
         make.right.equalTo(self.view);
-        make.top.equalTo(self.view).offset(265*kScaleH);
+        make.top.equalTo(self.view).offset(265*kScaleH+90*kScaleH);
         make.bottom.equalTo(self.view);
     }];
     

@@ -13,4 +13,9 @@
 
 @property (nonatomic, strong) CommandModel *model;
 
+/**
+ *  撤回/重发按钮的block
+ */
+@property (nonatomic, copy)void(^funcBtnClickBlock)(CommandModel *smodel,int audio);
+
 @end
